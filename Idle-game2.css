@@ -1,0 +1,25 @@
+body{
+	background:black;
+	font-family:Abel, sans-serif;
+	color:white;
+}
+.resource{
+	border: white double 2px;
+    width: 150px;
+    /* float: left; */
+    height: 86px;
+	/* border-radius:5px; */
+}
+.resourceCount{
+    position:relative;
+    text-align:right;
+    float:right;
+    bottom:83px;
+    right:2px;
+}
+.button{
+	background:black;
+	color:white;
+	border-radius:5px;
+	border-style:double;
+}

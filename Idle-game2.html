@@ -1,0 +1,75 @@
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+			<title>Idle game 2</title>
+			<script src="Idle-game2.js" defer></script>
+			<link rel="stylesheet" type="text/css" href="Idle-game2.css">
+			<link href="https://fonts.googleapis.com/css?family=Abel&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<div id=game>
+			<div id=buttonWrapper>
+				<input id=mineButton type=button class=button value=Mine onclick=mine();>
+				<input id=chopButton type=button class=button value=Chop onclick=chop();>
+			</div>
+			<div id=resourceWrapper>
+				 <div id=oreWrapper class=resource>
+					<div id=oreName>
+						<div id=copperOreName>Copper ore:</div>
+						<div id=ironOreName>Iron ore:</div>
+						<div id=silverOreName>Silver ore:</div>
+						<div id=goldOreName>Gold ore:</div>
+					</div>
+					<div id=oreCount class=resourceCount>
+						<div id=copperOre>0</div>
+						<div id=ironOre>0</div>
+						<div id=silverOre>0</div>
+						<div id=goldOre>0</div>
+					</div>
+				</div>
+				<div id=barWrapper class=resource>
+					<div id=barName>
+						<div id=copperBarName>Copper bar:</div>
+						<div id=ironBarName>Iron bar:</div>
+						<div id=silverBarName>Silver bar:</div>
+						<div id=goldBarName>Gold bar:</div>
+					</div>
+					<div id=barCount class=resourceCount>
+						<div id=copperBar>0</div>
+						<div id=ironBar>0</div>
+						<div id=silverBar>0</div>
+						<div id=goldBar>0</div>
+					</div>
+				</div>
+				<div id=woodWrapper class=resource>
+					<div id=woodName>
+						<div id=softWoodName>Softwood log:</div>
+						<div id=hardWoodName>Hardwood log:</div>
+						<div id=ebonyWoodName>Ebony log:</div>
+						<div id=pearlWoodName>Pearl log:</div>
+					</div>
+					<div id=woodCount class=resourceCount>
+						<div id=softWood>0</div>
+						<div id=hardWood>0</div>
+						<div id=ebonyWood>0</div>
+						<div id=pearlWood>0</div>
+					</div>
+				</div>
+				<div id=plankWrapper class=resource>
+					<div id=plankName>
+						<div id=softPlankName>Softwood plank:</div>
+						<div id=hardPlankName>Hardwood plank:</div>
+						<div id=ebonyPlankName>Ebony plank:</div>
+						<div id=pearlPlankName>Pearl plank:</div>
+					</div>
+					<div id=plankCount class=resourceCount>
+						<div id=softPlank>0</div>
+						<div id=hardPlank>0</div>
+						<div id=ebonyPlank>0</div>
+						<div id=pearlPlank>0</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
