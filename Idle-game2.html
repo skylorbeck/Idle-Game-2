@@ -9,64 +9,92 @@
 	<body>
 		<div id=game>
 			<div id=buttonWrapper>
-				<input id=mineButton type=button class=button value=Mine onclick=mine();>
-				<input id=chopButton type=button class=button value=Chop onclick=chop();>
+				<div id=gatherWrapper>
+					<input id=mineButton type=button class=button value=Mine onclick=mine();>
+					<input id=chopButton type=button class=button value=Chop onclick=chop();>
+				</div>
+				<div id=processWrapper>
+					<div id=smelt0Wrapper>
+						<input id=smeltButton0 type=button class="button process1" value=Smelt onclick=smelt(0);>
+						<div id=smeltProgress0 class="smeltProgress0"></div>
+					</div>
+					<div id=smelt1Wrapper>
+						<input id=smeltButton1 type=button class="button process1" value=Smelt onclick=smelt(1);>
+						<div id=smeltProgress1 class="smeltProgress0 smeltProgress1"></div>
+					</div>
+					<div id=smelt2Wrapper>
+						<input id=smeltButton0 type=button class="button process1" value=Smelt onclick=smelt(2);>
+						<div id=smeltProgress2 class="smeltProgress0 smeltProgress1 smeltProgress2"></div>
+					</div>
+					<div id=smelt3Wrapper>
+						<input id=smeltButton0 type=button class="button process1" value=Smelt onclick=smelt(3);>
+						<div id=smeltProgress3 class="smeltProgress0 smeltProgress1 smeltProgress2 smeltProgress3"></div>
+					</div>
+					<input id=planeButton0 type=button class="button process2" value=Plane onclick=plane(0);>
+					<input id=planeButton1 type=button class="button process2" value=Plane onclick=plane(1);>
+					<input id=planeButton2 type=button class="button process2" value=Plane onclick=plane(2);>
+					<input id=planeButton3 type=button class="button process2" value=Plane onclick=plane(3);>
+				</div>
 			</div>
 			<div id=resourceWrapper>
-				 <div id=oreWrapper class=resource>
-					<div id=oreName>
-						<div id=copperOreName>Copper ore:</div>
-						<div id=ironOreName>Iron ore:</div>
-						<div id=silverOreName>Silver ore:</div>
-						<div id=goldOreName>Gold ore:</div>
+				<div id=rawWrapper>
+					 <div id=oreWrapper class=resource>
+						<div id=oreName>
+							<div id=copperOreName>Copper ore:</div>
+							<div id=ironOreName>Iron ore:</div>
+							<div id=silverOreName>Silver ore:</div>
+							<div id=goldOreName>Gold ore:</div>
+						</div>
+						<div id=oreCount class=resourceCount>
+							<div id=copperOre>0</div>
+							<div id=ironOre>0</div>
+							<div id=silverOre>0</div>
+							<div id=goldOre>0</div>
+						</div>
 					</div>
-					<div id=oreCount class=resourceCount>
-						<div id=copperOre>0</div>
-						<div id=ironOre>0</div>
-						<div id=silverOre>0</div>
-						<div id=goldOre>0</div>
-					</div>
-				</div>
-				<div id=barWrapper class=resource>
-					<div id=barName>
-						<div id=copperBarName>Copper bar:</div>
-						<div id=ironBarName>Iron bar:</div>
-						<div id=silverBarName>Silver bar:</div>
-						<div id=goldBarName>Gold bar:</div>
-					</div>
-					<div id=barCount class=resourceCount>
-						<div id=copperBar>0</div>
-						<div id=ironBar>0</div>
-						<div id=silverBar>0</div>
-						<div id=goldBar>0</div>
-					</div>
-				</div>
-				<div id=woodWrapper class=resource>
-					<div id=woodName>
-						<div id=softWoodName>Softwood log:</div>
-						<div id=hardWoodName>Hardwood log:</div>
-						<div id=ebonyWoodName>Ebony log:</div>
-						<div id=pearlWoodName>Pearl log:</div>
-					</div>
-					<div id=woodCount class=resourceCount>
-						<div id=softWood>0</div>
-						<div id=hardWood>0</div>
-						<div id=ebonyWood>0</div>
-						<div id=pearlWood>0</div>
+					<div id=woodWrapper class=resource>
+						<div id=woodName>
+							<div id=softWoodName>Softwood log:</div>
+							<div id=hardWoodName>Hardwood log:</div>
+							<div id=ebonyWoodName>Ebony log:</div>
+							<div id=pearlWoodName>Pearl log:</div>
+						</div>
+						<div id=woodCount class=resourceCount>
+							<div id=softWood>0</div>
+							<div id=hardWood>0</div>
+							<div id=ebonyWood>0</div>
+							<div id=pearlWood>0</div>
+						</div>
 					</div>
 				</div>
-				<div id=plankWrapper class=resource>
-					<div id=plankName>
-						<div id=softPlankName>Softwood plank:</div>
-						<div id=hardPlankName>Hardwood plank:</div>
-						<div id=ebonyPlankName>Ebony plank:</div>
-						<div id=pearlPlankName>Pearl plank:</div>
+				<div id=processedWrapper>
+					<div id=barWrapper class=resource>
+						<div id=barName>
+							<div id=copperBarName>Copper bar:</div>
+							<div id=ironBarName>Iron bar:</div>
+							<div id=silverBarName>Silver bar:</div>
+							<div id=goldBarName>Gold bar:</div>
+						</div>
+						<div id=barCount class=resourceCount>
+							<div id=copperBar>0</div>
+							<div id=ironBar>0</div>
+							<div id=silverBar>0</div>
+							<div id=goldBar>0</div>
+						</div>
 					</div>
-					<div id=plankCount class=resourceCount>
-						<div id=softPlank>0</div>
-						<div id=hardPlank>0</div>
-						<div id=ebonyPlank>0</div>
-						<div id=pearlPlank>0</div>
+					<div id=plankWrapper class=resource>
+						<div id=plankName>
+							<div id=softPlankName>Softwood plank:</div>
+							<div id=hardPlankName>Hardwood plank:</div>
+							<div id=ebonyPlankName>Ebony plank:</div>
+							<div id=pearlPlankName>Pearl plank:</div>
+						</div>
+						<div id=plankCount class=resourceCount>
+							<div id=softPlank>0</div>
+							<div id=hardPlank>0</div>
+							<div id=ebonyPlank>0</div>
+							<div id=pearlPlank>0</div>
+						</div>
 					</div>
 				</div>
 			</div>

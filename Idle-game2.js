@@ -1,6 +1,9 @@
 window.onload = function(){
 
 }
+// var
+
+
 // Save
 var save={
 	ore:[0,0,0,0],//copper, iron, silver, gold
@@ -9,6 +12,7 @@ var save={
 	plank:[0,0,0,0],//soft, hard. ebony, pearl
 	buildings:[0,0,0,0,0,0,0,0,0],//mine, smeltery, lumber yard, sawmill, bar, tavern, brothel, market, bank
 	upgrades:[],
+	smeltProgress:[0,0,0,0],//c,i,s,g
 };
 var save2 = JSON.parse(localStorage.getItem('idleGame2.save'));
 if(	localStorage.getItem('idleGame2.save') !== null){//if there is a save
@@ -46,7 +50,7 @@ function updateResources(){
 
 }
 // Mine
-function mine(){
+function mine(id){
 	let result=randomInt(0,99);
 	switch(true){
 		case result>=0 && result<=39:
@@ -64,7 +68,37 @@ function mine(){
 	}
 	updateResources();
 }
-
+// Chop
+function chop(id){
+let result=randomInt(0,99);
+	switch(true){
+		case result>=0 && result<=39:
+			save.wood[0]+=1;
+		break;
+		case result>=40 && result<=69:
+			save.wood[1]+=1;
+		break;
+		case result>=70 && result<=89:
+			save.wood[2]+=1;
+		break;
+		case result>=90 && result<=99:
+			save.wood[3]+=1;
+		break;
+	}
+	updateResources();
+}
+// Smelt
+function smelt(id){
+	if(save.ore[id]>=2){
+		save.smeltProgress[id]+=1;
+		if(save.smeltProgress[id]>=5){
+			save.bar[id]+=1;
+			save.ore[id]-=2;
+			save.smeltProgress[id]=0;
+		}
+		updateResources();
+	}
+}
 
 // code stolen from stackoverflow
 function getDigitCount(number) {

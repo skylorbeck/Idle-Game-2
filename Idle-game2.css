@@ -22,4 +22,90 @@ body{
 	color:white;
 	border-radius:5px;
 	border-style:double;
+	z-index:100;
+}
+.process2{
+	position: relative;
+    top: 31px;
+}
+.process1,.process2{
+	width:100px;
+}
+.smeltProgress0{
+	width: 20px;
+    height: 18px;
+    background: yellow;
+	pointer-events: none;
+	z-index:101;
+	position: absolute;
+    top: 1px;
+    border-radius: 5px;
+}
+.smeltProgress1{
+	width: 20px;
+    height: 18px;
+    background: yellow;
+	pointer-events: none;
+	z-index:101;
+	position: absolute;
+    top: 1px;
+    border-radius: 5px;
+}
+.smeltProgress2{
+	width: 20px;
+    height: 18px;
+    background: yellow;
+	pointer-events: none;
+	z-index:101;
+	position: absolute;
+    top: 1px;
+    border-radius: 5px;
+}
+.smeltProgress3{
+	width: 20px;
+    height: 18px;
+    background: yellow;
+	pointer-events: none;
+	z-index:101;
+	position: absolute;
+    top: 1px;
+    border-radius: 5px;
+}
+#gatherWrapper{
+	top: 91px;
+    position: absolute;
+	float:left;
+	z-index:100;
+}
+#rawWrapper{
+    float: left;
+}
+#processedWrapper{
+    float: left;
+	position:relative;
+	left:100px;
+}
+#woodWrapper,#plankWrapper{
+    top: 25px;
+    position: relative;
+}
+#resourceWrapper{
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+#processWrapper{
+	display: inline-grid;
+    left: 154px;
+	top:3px;
+    position: absolute;
+}
+#smeltProgress1{
+    top: 22px;
+}
+#smeltProgress2{
+	top:43px;
+}
+#smeltProgress3{
+	top:64px;
 }
