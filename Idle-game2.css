@@ -1,5 +1,5 @@
 body{
-	background:black;
+	background:grey;
 	font-family:Abel, sans-serif;
 	color:white;
 }
@@ -8,7 +8,7 @@ body{
     width: 150px;
     /* float: left; */
     height: 86px;
-	/* border-radius:5px; */
+	border-radius:5px;
 }
 .resourceCount{
     position:relative;
@@ -23,6 +23,16 @@ body{
 	border-radius:5px;
 	border-style:double;
 	z-index:100;
+	outline:none;
+}
+.button:hover{
+	border-color:yellow;
+}
+.button:active{
+	border-color:yellow;
+}
+.button:focus{
+	
 }
 .process2{
 	position: relative;
@@ -30,46 +40,106 @@ body{
 }
 .process1,.process2{
 	width:100px;
+	position: relative;
+    background: transparent;
+    color: grey;
 }
 .smeltProgress0{
-	width: 20px;
-    height: 18px;
+	width: 23px;
+    height: 15px;
     background: yellow;
 	pointer-events: none;
-	z-index:101;
 	position: absolute;
-    top: 1px;
+    top: 3px;
     border-radius: 5px;
+	left:3px;
 }
 .smeltProgress1{
-	width: 20px;
-    height: 18px;
+	width: 23px;
+    height: 15px;
     background: yellow;
 	pointer-events: none;
-	z-index:101;
 	position: absolute;
-    top: 1px;
+    top: 3px;
     border-radius: 5px;
+	left:27px;
 }
 .smeltProgress2{
-	width: 20px;
-    height: 18px;
+	width: 23px;
+    height: 15px;
     background: yellow;
 	pointer-events: none;
-	z-index:101;
 	position: absolute;
-    top: 1px;
+    top: 3px;
     border-radius: 5px;
+	left:51px;
 }
 .smeltProgress3{
-	width: 20px;
-    height: 18px;
+	width: 23px;
+    height: 15px;
     background: yellow;
 	pointer-events: none;
-	z-index:101;
 	position: absolute;
-    top: 1px;
+    top: 3px;
     border-radius: 5px;
+	left:75px;
+}
+.planeProgress0{
+	width: 23px;
+    height: 15px;
+    background: yellow;
+	pointer-events: none;
+	position: absolute;
+    top:118px;
+    border-radius: 5px;
+	left:3px;
+}
+.planeProgress1{
+	width: 23px;
+    height: 15px;
+    background: yellow;
+	pointer-events: none;
+	position: absolute;
+    top:118px;
+    border-radius: 5px;
+	left:27px;
+}
+.planeProgress2{
+	width: 23px;
+    height: 15px;
+    background: yellow;
+	pointer-events: none;
+	position: absolute;
+    top:118px;
+    border-radius: 5px;
+	left:51px;
+}
+.planeProgress3{
+	width: 23px;
+    height: 15px;
+    background: yellow;
+	pointer-events: none;
+	position: absolute;
+    top:118px;
+    border-radius: 5px;
+	left:75px;
+}
+.info{
+	display:none;
+	position: absolute;
+    background: black;
+    z-index: 1000;
+    color: white;
+    width: max-content;
+    border: 2px solid white;
+    border-radius: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+#game{
+	width:800px;
+	height:800px;
+	background:black;
 }
 #gatherWrapper{
 	top: 91px;
@@ -85,27 +155,113 @@ body{
 	position:relative;
 	left:100px;
 }
-#woodWrapper,#plankWrapper{
+#woodWrapper,#plankWrapper,#buildingTownWrapper{
     top: 25px;
     position: relative;
 }
-#resourceWrapper{
-    position: absolute;
-    left: 0;
-    top: 0;
+#resourceWrapper,#buttonWrapper{
+    position: relative;
 }
 #processWrapper{
 	display: inline-grid;
     left: 154px;
 	top:3px;
     position: absolute;
+	z-index:100;
 }
-#smeltProgress1{
-    top: 22px;
+#smeltProgress10,#smeltProgress11,#smeltProgress12,#smeltProgress13{
+    top:24px;
 }
-#smeltProgress2{
-	top:43px;
+#smeltProgress20,#smeltProgress21,#smeltProgress22,#smeltProgress23{
+	top:45px;
 }
-#smeltProgress3{
-	top:64px;
+#smeltProgress30,#smeltProgress31,#smeltProgress32,#smeltProgress33{
+	top:66px;
+}
+#planeProgress10,#planeProgress11,#planeProgress12,#planeProgress13{
+    top:139px;
+}
+#planeProgress20,#planeProgress21,#planeProgress22,#planeProgress23{
+	top:160px;
+}
+#planeProgress30,#planeProgress31,#planeProgress32,#planeProgress33{
+	top:181px;
+}
+#buildingWrapper{
+	position: absolute;
+    left: 600px;
+}
+#buyCraftingWrapper,#buyTownWrapper{
+	display:inline-grid;
+	position: absolute;
+}
+#buyCraftingWrapper{
+	left: 540px;
+    top: 3px;
+}
+#buyTownWrapper{
+    left: 540px;
+    top: 117px;
+}
+#buildingBuyWrapper{
+	position:relative;
+}
+#buyMine:hover +#mineInfo{
+	display:block;
+}
+#mineInfo{
+    left: 50px;
+    top: 10px;
+}
+#buyRefinery:hover +#refineryInfo{
+	display:block;
+}
+#refineryInfo{
+	left:50px;
+	top:30px;
+}
+#buyYard:hover +#yardInfo{
+	display:block;
+}
+#yardInfo{
+	left:50px;
+	top:50px;
+}
+#buySaw:hover +#sawInfo{
+	display:block;
+}
+#sawInfo{
+	left:50px;
+	top:70px;
+}
+#buyTavern:hover +#tavernInfo{
+	display:block;
+}
+#tavernInfo{
+	left:50px;
+	 top: 10px;
+}
+#buyHostel:hover +#hostelInfo{
+	display:block;
+}
+#hostelInfo{
+	left:50px;
+	top:30px;
+}
+#buyBrothel:hover +#brothelInfo{
+	display:block;
+}
+#brothelInfo{
+	left:50px;
+	top:50px;
+}
+#buyMarket:hover +#marketInfo{
+	display:block;
+}
+#marketInfo{
+	left:50px;
+	top:70px;
+}
+.locked{
+	display:none;
 }

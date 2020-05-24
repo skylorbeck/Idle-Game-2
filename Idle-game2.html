@@ -16,24 +16,61 @@
 				<div id=processWrapper>
 					<div id=smelt0Wrapper>
 						<input id=smeltButton0 type=button class="button process1" value=Smelt onclick=smelt(0);>
-						<div id=smeltProgress0 class="smeltProgress0"></div>
+						<div id=smeltProgress00 class="smeltProgress0 locked"></div>
+						<div id=smeltProgress01 class="smeltProgress1 locked"></div>
+						<div id=smeltProgress02 class="smeltProgress2 locked"></div>
+						<div id=smeltProgress03 class="smeltProgress3 locked"></div>
 					</div>
 					<div id=smelt1Wrapper>
 						<input id=smeltButton1 type=button class="button process1" value=Smelt onclick=smelt(1);>
-						<div id=smeltProgress1 class="smeltProgress0 smeltProgress1"></div>
+						<div id=smeltProgress10 class="smeltProgress0 locked"></div>
+						<div id=smeltProgress11 class="smeltProgress1 locked"></div>
+						<div id=smeltProgress12 class="smeltProgress2 locked"></div>
+						<div id=smeltProgress13 class="smeltProgress3 locked"></div>
 					</div>
 					<div id=smelt2Wrapper>
 						<input id=smeltButton0 type=button class="button process1" value=Smelt onclick=smelt(2);>
-						<div id=smeltProgress2 class="smeltProgress0 smeltProgress1 smeltProgress2"></div>
+						<div id=smeltProgress20 class="smeltProgress0 locked"></div>
+						<div id=smeltProgress21 class="smeltProgress1 locked"></div>
+						<div id=smeltProgress22 class="smeltProgress2 locked"></div>
+						<div id=smeltProgress23 class="smeltProgress3 locked"></div>
 					</div>
 					<div id=smelt3Wrapper>
 						<input id=smeltButton0 type=button class="button process1" value=Smelt onclick=smelt(3);>
-						<div id=smeltProgress3 class="smeltProgress0 smeltProgress1 smeltProgress2 smeltProgress3"></div>
+						<div id=smeltProgress30 class="smeltProgress0 locked"></div>
+						<div id=smeltProgress31 class="smeltProgress1 locked"></div>
+						<div id=smeltProgress32 class="smeltProgress2 locked"></div>
+						<div id=smeltProgress33 class="smeltProgress3 locked"></div>
 					</div>
-					<input id=planeButton0 type=button class="button process2" value=Plane onclick=plane(0);>
-					<input id=planeButton1 type=button class="button process2" value=Plane onclick=plane(1);>
-					<input id=planeButton2 type=button class="button process2" value=Plane onclick=plane(2);>
-					<input id=planeButton3 type=button class="button process2" value=Plane onclick=plane(3);>
+					
+					<div id=plane0Wrapper>
+						<input id=planeButton0 type=button class="button process2" value=Plane onclick=plane(0);>
+						<div id=planeProgress00 class="planeProgress0 locked"></div>
+						<div id=planeProgress01 class="planeProgress1 locked"></div>
+						<div id=planeProgress02 class="planeProgress2 locked"></div>
+						<div id=planeProgress03 class="planeProgress3 locked"></div>
+					</div>
+					<div id=plane1Wrapper>
+						<input id=planeButton1 type=button class="button process2" value=Plane onclick=plane(1);>
+						<div id=planeProgress10 class="planeProgress0 locked"></div>
+						<div id=planeProgress11 class="planeProgress1 locked"></div>
+						<div id=planeProgress12 class="planeProgress2 locked"></div>
+						<div id=planeProgress13 class="planeProgress3 locked"></div>
+					</div>
+					<div id=plane2Wrapper>
+						<input id=planeButton2 type=button class="button process2" value=Plane onclick=plane(2);>
+						<div id=planeProgress20 class="planeProgress0 locked"></div>
+						<div id=planeProgress21 class="planeProgress1 locked"></div>
+						<div id=planeProgress22 class="planeProgress2 locked"></div>
+						<div id=planeProgress23 class="planeProgress3 locked"></div>
+					</div>
+					<div id=plane3Wrapper>
+						<input id=planeButton3 type=button class="button process2" value=Plane onclick=plane(3);>
+						<div id=planeProgress30 class="planeProgress0 locked"></div>
+						<div id=planeProgress31 class="planeProgress1 locked"></div>
+						<div id=planeProgress32 class="planeProgress2 locked"></div>
+						<div id=planeProgress33 class="planeProgress3 locked"></div>
+					</div>
 				</div>
 			</div>
 			<div id=resourceWrapper>
@@ -97,6 +134,61 @@
 						</div>
 					</div>
 				</div>
+			</div>
+			<div id=buildingBuyWrapper>
+				<div id=buyCraftingWrapper>
+					<input id=buyMine type=button class=button value="Build" onclick=buyBuilding(0);>
+					<div id=mineInfo class=info>Copper: 10, Soft Planks: 10</div>
+					<input id=buyRefinery type=button class=button value="Build" onclick=buyBuilding(1);>
+					<div id=refineryInfo class=info>refinery cost</div>
+					<input id=buyYard type=button class=button value="Build" onclick=buyBuilding(2);>
+					<div id=yardInfo class=info>yard cost</div>
+					<input id=buySaw type=button class=button value="Build" onclick=buyBuilding(3);>
+					<div id=sawInfo class=info>saw cost</div>
+				</div>
+				<div id=buyTownWrapper>
+					<input id=buyTavern type=button class=button value="Build" onclick=buyBuilding(4);>
+					<div id=tavernInfo class=info>tavern cost</div>
+					<input id=buyHostel type=button class=button value="Build" onclick=buyBuilding(5);>
+					<div id=hostelInfo class=info>hostel cost</div>
+					<input id=buyBrothel type=button class=button value="Build" onclick=buyBuilding(6);>
+					<div id=brothelInfo class=info>brothel cost</div>
+					<input id=buyMarket type=button class=button value="Build" onclick=buyBuilding(7);>
+					<div id=marketInfo class=info>market cost</div>
+				</div>
+			</div>
+			<div id=buildingWrapper>
+				<div id=buildingCraftingWrapper class=resource>
+					<div id=craftNameWrapper>
+						<div id=mineName>Mine:</div>
+						<div id=refineryName>Refinery:</div>
+						<div id=yardName>Lumber Yard:</div>
+						<div id=sawName>Sawmill:</div>
+					</div>
+					<div id=craftBuildingCount class=resourceCount>
+						<div id=mineCount>0</div>
+						<div id=refineryCount>0</div>
+						<div id=yardCount>0</div>
+						<div id=sawCount>0</div>
+					</div>
+				</div>
+				<div id=buildingTownWrapper class=resource>
+					<div id=townNameWrapper>
+						<div id=tavernName>Tavern:</div>
+						<div id=hostelName>Hostel:</div>
+						<div id=brothelName>Brothel:</div>
+						<div id=marketName>Market:</div>
+					</div>
+					<div id=woodCount class=resourceCount>
+						<div id=tavernCount>0</div>
+						<div id=hostelCount>0</div>
+						<div id=brothelCount>0</div>
+						<div id=marketCount>0</div>
+					</div>
+				</div>
+			</div>
+			<div id=upgradeWrapper>
+				
 			</div>
 		</div>
 	</body>
