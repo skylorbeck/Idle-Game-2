@@ -1,7 +1,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-			<title>Idle game 2</title>
+			<title>Idle game</title>
 			<script src="Idle-game2.js" defer></script>
 			<link rel="stylesheet" type="text/css" href="Idle-game2.css">
 			<link href="https://fonts.googleapis.com/css?family=Abel&display=swap" rel="stylesheet">
@@ -138,7 +138,7 @@
 			<div id=buildingBuyWrapper>
 				<div id=buyCraftingWrapper>
 					<input id=buyMine type=button class=button value="Build" onclick=buyBuilding(0);>
-					<div id=mineInfo class=info>Copper: 10, Soft Planks: 10</div>
+					<div id=mineInfo class=info>mine cost</div>
 					<input id=buyRefinery type=button class=button value="Build" onclick=buyBuilding(1);>
 					<div id=refineryInfo class=info>refinery cost</div>
 					<input id=buyYard type=button class=button value="Build" onclick=buyBuilding(2);>
@@ -187,9 +187,25 @@
 					</div>
 				</div>
 			</div>
-			<div id=upgradeWrapper>
-				
+			<div id=researchWrapper>
+				<div id=thinkWrapper>
+					<input id=thinkButton type=button class="button think" value="Do a Think" onclick=doThink();>
+					<div id=thinkProgress0 class="thinkProgress0 thinkProgress locked"></div>
+					<div id=thinkProgress1 class="thinkProgress1 thinkProgress locked"></div>
+					<div id=thinkProgress2 class="thinkProgress2 thinkProgress locked"></div>
+					<div id=thinkProgress3 class="thinkProgress3 thinkProgress locked"></div>
+					<div id=thinkProgress4 class="thinkProgress4 thinkProgress locked"></div>
+					<div id=thinkProgress5 class="thinkProgress5 thinkProgress locked"></div>
+					<div id=thinkProgress6 class="thinkProgress6 thinkProgress locked"></div>
+					<div id=thinkProgress7 class="thinkProgress7 thinkProgress locked"></div>
+					<div id=thinkProgress8 class="thinkProgress8 thinkProgress locked"></div>
+					<div id=thinkProgress9 class="thinkProgress9 thinkProgress locked"></div>
+					<div id=thinkProgress10 class="thinkProgress10 thinkProgress locked"></div>
+					<div id=thinkProgress11 class="thinkProgress11 thinkProgress locked"></div>
+				</div>
 			</div>
+			<input id=resetButton class=button type=button value=reset onclick=resetAll();>
+			<input id=GoBack class=button type=button value="skylorbeck.website" onclick="window.location.href='https://www.skylorbeck.website';">
 		</div>
 	</body>
 </html>

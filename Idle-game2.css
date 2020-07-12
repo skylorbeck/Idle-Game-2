@@ -38,7 +38,7 @@ body{
 	position: relative;
     top: 31px;
 }
-.process1,.process2{
+.process1,.process2,.think{
 	width:100px;
 	position: relative;
     background: transparent;
@@ -136,6 +136,51 @@ body{
     padding-left: 5px;
     padding-right: 5px;
 }
+.thinkProgress{
+	width: 23px;
+    height: 15px;
+    background: yellow;
+	pointer-events: none;
+	position: absolute;
+	border-radius: 5px;
+	top: 361px;
+}
+.thinkProgress0{
+	left:69px;
+}
+.thinkProgress1{
+	left:93px;
+}
+.thinkProgress2{
+	left:117px;
+}
+.thinkProgress3{
+	left:141px;
+}
+.thinkProgress4{
+	left:165px;
+}
+.thinkProgress5{
+	left:189px;
+}
+.thinkProgress6{
+	left:213px;
+}
+.thinkProgress7{
+	left:237px;
+}
+.thinkProgress8{
+	left:261px;
+}
+.thinkProgress9{
+	left:285px;
+}
+.thinkProgress10{
+	left:309px;
+}
+.thinkProgress11{
+	left:333px;
+}
 #game{
 	width:800px;
 	height:800px;
@@ -196,71 +241,87 @@ body{
 	position: absolute;
 }
 #buyCraftingWrapper{
-	left: 540px;
+	/* left: 540px; */
     top: 3px;
 }
 #buyTownWrapper{
-    left: 540px;
+    /* left: 540px; */
     top: 117px;
 }
 #buildingBuyWrapper{
 	position:relative;
+	left:442px;
 }
 #buyMine:hover +#mineInfo{
 	display:block;
 }
 #mineInfo{
-    left: 50px;
+    right: 50px;
     top: 10px;
 }
 #buyRefinery:hover +#refineryInfo{
 	display:block;
 }
 #refineryInfo{
-	left:50px;
+	right:50px;
 	top:30px;
 }
 #buyYard:hover +#yardInfo{
 	display:block;
 }
 #yardInfo{
-	left:50px;
+	right:50px;
 	top:50px;
 }
 #buySaw:hover +#sawInfo{
 	display:block;
 }
 #sawInfo{
-	left:50px;
+	right:50px;
 	top:70px;
 }
 #buyTavern:hover +#tavernInfo{
 	display:block;
 }
 #tavernInfo{
-	left:50px;
+	right:50px;
 	 top: 10px;
 }
 #buyHostel:hover +#hostelInfo{
 	display:block;
 }
 #hostelInfo{
-	left:50px;
+	right:50px;
 	top:30px;
 }
 #buyBrothel:hover +#brothelInfo{
 	display:block;
 }
 #brothelInfo{
-	left:50px;
+	right:50px;
 	top:50px;
 }
 #buyMarket:hover +#marketInfo{
 	display:block;
 }
 #marketInfo{
-	left:50px;
+	right:50px;
 	top:70px;
+}
+#resetButton{
+	position: fixed;
+	top: 785px;
+    left: 10px;
+}
+#GoBack{
+    position: fixed;
+    top: 785px;
+    left: 60px;
+}
+#thinkButton{
+	top: 350px;
+    right: 250px;
+    width: 293px;
 }
 .locked{
 	display:none;

@@ -1,7 +1,5 @@
 window.onload = function(){
-	updateResources();
-	updateBuildings();
-	updateSmeltPlaneOnStart();
+	updateAll();
 }
 // Stop enter button spam
 function stopRKey(evt) {
@@ -11,19 +9,24 @@ function stopRKey(evt) {
 }
 document.onkeypress = stopRKey;
 // var
-
-
+var tickVar=1000;
+	
 // Save
 var save={
 	ore:[0,0,0,0],//copper, iron, silver, gold
 	wood:[0,0,0,0],//soft, hard, ebony, pearl
 	bar:[0,0,0,0],//copper, iron, silver, gold
 	plank:[0,0,0,0],//soft, hard. ebony, pearl
-	buildings:[0,0,0,0,0,0,0,0,0],//mine, smeltery, lumber yard, sawmill, tavern, hostel, brothel, market, bank
-	upgrades:[],
+	buildings:[0,0,0,0,0,0,0,0,0,0],//mine, smeltery, lumber yard, sawmill, tavern, hostel, brothel, market, bank, lab
 	smeltProgress:[0,0,0,0],//c,i,s,g
 	planeProgress:[0,0,0,0],//s,h,e,p
+	oreUnlocked:[false,false,false],//iron,silver,gold
+	woodUnlocked:[false,false,false],//hard,ebony,pearl
+	buildingsUnlocked:[false,false,false,false,false,false,false,false,false,false],//mine, smeltery, lumber yard, sawmill, tavern, hostel, brothel, market, bank, lab
+	thinkProgress:0,
+	thinkPoints:0,
 };
+var save3 = Object.assign({}, save); //JSON.parse(JSON.stringify(save));
 var save2 = JSON.parse(localStorage.getItem('idleGame2.save'));
 if(	localStorage.getItem('idleGame2.save') !== null){//if there is a save
 		Object.assign(save,save2);//copies loaded save overtop blank save ensuring all old saves get new save conent/features
@@ -36,8 +39,16 @@ function gameSave(){
 
 // Timers
 var saveTick = window.setInterval(function(){gameSave()},1000);
-	updateTick =window.setInterval(function(){updateResources()},1000);
-
+	// updateTick =window.setInterval(function(){updateResources()},1000);
+	
+function buildingTick(){
+	window.setTimeout(function(){buildingCheck();updateTickVar()},tickVar);
+}
+function updateTickVar(){
+	tickVar=1000*Math.exp(save.buildings[4]/10*-1);
+	// console.log(tickVar);
+	buildingTick();
+}
 
 // visual updates
 function updateResources(){
@@ -67,7 +78,16 @@ function updateBuildings(){
 	document.getElementById("hostelCount").innerHTML=save.buildings[5].toLocaleString();
 	document.getElementById("brothelCount").innerHTML=save.buildings[6].toLocaleString();
 	document.getElementById("marketCount").innerHTML=save.buildings[7].toLocaleString();
-
+}
+function updateBuildingCost(){
+	document.getElementById("mineInfo").innerHTML="Copper Bars: " + parseInt(10+save.buildings[0]*2,10) +" Soft Planks: " + parseInt(10+save.buildings[0]*2,10);
+	document.getElementById("refineryInfo").innerHTML="Copper Bars: " + parseInt(10+save.buildings[1]*2,10) +" Soft Planks: " + parseInt(10+save.buildings[1]*2,10);
+	document.getElementById("yardInfo").innerHTML="Copper Bars: " + parseInt(10+save.buildings[2]*2,10) +" Soft Planks: " + parseInt(10+save.buildings[2]*2,10);
+	document.getElementById("sawInfo").innerHTML="Copper Bars: " + parseInt(10+save.buildings[3]*2,10) +" Soft Planks: " + parseInt(10+save.buildings[3]*2,10);
+	document.getElementById("tavernInfo").innerHTML="Copper Bars: " + parseInt(10+save.buildings[4]*2,10) +" Soft Planks: " + parseInt(10+save.buildings[4]*2,10);
+	document.getElementById("hostelInfo").innerHTML="Copper Bars: " + parseInt(10+save.buildings[5]*2,10) +" Soft Planks: " + parseInt(10+save.buildings[5]*2,10);
+	document.getElementById("brothelInfo").innerHTML="Copper Bars: " + parseInt(10+save.buildings[6]*2,10) +" Soft Planks: " + parseInt(10+save.buildings[6]*2,10);
+	document.getElementById("marketInfo").innerHTML="Copper Bars: " + parseInt(10+save.buildings[7]*2,10) +" Soft Planks: " + parseInt(10+save.buildings[7]*2,10);
 }
 function updateSmeltProgress(id){
 	switch(true){
@@ -98,6 +118,16 @@ function updateSmeltProgress(id){
 					lockItem("smeltProgress03");
 					save.smeltProgress[id]=0;
 				break;
+				case save.smeltProgress[0]==0:
+					unlockItem("smeltProgress00");
+					unlockItem("smeltProgress01");
+					unlockItem("smeltProgress02");
+					unlockItem("smeltProgress03");
+					lockItem("smeltProgress00");
+					lockItem("smeltProgress01");
+					lockItem("smeltProgress02");
+					lockItem("smeltProgress03");
+				break;
 			}
 		break;
 		case id==1:
@@ -126,6 +156,16 @@ function updateSmeltProgress(id){
 					lockItem("smeltProgress12");
 					lockItem("smeltProgress13");
 					save.smeltProgress[id]=0;
+				break;
+				case save.smeltProgress[1]==0:
+					unlockItem("smeltProgress10");
+					unlockItem("smeltProgress11");
+					unlockItem("smeltProgress12");
+					unlockItem("smeltProgress13");
+					lockItem("smeltProgress10");
+					lockItem("smeltProgress11");
+					lockItem("smeltProgress12");
+					lockItem("smeltProgress13");
 				break;
 			}
 		break;
@@ -156,6 +196,16 @@ function updateSmeltProgress(id){
 					lockItem("smeltProgress23");
 					save.smeltProgress[id]=0;
 				break;
+				case save.smeltProgress[2]==0:
+					unlockItem("smeltProgress20");
+					unlockItem("smeltProgress21");
+					unlockItem("smeltProgress22");
+					unlockItem("smeltProgress23");
+					lockItem("smeltProgress20");
+					lockItem("smeltProgress21");
+					lockItem("smeltProgress22");
+					lockItem("smeltProgress23");
+				break;
 			}
 		break;
 		case id==3:
@@ -184,6 +234,16 @@ function updateSmeltProgress(id){
 					lockItem("smeltProgress32");
 					lockItem("smeltProgress33");
 					save.smeltProgress[id]=0;
+				break;
+				case save.smeltProgress[3]==0:
+					unlockItem("smeltProgress30");
+					unlockItem("smeltProgress31");
+					unlockItem("smeltProgress32");
+					unlockItem("smeltProgress33");
+					lockItem("smeltProgress30");
+					lockItem("smeltProgress31");
+					lockItem("smeltProgress32");
+					lockItem("smeltProgress33");
 				break;
 			}
 		break;
@@ -218,6 +278,16 @@ function updatePlaneProgress(id){
 					lockItem("planeProgress03");
 					save.planeProgress[id]=0;
 				break;
+				case save.planeProgress[0]==0:
+					unlockItem("planeProgress00");
+					unlockItem("planeProgress01");
+					unlockItem("planeProgress02");
+					unlockItem("planeProgress03");
+					lockItem("planeProgress00");
+					lockItem("planeProgress01");
+					lockItem("planeProgress02");
+					lockItem("planeProgress03");
+				break;
 			}
 		break;
 		case id==1:
@@ -246,6 +316,16 @@ function updatePlaneProgress(id){
 					lockItem("planeProgress12");
 					lockItem("planeProgress13");
 					save.planeProgress[id]=0;
+				break;
+				case save.planeProgress[1]==0:
+					unlockItem("planeProgress10");
+					unlockItem("planeProgress11");
+					unlockItem("planeProgress12");
+					unlockItem("planeProgress13");
+					lockItem("planeProgress10");
+					lockItem("planeProgress11");
+					lockItem("planeProgress12");
+					lockItem("planeProgress13");
 				break;
 			}
 		break;
@@ -276,6 +356,16 @@ function updatePlaneProgress(id){
 					lockItem("planeProgress23");
 					save.planeProgress[id]=0;
 				break;
+				case save.planeProgress[2]==0:
+					unlockItem("planeProgress20");
+					unlockItem("planeProgress21");
+					unlockItem("planeProgress22");
+					unlockItem("planeProgress23");
+					lockItem("planeProgress20");
+					lockItem("planeProgress21");
+					lockItem("planeProgress22");
+					lockItem("planeProgress23");
+				break;
 			}
 		break;
 		case id==3:
@@ -305,11 +395,153 @@ function updatePlaneProgress(id){
 					lockItem("planeProgress33");
 					save.planeProgress[id]=0;
 				break;
+				case save.planeProgress[3]==0:
+					unlockItem("planeProgress30");
+					unlockItem("planeProgress31");
+					unlockItem("planeProgress32");
+					unlockItem("planeProgress33");
+					lockItem("planeProgress30");
+					lockItem("planeProgress31");
+					lockItem("planeProgress32");
+					lockItem("planeProgress33");
+				break;
 			}
 		break;
 	}
 }
-function updateSmeltPlaneOnStart(){
+function updateThinkProgress(){
+	switch(true){
+		case save.thinkProgress==1:
+			unlockItem("thinkProgress0");
+		break;
+		case save.thinkProgress==2:
+			unlockItem("thinkProgress0");
+			unlockItem("thinkProgress1");
+		break;
+		case save.thinkProgress==3:
+			unlockItem("thinkProgress0");
+			unlockItem("thinkProgress1");
+			unlockItem("thinkProgress2");
+		break;
+		case save.thinkProgress==4:
+			unlockItem("thinkProgress0");
+			unlockItem("thinkProgress1");
+			unlockItem("thinkProgress2");
+			unlockItem("thinkProgress3");
+		break;
+		case save.thinkProgress==5:
+			unlockItem("thinkProgress0");
+			unlockItem("thinkProgress1");
+			unlockItem("thinkProgress2");
+			unlockItem("thinkProgress3");
+			unlockItem("thinkProgress4");
+		break;
+		case save.thinkProgress==6:
+			unlockItem("thinkProgress0");
+			unlockItem("thinkProgress1");
+			unlockItem("thinkProgress2");
+			unlockItem("thinkProgress3");
+			unlockItem("thinkProgress4");
+			unlockItem("thinkProgress5");
+		break;
+		case save.thinkProgress==7:
+			unlockItem("thinkProgress0");
+			unlockItem("thinkProgress1");
+			unlockItem("thinkProgress2");
+			unlockItem("thinkProgress3");
+			unlockItem("thinkProgress4");
+			unlockItem("thinkProgress5");
+			unlockItem("thinkProgress6");
+		break;
+		case save.thinkProgress==8:
+			unlockItem("thinkProgress0");
+			unlockItem("thinkProgress1");
+			unlockItem("thinkProgress2");
+			unlockItem("thinkProgress3");
+			unlockItem("thinkProgress4");
+			unlockItem("thinkProgress5");
+			unlockItem("thinkProgress6");
+			unlockItem("thinkProgress7");
+		break;
+		case save.thinkProgress==9:
+			unlockItem("thinkProgress0");
+			unlockItem("thinkProgress1");
+			unlockItem("thinkProgress2");
+			unlockItem("thinkProgress3");
+			unlockItem("thinkProgress4");
+			unlockItem("thinkProgress5");
+			unlockItem("thinkProgress6");
+			unlockItem("thinkProgress7");
+			unlockItem("thinkProgress8");
+		break;
+		case save.thinkProgress==10:
+			unlockItem("thinkProgress0");
+			unlockItem("thinkProgress1");
+			unlockItem("thinkProgress2");
+			unlockItem("thinkProgress3");
+			unlockItem("thinkProgress4");
+			unlockItem("thinkProgress5");
+			unlockItem("thinkProgress6");
+			unlockItem("thinkProgress7");
+			unlockItem("thinkProgress8");
+			unlockItem("thinkProgress9");
+		break;
+		case save.thinkProgress==11:
+			unlockItem("thinkProgress0");
+			unlockItem("thinkProgress1");
+			unlockItem("thinkProgress2");
+			unlockItem("thinkProgress3");
+			unlockItem("thinkProgress4");
+			unlockItem("thinkProgress5");
+			unlockItem("thinkProgress6");
+			unlockItem("thinkProgress7");
+			unlockItem("thinkProgress8");
+			unlockItem("thinkProgress9");
+			unlockItem("thinkProgress10");
+		break;
+		case save.thinkProgress==12:
+			unlockItem("thinkProgress0");
+			unlockItem("thinkProgress1");
+			unlockItem("thinkProgress2");
+			unlockItem("thinkProgress3");
+			unlockItem("thinkProgress4");
+			unlockItem("thinkProgress5");
+			unlockItem("thinkProgress6");
+			unlockItem("thinkProgress7");
+			unlockItem("thinkProgress8");
+			unlockItem("thinkProgress9");
+			unlockItem("thinkProgress10");
+			unlockItem("thinkProgress11");
+		break;
+		default:
+			unlockItem("thinkProgress0");
+			unlockItem("thinkProgress1");
+			unlockItem("thinkProgress2");
+			unlockItem("thinkProgress3");
+			unlockItem("thinkProgress4");
+			unlockItem("thinkProgress5");
+			unlockItem("thinkProgress6");
+			unlockItem("thinkProgress7");
+			unlockItem("thinkProgress8");
+			unlockItem("thinkProgress9");
+			unlockItem("thinkProgress10");
+			unlockItem("thinkProgress11");
+			lockItem("thinkProgress0");
+			lockItem("thinkProgress1");
+			lockItem("thinkProgress2");
+			lockItem("thinkProgress3");
+			lockItem("thinkProgress4");
+			lockItem("thinkProgress5");
+			lockItem("thinkProgress6");
+			lockItem("thinkProgress7");
+			lockItem("thinkProgress8");
+			lockItem("thinkProgress9");
+			lockItem("thinkProgress10");
+			lockItem("thinkProgress11");
+		break;
+	}
+}
+function updateSmeltPlanet‌ThinkOnStart(){
 	updateSmeltProgress(0);
 	updateSmeltProgress(1);
 	updateSmeltProgress(2);
@@ -318,46 +550,123 @@ function updateSmeltPlaneOnStart(){
 	updatePlaneProgress(1);
 	updatePlaneProgress(2);
 	updatePlaneProgress(3);
+	updateThinkProgress();
+}
+function updateAll(){
+	updateSmeltPlanet‌ThinkOnStart();
+	updateResources();
+	updateBuildings();
+	updateBuildingCost();
+	updateTickVar();
+}
+// Think
+function doThink(){
+	save.thinkProgress+=1;
+	if(save.thinkProgress>=13){
+		save.thinkPoints+=1;
+		save.thinkProgress=0;
+	}
+	updateThinkProgress();
 }
 // Mine
 function mine(id){
-	let result=randomInt(0,99);
+	let result=randomInt(0,9);
 	switch(true){
-		case result>=0 && result<=39:
+		case save.oreUnlocked[3]==true:
+			switch(true){
+				case result>=9:
+					save.ore[3]+=1;
+				break;
+				case result>=7:
+					save.ore[2]+=1;
+				break;
+				case result>=4:
+					save.ore[1]+=1;
+				break;
+				default:
+					save.ore[0]+=1;
+				break;
+			}
+		break;
+		case save.oreUnlocked[2]==true:
+			switch(true){
+				case result>=8:
+					save.ore[2]+=1;
+				break;
+				case result>=5:
+					save.ore[1]+=1;
+				break;
+				default:
+					save.ore[0]+=1;
+				break;
+			}
+		break;
+		case save.oreUnlocked[1]==true:
+			switch(true){
+				case result>=7:
+					save.ore[1]+=1;
+				break;
+				default:
+					save.ore[0]+=1;
+				break;
+			}
+		break;
+		default:
 			save.ore[0]+=1;
-		break;
-		case result>=40 && result<=69:
-			save.ore[1]+=1;
-		break;
-		case result>=70 && result<=89:
-			save.ore[2]+=1;
-		break;
-		case result>=90 && result<=99:
-			save.ore[3]+=1;
 		break;
 	}
 	updateResources();
 }
 // Chop
 function chop(id){
-let result=randomInt(0,99);
+	let result=randomInt(0,9);
 	switch(true){
-		case result>=0 && result<=39:
+		case save.woodUnlocked[3]==true:
+			switch(true){
+				case result>=9:
+					save.wood[3]+=1;
+				break;
+				case result>=7:
+					save.wood[2]+=1;
+				break;
+				case result>=4:
+					save.wood[1]+=1;
+				break;
+				default:
+					save.wood[0]+=1;
+				break;
+			}
+		break;
+		case save.woodUnlocked[2]==true:
+			switch(true){
+				case result>=8:
+					save.wood[2]+=1;
+				break;
+				case result>=5:
+					save.wood[1]+=1;
+				break;
+				default:
+					save.wood[0]+=1;
+				break;
+			}
+		break;
+		case save.woodUnlocked[1]==true:
+			switch(true){
+				case result>=7:
+					save.wood[1]+=1;
+				break;
+				default:
+					save.wood[0]+=1;
+				break;
+			}
+		break;
+		default:
 			save.wood[0]+=1;
-		break;
-		case result>=40 && result<=69:
-			save.wood[1]+=1;
-		break;
-		case result>=70 && result<=89:
-			save.wood[2]+=1;
-		break;
-		case result>=90 && result<=99:
-			save.wood[3]+=1;
 		break;
 	}
 	updateResources();
-}
-// Smelt
+	
+}// Smelt
 function smelt(id){
 	if(save.ore[id]>=2){
 		save.smeltProgress[id]+=1;
@@ -371,7 +680,7 @@ function smelt(id){
 }
 // Plane
 function plane(id){
-	if(save.wood[id]>=2){
+	if(save.wood[id]>=1){
 		save.planeProgress[id]+=1;
 		if(save.planeProgress[id]>=5){
 			save.plank[id]+=4;
@@ -385,72 +694,116 @@ function plane(id){
 function buyBuilding(id){
 	switch(true){
 		case id==0:
-			if(save.bar[0]>=10 && save.plank[0]>=10){
-				save.bar[0]-=10;
-				save.plank[0]-=10;
+			if(save.bar[0]>=10+save.buildings[0]*2 && save.plank[0]>=10+save.buildings[0]*2 ){
+				save.bar[0]-=10+save.buildings[0]*2 ;
+				save.plank[0]-=10+save.buildings[0]*2 ;
 				save.buildings[0]+=1;
 			}
 		break;
 		case id==1:
-			if(save.bar[0]>=10 && save.plank[0]>=10){
-				save.bar[0]-=10;
-				save.plank[0]-=10;
+			if(save.bar[0]>=10+save.buildings[1]*2  && save.plank[0]>=10+save.buildings[1]*2 ){
+				save.bar[0]-=10+save.buildings[1]*2;
+				save.plank[0]-=10+save.buildings[1]*2;
 				save.buildings[1]+=1;
 			}
 		break;
 		case id==2:
-			if(save.bar[0]>=10 && save.plank[0]>=10){
-				save.bar[0]-=10;
-				save.plank[0]-=10;
+			if(save.bar[0]>=10+save.buildings[2]*2 && save.plank[0]>=10+save.buildings[2]*2){
+				save.bar[0]-=10+save.buildings[2]*2;
+				save.plank[0]-=10+save.buildings[2]*2;
 				save.buildings[2]+=1;
 			}
 		break;
 		case id==3:
-			if(save.bar[0]>=10 && save.plank[0]>=10){
-				save.bar[0]-=10;
-				save.plank[0]-=10;
+			if(save.bar[0]>=10+save.buildings[3]*2 && save.plank[0]>=10+save.buildings[3]*2){
+				save.bar[0]-=10+save.buildings[3]*2;
+				save.plank[0]-=10+save.buildings[3]*2;
 				save.buildings[3]+=1;
 			}
 		break;
 		case id==4:
-			if(save.bar[0]>=10 && save.plank[0]>=10){
-				save.bar[0]-=10;
-				save.plank[0]-=10;
+			if(save.bar[0]>=10+save.buildings[4]*2 && save.plank[0]>=10+save.buildings[4]*2){
+				save.bar[0]-=10+save.buildings[4]*2;
+				save.plank[0]-=10+save.buildings[4]*2;
 				save.buildings[4]+=1;
 			}
 		break;
 		case id==5:
-			if(save.bar[0]>=10 && save.plank[0]>=10){
-				save.bar[0]-=10;
-				save.plank[0]-=10;
+			if(save.bar[0]>=10+save.buildings[5]*2 && save.plank[0]>=10+save.buildings[5]*2){
+				save.bar[0]-=10+save.buildings[5]*2;
+				save.plank[0]-=10+save.buildings[5]*2;
 				save.buildings[5]+=1;
 			}
 		break;
 		case id==6:
-			if(save.bar[0]>=10 && save.plank[0]>=10){
-				save.bar[0]-=10;
-				save.plank[0]-=10;
+			if(save.bar[0]>=10+save.buildings[6]*2 && save.plank[0]>=10+save.buildings[6]*2){
+				save.bar[0]-=10+save.buildings[6]*2;
+				save.plank[0]-=10+save.buildings[6]*2;
 				save.buildings[6]+=1;
 			}
 		break;
 		case id==7:
-			if(save.bar[0]>=10 && save.plank[0]>=10){
-				save.bar[0]-=10;
-				save.plank[0]-=10;
+			if(save.bar[0]>=10+save.buildings[7]*2 && save.plank[0]>=10+save.buildings[7]*2){
+				save.bar[0]-=10+save.buildings[7]*2;
+				save.plank[0]-=10+save.buildings[7]*2;
 				save.buildings[7]+=1;
 			}
 		break;
 		case id==8:
-			if(save.bar[0]>=10 && save.plank[0]>=10){
-				save.bar[0]-=10;
-				save.plank[0]-=10;
+			if(save.bar[0]>=10+save.buildings[8]*2 && save.plank[0]>=10+save.buildings[8]*2){
+				save.bar[0]-=10+save.buildings[8]*2;
+				save.plank[0]-=10+save.buildings[8]*2;
 				save.buildings[8]+=1;
 			}
 		break;
 	}
 	updateBuildings();
+	updateBuildingCost();
+	updateResources();
 }
-
+//building checks
+function buildingCheck(){
+	if(save.buildings[0]>=1){
+		for(let a = 0;a<save.buildings[0];a++){
+			mine();
+		}
+	}
+	
+	if(save.buildings[1]>=1){
+		let ore2=[];
+		save.ore.forEach(oreForEach);
+		function oreForEach(value, index, array){
+			if (value>=2){
+			ore2.push(index);
+			}
+		}
+		for(let b=0;b<save.buildings[1];b++){
+			let result=randomInt(0,ore2.length-1)
+			smelt(ore2[result]);
+			}
+		}
+		
+	if(save.buildings[2]>=1){
+		for(let c=0;c<save.buildings[2];c++){
+			chop();
+		}
+	}
+	
+	if(save.buildings[3]>=1){
+		let wood2=[];
+		save.wood.forEach(woodForEach);
+		function woodForEach(value, index, array){
+			if (value>=1){
+			wood2.push(index);
+			}
+		}
+		for(let c=0;c<save.buildings[3];c++){
+			let result=randomInt(0,wood2.length-1)
+			plane(wood2[result]);
+			}
+		}
+	// updateAll();
+}
 // lock and unlock
 function lockItem(item){
 document.getElementById(item).className = document.getElementById(item).className + " locked";
@@ -467,6 +820,12 @@ function enableItem(item){
 document.getElementById(item).disabled=false;
 }
 
+//reset save
+function resetAll(){
+	Object.assign(save,save3);
+	gameSave();
+	updateAll();
+}
 
 // code stolen from stackoverflow
 function getDigitCount(number) {
