@@ -9,203 +9,315 @@
 	<body>
 		<div id=game>
 			<div id=buttonWrapper>
-				<div id=gatherWrapper>
-					<input id=mineButton type=button class=button value=Mine onclick=mine();>
-					<input id=chopButton type=button class=button value=Chop onclick=chop();>
-				</div>
 				<div id=processWrapper>
-					<div id=smelt0Wrapper>
-						<input id=smeltButton0 type=button class="button process1" value=Smelt onclick=smelt(0);>
-						<div id=smeltProgress00 class="smeltProgress0 locked"></div>
-						<div id=smeltProgress01 class="smeltProgress1 locked"></div>
-						<div id=smeltProgress02 class="smeltProgress2 locked"></div>
-						<div id=smeltProgress03 class="smeltProgress3 locked"></div>
+					<div id=smeltMasterWrapper>
+						<div id=smelt0Wrapper>
+							<div id=smeltInfo class=" locked">2:1</div>
+							<input id=smeltButton0 type=button class="button process1 locked" value=Smelt onclick=smelt(0);>
+							<div id=smeltProgress00 class="genericProgress smeltProgress0 locked"></div>
+							<div id=smeltProgress01 class="genericProgress smeltProgress1 locked"></div>
+							<div id=smeltProgress02 class="genericProgress smeltProgress2 locked"></div>
+							<div id=smeltProgress03 class="genericProgress smeltProgress3 locked"></div>
+						</div>
+						<div id=smelt1Wrapper>
+							<input id=smeltButton1 type=button class="button process1 locked" value=Smelt onclick=smelt(1);>
+							<div id=smeltProgress10 class="genericProgress smeltProgress0 locked"></div>
+							<div id=smeltProgress11 class="genericProgress smeltProgress1 locked"></div>
+							<div id=smeltProgress12 class="genericProgress smeltProgress2 locked"></div>
+							<div id=smeltProgress13 class="genericProgress smeltProgress3 locked"></div>
+						</div>
+						<div id=smelt2Wrapper>
+							<input id=smeltButton2 type=button class="button process1 locked" value=Smelt onclick=smelt(2);>
+							<div id=smeltProgress20 class="genericProgress smeltProgress0 locked"></div>
+							<div id=smeltProgress21 class="genericProgress smeltProgress1 locked"></div>
+							<div id=smeltProgress22 class="genericProgress smeltProgress2 locked"></div>
+							<div id=smeltProgress23 class="genericProgress smeltProgress3 locked"></div>
+						</div>
+						<div id=smelt3Wrapper>
+							<input id=smeltButton3 type=button class="button process1 locked" value=Smelt onclick=smelt(3);>
+							<div id=smeltProgress30 class="genericProgress smeltProgress0 locked"></div>
+							<div id=smeltProgress31 class="genericProgress smeltProgress1 locked"></div>
+							<div id=smeltProgress32 class="genericProgress smeltProgress2 locked"></div>
+							<div id=smeltProgress33 class="genericProgress smeltProgress3 locked"></div>
+						</div>
 					</div>
-					<div id=smelt1Wrapper>
-						<input id=smeltButton1 type=button class="button process1" value=Smelt onclick=smelt(1);>
-						<div id=smeltProgress10 class="smeltProgress0 locked"></div>
-						<div id=smeltProgress11 class="smeltProgress1 locked"></div>
-						<div id=smeltProgress12 class="smeltProgress2 locked"></div>
-						<div id=smeltProgress13 class="smeltProgress3 locked"></div>
-					</div>
-					<div id=smelt2Wrapper>
-						<input id=smeltButton0 type=button class="button process1" value=Smelt onclick=smelt(2);>
-						<div id=smeltProgress20 class="smeltProgress0 locked"></div>
-						<div id=smeltProgress21 class="smeltProgress1 locked"></div>
-						<div id=smeltProgress22 class="smeltProgress2 locked"></div>
-						<div id=smeltProgress23 class="smeltProgress3 locked"></div>
-					</div>
-					<div id=smelt3Wrapper>
-						<input id=smeltButton0 type=button class="button process1" value=Smelt onclick=smelt(3);>
-						<div id=smeltProgress30 class="smeltProgress0 locked"></div>
-						<div id=smeltProgress31 class="smeltProgress1 locked"></div>
-						<div id=smeltProgress32 class="smeltProgress2 locked"></div>
-						<div id=smeltProgress33 class="smeltProgress3 locked"></div>
-					</div>
-					
-					<div id=plane0Wrapper>
-						<input id=planeButton0 type=button class="button process2" value=Plane onclick=plane(0);>
-						<div id=planeProgress00 class="planeProgress0 locked"></div>
-						<div id=planeProgress01 class="planeProgress1 locked"></div>
-						<div id=planeProgress02 class="planeProgress2 locked"></div>
-						<div id=planeProgress03 class="planeProgress3 locked"></div>
-					</div>
-					<div id=plane1Wrapper>
-						<input id=planeButton1 type=button class="button process2" value=Plane onclick=plane(1);>
-						<div id=planeProgress10 class="planeProgress0 locked"></div>
-						<div id=planeProgress11 class="planeProgress1 locked"></div>
-						<div id=planeProgress12 class="planeProgress2 locked"></div>
-						<div id=planeProgress13 class="planeProgress3 locked"></div>
-					</div>
-					<div id=plane2Wrapper>
-						<input id=planeButton2 type=button class="button process2" value=Plane onclick=plane(2);>
-						<div id=planeProgress20 class="planeProgress0 locked"></div>
-						<div id=planeProgress21 class="planeProgress1 locked"></div>
-						<div id=planeProgress22 class="planeProgress2 locked"></div>
-						<div id=planeProgress23 class="planeProgress3 locked"></div>
-					</div>
-					<div id=plane3Wrapper>
-						<input id=planeButton3 type=button class="button process2" value=Plane onclick=plane(3);>
-						<div id=planeProgress30 class="planeProgress0 locked"></div>
-						<div id=planeProgress31 class="planeProgress1 locked"></div>
-						<div id=planeProgress32 class="planeProgress2 locked"></div>
-						<div id=planeProgress33 class="planeProgress3 locked"></div>
+					<div id=planeMasterWrapper>
+						<div id=planeInfo class=" locked">1:2</div>
+						<div id=plane0Wrapper>
+							<input id=planeButton0 type=button class="button process2 locked" value=Plane onclick=plane(0);>
+							<div id=planeProgress00 class="genericProgress planeProgress planeProgress0 locked"></div>
+							<div id=planeProgress01 class="genericProgress planeProgress planeProgress1 locked"></div>
+							<div id=planeProgress02 class="genericProgress planeProgress planeProgress2 locked"></div>
+							<div id=planeProgress03 class="genericProgress planeProgress planeProgress3 locked"></div>
+						</div>
+						<div id=plane1Wrapper>
+							<input id=planeButton1 type=button class="button process2 locked" value=Plane onclick=plane(1);>
+							<div id=planeProgress10 class="genericProgress planeProgress planeProgress0 locked"></div>
+							<div id=planeProgress11 class="genericProgress planeProgress planeProgress1 locked"></div>
+							<div id=planeProgress12 class="genericProgress planeProgress planeProgress2 locked"></div>
+							<div id=planeProgress13 class="genericProgress planeProgress planeProgress3 locked"></div>
+						</div>
+						<div id=plane2Wrapper>
+							<input id=planeButton2 type=button class="button process2 locked" value=Plane onclick=plane(2);>
+							<div id=planeProgress20 class="genericProgress planeProgress planeProgress0 locked"></div>
+							<div id=planeProgress21 class="genericProgress planeProgress planeProgress1 locked"></div>
+							<div id=planeProgress22 class="genericProgress planeProgress planeProgress2 locked"></div>
+							<div id=planeProgress23 class="genericProgress planeProgress planeProgress3 locked"></div>
+						</div>
+						<div id=plane3Wrapper>
+							<input id=planeButton3 type=button class="button process2 locked" value=Plane onclick=plane(3);>
+							<div id=planeProgress30 class="genericProgress planeProgress planeProgress0 locked"></div>
+							<div id=planeProgress31 class="genericProgress planeProgress planeProgress1 locked"></div>
+							<div id=planeProgress32 class="genericProgress planeProgress planeProgress2 locked"></div>
+							<div id=planeProgress33 class="genericProgress planeProgress planeProgress3 locked"></div>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div id=resourceWrapper>
 				<div id=rawWrapper>
-					 <div id=oreWrapper class=resource>
+					 <div id=oreWrapper class="resource locked">
 						<div id=oreName>
-							<div id=copperOreName>Copper ore:</div>
-							<div id=ironOreName>Iron ore:</div>
-							<div id=silverOreName>Silver ore:</div>
-							<div id=goldOreName>Gold ore:</div>
+							<div id=copperOreName class=" locked">Copper ore:</div>
+							<div id=ironOreName class=" locked">Iron ore:</div>
+							<div id=silverOreName class=" locked">Silver ore:</div>
+							<div id=goldOreName class=" locked">Gold ore:</div>
 						</div>
 						<div id=oreCount class=resourceCount>
-							<div id=copperOre>0</div>
-							<div id=ironOre>0</div>
-							<div id=silverOre>0</div>
-							<div id=goldOre>0</div>
+							<div id=copperOre class=" locked">0</div>
+							<div id=ironOre class=" locked">0</div>
+							<div id=silverOre class=" locked">0</div>
+							<div id=goldOre class=" locked">0</div>
 						</div>
 					</div>
-					<div id=woodWrapper class=resource>
+					<div id=mineWrapper>
+						<input id=mineButton type=button class="button gather1" value=Mine onclick=mine();>
+						<div id=mineProgress0 class="genericProgress mineProgress0 locked"></div>
+						<div id=mineProgress1 class="genericProgress mineProgress1 locked"></div>
+						<div id=mineProgress2 class="genericProgress mineProgress2 locked"></div>
+						<div id=mineProgress3 class="genericProgress mineProgress3 locked"></div>
+						<div id=mineSpeed class="speed locked">0 per sec</div>
+					</div>
+					<div id=woodWrapper class="resource locked">
 						<div id=woodName>
-							<div id=softWoodName>Softwood log:</div>
-							<div id=hardWoodName>Hardwood log:</div>
-							<div id=ebonyWoodName>Ebony log:</div>
-							<div id=pearlWoodName>Pearl log:</div>
+							<div id=softWoodName class=" locked">Softwood log:</div>
+							<div id=hardWoodName class=" locked">Hardwood log:</div>
+							<div id=ebonyWoodName class=" locked">Ebony log:</div>
+							<div id=pearlWoodName class=" locked">Pearl log:</div>
 						</div>
 						<div id=woodCount class=resourceCount>
-							<div id=softWood>0</div>
-							<div id=hardWood>0</div>
-							<div id=ebonyWood>0</div>
-							<div id=pearlWood>0</div>
+							<div id=softWood class=" locked">0</div>
+							<div id=hardWood class=" locked">0</div>
+							<div id=ebonyWood class=" locked">0</div>
+							<div id=pearlWood class=" locked">0</div>
 						</div>
+					</div>
+					<div id=chopWrapper>
+						<input id=chopButton type=button class="button gather2 locked" value=Chop onclick=chop();>
+						<div id=chopProgress0 class="genericProgress chopProgress0 locked"></div>
+						<div id=chopProgress1 class="genericProgress chopProgress1 locked"></div>
+						<div id=chopProgress2 class="genericProgress chopProgress2 locked"></div>
+						<div id=chopProgress3 class="genericProgress chopProgress3 locked"></div>
+						<div id=chopSpeed class="speed locked">0 per sec</div>
 					</div>
 				</div>
 				<div id=processedWrapper>
-					<div id=barWrapper class=resource>
+					<div id=barWrapper class="resource locked">
 						<div id=barName>
-							<div id=copperBarName>Copper bar:</div>
-							<div id=ironBarName>Iron bar:</div>
-							<div id=silverBarName>Silver bar:</div>
-							<div id=goldBarName>Gold bar:</div>
+							<div id=copperBarName class=" locked">Copper bar:</div>
+							<div id=ironBarName class=" locked">Iron bar:</div>
+							<div id=silverBarName class=" locked">Silver bar:</div>
+							<div id=goldBarName class=" locked">Gold bar:</div>
 						</div>
 						<div id=barCount class=resourceCount>
-							<div id=copperBar>0</div>
-							<div id=ironBar>0</div>
-							<div id=silverBar>0</div>
-							<div id=goldBar>0</div>
+							<div id=copperBar class=" locked">0</div>
+							<div id=ironBar class=" locked">0</div>
+							<div id=silverBar class=" locked">0</div>
+							<div id=goldBar class=" locked">0</div>
 						</div>
 					</div>
-					<div id=plankWrapper class=resource>
+					<div id=plankWrapper class="resource locked">
 						<div id=plankName>
-							<div id=softPlankName>Softwood plank:</div>
-							<div id=hardPlankName>Hardwood plank:</div>
-							<div id=ebonyPlankName>Ebony plank:</div>
-							<div id=pearlPlankName>Pearl plank:</div>
+							<div id=softPlankName class=" locked">Softwood plank:</div>
+							<div id=hardPlankName class=" locked">Hardwood plank:</div>
+							<div id=ebonyPlankName class=" locked">Ebony plank:</div>
+							<div id=pearlPlankName class=" locked">Pearl plank:</div>
 						</div>
 						<div id=plankCount class=resourceCount>
-							<div id=softPlank>0</div>
-							<div id=hardPlank>0</div>
-							<div id=ebonyPlank>0</div>
-							<div id=pearlPlank>0</div>
+							<div id=softPlank class=" locked">0</div>
+							<div id=hardPlank class=" locked">0</div>
+							<div id=ebonyPlank class=" locked">0</div>
+							<div id=pearlPlank class=" locked">0</div>
 						</div>
 					</div>
-				</div>
-			</div>
-			<div id=buildingBuyWrapper>
-				<div id=buyCraftingWrapper>
-					<input id=buyMine type=button class=button value="Build" onclick=buyBuilding(0);>
-					<div id=mineInfo class=info>mine cost</div>
-					<input id=buyRefinery type=button class=button value="Build" onclick=buyBuilding(1);>
-					<div id=refineryInfo class=info>refinery cost</div>
-					<input id=buyYard type=button class=button value="Build" onclick=buyBuilding(2);>
-					<div id=yardInfo class=info>yard cost</div>
-					<input id=buySaw type=button class=button value="Build" onclick=buyBuilding(3);>
-					<div id=sawInfo class=info>saw cost</div>
-				</div>
-				<div id=buyTownWrapper>
-					<input id=buyTavern type=button class=button value="Build" onclick=buyBuilding(4);>
-					<div id=tavernInfo class=info>tavern cost</div>
-					<input id=buyHostel type=button class=button value="Build" onclick=buyBuilding(5);>
-					<div id=hostelInfo class=info>hostel cost</div>
-					<input id=buyBrothel type=button class=button value="Build" onclick=buyBuilding(6);>
-					<div id=brothelInfo class=info>brothel cost</div>
-					<input id=buyMarket type=button class=button value="Build" onclick=buyBuilding(7);>
-					<div id=marketInfo class=info>market cost</div>
 				</div>
 			</div>
 			<div id=buildingWrapper>
-				<div id=buildingCraftingWrapper class=resource>
+				<div id=buildingCraftingWrapper class="resource locked">
 					<div id=craftNameWrapper>
-						<div id=mineName>Mine:</div>
-						<div id=refineryName>Refinery:</div>
-						<div id=yardName>Lumber Yard:</div>
-						<div id=sawName>Sawmill:</div>
+						<div id=mineName class=" locked">Mine:</div>
+						<div id=refineryName class=" locked">Refinery:</div>
+						<div id=yardName class=" locked">Lumber Yard:</div>
+						<div id=sawName class=" locked">Sawmill:</div>
 					</div>
 					<div id=craftBuildingCount class=resourceCount>
-						<div id=mineCount>0</div>
-						<div id=refineryCount>0</div>
-						<div id=yardCount>0</div>
-						<div id=sawCount>0</div>
+						<div id=mineCount class=" locked">0</div>
+						<div id=refineryCount class=" locked">0</div>
+						<div id=yardCount class=" locked">0</div>
+						<div id=sawCount class=" locked">0</div>
+					</div>
+					<div id=buyCraftingWrapper>
+						<div id=mineInfoWrapper class=infoWrapper>
+							<input id=buyMine type=button class="button locked" value="Build" onclick=buyBuilding(0);>
+							<div id=mineInfo class=info>mine cost</div>
+						</div>
+						<div id=refineryInfoWrapper class=infoWrapper>
+							<input id=buyRefinery type=button class="button locked" value="Build" onclick=buyBuilding(1);>
+							<div id=refineryInfo class=info>refinery cost</div>
+						</div>
+						<div id=yardInfoWrapper class=infoWrapper>
+							<input id=buyYard type=button class="button locked" value="Build" onclick=buyBuilding(2);>
+							<div id=yardInfo class=info>yard cost</div>
+						</div>
+						<div id=sawInfoWrapper class=infoWrapper>
+							<input id=buySaw type=button class="button locked" value="Build" onclick=buyBuilding(3);>
+							<div id=sawInfo class=info>saw cost</div>
+						</div>
 					</div>
 				</div>
-				<div id=buildingTownWrapper class=resource>
+				<div id=buildingTownWrapper class="resource locked">
 					<div id=townNameWrapper>
-						<div id=tavernName>Tavern:</div>
-						<div id=hostelName>Hostel:</div>
-						<div id=brothelName>Brothel:</div>
-						<div id=marketName>Market:</div>
+						<div id=tavernName class=" locked">Tavern:</div>
+						<div id=hostelName class=" locked">Hostel:</div>
+						<div id=brothelName class=" locked">Brothel:</div>
+						<div id=marketName class=" locked">Market:</div>
+						<div id=bankName class=" locked">Bank:</div>
+						<div id=labName class=" locked">Laboratory:</div>
 					</div>
-					<div id=woodCount class=resourceCount>
-						<div id=tavernCount>0</div>
-						<div id=hostelCount>0</div>
-						<div id=brothelCount>0</div>
-						<div id=marketCount>0</div>
+					<div id=townCraftWrapper class=resourceCount>
+						<div id=tavernCount class=" locked">0</div>
+						<div id=hostelCount class=" locked">0</div>
+						<div id=brothelCount class=" locked">0</div>
+						<div id=marketCount class=" locked">0</div>
+						<div id=bankCount class=" locked">0</div>
+						<div id=labCount class=" locked">0</div>
+					</div>
+					<div id=buyTownWrapper>
+						<div id=tavernInfoWrapper class=infoWrapper>
+							<input id=buyTavern type=button class="button locked" value="Build" onclick=buyBuilding(4);>
+							<div id=tavernInfo class=info>tavern cost</div>
+						</div>
+						<div id=hostelInfoWrapper class=infoWrapper>
+							<input id=buyHostel type=button class="button locked" value="Build" onclick=buyBuilding(5);>
+							<div id=hostelInfo class=info>hostel cost</div>
+						</div>
+						<div id=brothelInfoWrapper class=infoWrapper>
+							<input id=buyBrothel type=button class="button locked" value="Build" onclick=buyBuilding(6);>
+							<div id=brothelInfo class=info>brothel cost</div>
+						</div>
+						<div id=marketInfoWrapper class=infoWrapper>
+							<input id=buyMarket type=button class="button locked" value="Build" onclick=buyBuilding(7);>
+							<div id=marketInfo class=info>market cost</div>
+						</div>
+						<div id=bankInfoWrapper class=infoWrapper>
+							<input id=buyBank type=button class="button locked" value="Build" onclick=buyBuilding(8);>
+							<div id=bankInfo class=info>bank cost</div>
+						</div>
+						<div id=labInfoWrapper class=infoWrapper>
+							<input id=buyLab type=button class="button locked" value="Build" onclick=buyBuilding(9);>
+							<div id=labInfo class=info>lab cost</div>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div id=researchWrapper>
 				<div id=thinkWrapper>
-					<input id=thinkButton type=button class="button think" value="Do a Think" onclick=doThink();>
-					<div id=thinkProgress0 class="thinkProgress0 thinkProgress locked"></div>
-					<div id=thinkProgress1 class="thinkProgress1 thinkProgress locked"></div>
-					<div id=thinkProgress2 class="thinkProgress2 thinkProgress locked"></div>
-					<div id=thinkProgress3 class="thinkProgress3 thinkProgress locked"></div>
-					<div id=thinkProgress4 class="thinkProgress4 thinkProgress locked"></div>
-					<div id=thinkProgress5 class="thinkProgress5 thinkProgress locked"></div>
-					<div id=thinkProgress6 class="thinkProgress6 thinkProgress locked"></div>
-					<div id=thinkProgress7 class="thinkProgress7 thinkProgress locked"></div>
-					<div id=thinkProgress8 class="thinkProgress8 thinkProgress locked"></div>
-					<div id=thinkProgress9 class="thinkProgress9 thinkProgress locked"></div>
-					<div id=thinkProgress10 class="thinkProgress10 thinkProgress locked"></div>
-					<div id=thinkProgress11 class="thinkProgress11 thinkProgress locked"></div>
+					<input id=thinkButton type=button class="button think locked" value="Do a Think" onclick=doThink();>
+					<div id=thinkProgress0 class="genericProgress thinkProgress0 locked"></div>
+					<div id=thinkProgress1 class="genericProgress thinkProgress1 locked"></div>
+					<div id=thinkProgress2 class="genericProgress thinkProgress2 locked"></div>
+					<div id=thinkProgress3 class="genericProgress thinkProgress3 locked"></div>
+					<div id=thinkProgress4 class="genericProgress thinkProgress4 locked"></div>
+					<div id=thinkProgress5 class="genericProgress thinkProgress5 locked"></div>
+					<div id=thinkProgress6 class="genericProgress thinkProgress6 locked"></div>
+					<div id=thinkProgress7 class="genericProgress thinkProgress7 locked"></div>
+					<div id=thinkProgress8 class="genericProgress thinkProgress8 locked"></div>
+					<div id=thinkProgress9 class="genericProgress thinkProgress9 locked"></div>
+					<div id=thinkProgress10 class="genericProgress thinkProgress10 locked"></div>
+					<div id=thinkProgress11 class="genericProgress thinkProgress11 locked"></div>
+					<div id=thinkSpeed class="speed locked">0 per sec</div>
+					<div id=thinkShopPoints class=" locked">Think Points: 0</div>
+				</div>
+				<div id=thinkShopWrapper class="resource locked">
+					<div id=unlockWrapper0 class=unlockWrapper>
+						<input id=unlockButton0 class="button unlockable locked" type=button value="unlock mine" onclick=unlockUpgrade(0);>
+						<div id=unlockInfo0 class="info info3">1 TP</div>
+					</div>
+					<div id=unlockWrapper1 class=unlockWrapper>
+						<input id=unlockButton1 class="button unlockable locked" type=button value="unlock refinery" onclick=unlockUpgrade(1);>
+						<div id=unlockInfo1 class="info info3">2 TP</div>
+					</div>
+					<div id=unlockWrapper2 class=unlockWrapper>
+						<input id=unlockButton2 class="button unlockable locked" type=button value="unlock yard" onclick=unlockUpgrade(2);>
+						<div id=unlockInfo2 class="info info3">2 TP</div>
+					</div>
+					<div id=unlockWrapper3 class=unlockWrapper>
+						<input id=unlockButton3 class="button unlockable locked" type=button value="unlock sawmill" onclick=unlockUpgrade(3);>
+						<div id=unlockInfo3 class="info info3">2 TP</div>
+					</div>
+					<div id=unlockWrapper4 class=unlockWrapper>
+						<input id=unlockButton4 class="button unlockable locked" type=button value="unlock tavern" onclick=unlockUpgrade(4);>
+						<div id=unlockInfo4 class="info info3">20 TP</div>
+					</div>
+					<div id=unlockWrapper5 class=unlockWrapper>
+						<input id=unlockButton5 class="button unlockable locked" type=button value="unlock hostel" onclick=unlockUpgrade(5);>
+						<div id=unlockInfo5 class="info info3">30 TP</div>
+					</div>
+					<div id=unlockWrapper6 class=unlockWrapper>
+						<input id=unlockButton6 class="button unlockable locked" type=button value="unlock brothel" onclick=unlockUpgrade(6);>
+						<div id=unlockInfo6 class="info info3">40 TP</div>
+					</div>
+					<div id=unlockWrapper7 class=unlockWrapper>
+						<input id=unlockButton7 class="button unlockable locked" type=button value="unlock market" onclick=unlockUpgrade(7);>
+						<div id=unlockInfo7 class="info info3">50 TP</div>
+					</div>
+					<div id=unlockWrapper8 class=unlockWrapper>
+						<input id=unlockButton8 class="button unlockable locked" type=button value="unlock bank" onclick=unlockUpgrade(8);>
+						<div id=unlockInfo8 class="info info3">100 TP</div>
+					</div>
+					<div id=unlockWrapper9 class=unlockWrapper>
+						<input id=unlockButton9 class="button unlockable locked" type=button value="unlock laboratory" onclick=unlockUpgrade(9);>
+						<div id=unlockInfo9 class="info info3">3 TP</div>
+					</div>
+					<div id=unlockWrapper10 class=unlockWrapper>
+						<input id=unlockButton10 class="button unlockable locked" type=button value="unlock iron" onclick=unlockUpgrade(10);>
+						<div id=unlockInfo10 class="info info3"> TP</div>
+					</div>
+					<div id=unlockWrapper11 class=unlockWrapper>
+						<input id=unlockButton11 class="button unlockable locked" type=button value="unlock silver" onclick=unlockUpgrade(11);>
+						<div id=unlockInfo11 class="info info3"> TP</div>
+					</div>
+					<div id=unlockWrapper12 class=unlockWrapper>
+						<input id=unlockButton12 class="button unlockable locked" type=button value="unlock gold" onclick=unlockUpgrade(12);>
+						<div id=unlockInfo12 class="info info3"> TP</div>
+					</div>
+					<div id=unlockWrapper13 class=unlockWrapper>
+						<input id=unlockButton13 class="button unlockable locked" type=button value="unlock hardwood" onclick=unlockUpgrade(13);>
+						<div id=unlockInfo13 class="info info3"> TP</div>
+					</div>
+					<div id=unlockWrapper14 class=unlockWrapper>
+						<input id=unlockButton14 class="button unlockable locked" type=button value="unlock ebonywood" onclick=unlockUpgrade(14);>
+						<div id=unlockInfo14 class="info info3"> TP</div>
+					</div>
+					<div id=unlockWrapper15 class=unlockWrapper>
+						<input id=unlockButton15 class="button unlockable locked" type=button value="unlock pearlwood" onclick=unlockUpgrade(15);>
+						<div id=unlockInfo15 class="info info3"> TP</div>
+					</div>
 				</div>
 			</div>
-			<input id=resetButton class=button type=button value=reset onclick=resetAll();>
-			<input id=GoBack class=button type=button value="skylorbeck.website" onclick="window.location.href='https://www.skylorbeck.website';">
+			<input id=colorButton class="button bottomBar" type=button value="Cycle Colors" onclick=changeColor();>
+			<input id=resetButton class="button bottomBar" type=button value=reset onclick=resetAll();>
+			<input id=GoBack class="button bottomBar" type=button value="skylorbeck.website" onclick="window.location.href='https://www.skylorbeck.website';">
 		</div>
 	</body>
 </html>

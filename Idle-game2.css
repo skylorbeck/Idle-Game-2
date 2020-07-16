@@ -1,127 +1,156 @@
 body{
-	background:grey;
+	background:#2d2d2d;
 	font-family:Abel, sans-serif;
 	color:white;
+	--progress-color:#FFEB3B;
+	width: 624px;
+    height: 362px;
+	/* background:black; */
+	margin: 0px;
+	
 }
 .resource{
 	border: white double 2px;
     width: 150px;
-    /* float: left; */
-    height: 86px;
+    height: auto;
 	border-radius:5px;
 }
 .resourceCount{
-    position:relative;
-    text-align:right;
-    float:right;
-    bottom:83px;
-    right:2px;
+    position: absolute;
+    text-align: right;
+    bottom: inherit;
+    right: 2px;
+    float: right;
+    top: 1px;
+
 }
 .button{
 	background:black;
 	color:white;
 	border-radius:5px;
 	border-style:double;
-	z-index:100;
+	z-index:1;
 	outline:none;
+	width: fit-content;
+    margin-top: 1px;
+    height: 21px;
+	position: inherit;
 }
 .button:hover{
-	border-color:yellow;
+	border-color:var(--progress-color);
 }
 .button:active{
-	border-color:yellow;
+	border-color:var(--progress-color);
 }
 .button:focus{
 	
 }
-.process2{
-	position: relative;
-    top: 31px;
+.speed{
+	position: absolute;
+    font-size: 10px;
+    color: var(--progress-color);
+    left: 105px;
+    width: 100px;
+    top: 5px;
 }
-.process1,.process2,.think{
-	width:100px;
-	position: relative;
+.process1,.process2,.think,.gather1,.gather2{
+	width:101px;
     background: transparent;
-    color: grey;
+    color:darkgray;
 }
-.smeltProgress0{
+.genericProgress{
+	top: 4px;
 	width: 23px;
     height: 15px;
-    background: yellow;
+    background:var(--progress-color);
 	pointer-events: none;
 	position: absolute;
-    top: 3px;
+    bottom: 3px;
     border-radius: 5px;
+	z-index:0;
+}
+.smeltProgress0{
 	left:3px;
 }
 .smeltProgress1{
-	width: 23px;
-    height: 15px;
-    background: yellow;
-	pointer-events: none;
-	position: absolute;
-    top: 3px;
-    border-radius: 5px;
 	left:27px;
 }
 .smeltProgress2{
-	width: 23px;
-    height: 15px;
-    background: yellow;
-	pointer-events: none;
-	position: absolute;
-    top: 3px;
-    border-radius: 5px;
 	left:51px;
 }
 .smeltProgress3{
-	width: 23px;
-    height: 15px;
-    background: yellow;
-	pointer-events: none;
-	position: absolute;
-    top: 3px;
-    border-radius: 5px;
 	left:75px;
 }
 .planeProgress0{
-	width: 23px;
-    height: 15px;
-    background: yellow;
-	pointer-events: none;
-	position: absolute;
-    top:118px;
-    border-radius: 5px;
 	left:3px;
 }
 .planeProgress1{
-	width: 23px;
-    height: 15px;
-    background: yellow;
-	pointer-events: none;
-	position: absolute;
-    top:118px;
-    border-radius: 5px;
 	left:27px;
 }
 .planeProgress2{
-	width: 23px;
-    height: 15px;
-    background: yellow;
-	pointer-events: none;
-	position: absolute;
-    top:118px;
-    border-radius: 5px;
 	left:51px;
 }
 .planeProgress3{
-	width: 23px;
-    height: 15px;
-    background: yellow;
-	pointer-events: none;
-	position: absolute;
-    top:118px;
-    border-radius: 5px;
+	left:75px;
+}
+.thinkProgress0{
+	left:3px;
+}
+.thinkProgress1{
+	left:27px;
+}
+.thinkProgress2{
+	left:51px;
+}
+.thinkProgress3{
+	left:75px;
+}
+.thinkProgress4{
+	left:99px;
+}
+.thinkProgress5{
+	left:123px;
+}
+.thinkProgress6{
+	left:147px;
+}
+.thinkProgress7{
+	left:171px;
+}
+.thinkProgress8{
+	left:195px;
+}
+.thinkProgress9{
+	left:219px;
+}
+.thinkProgress10{
+	left:243px;
+}
+.thinkProgress11{
+	left:267px;
+}
+.chopProgress0{
+	left:3px;
+}
+.chopProgress1{
+	left:27px;
+}
+.chopProgress2{
+	left:51px;
+}
+.chopProgress3{
+	left:75px;
+}
+.mineProgress0{
+	left:3px;
+}
+.mineProgress1{
+	left:27px;
+}
+.mineProgress2{
+	left:51px;
+}
+.mineProgress3{
 	left:75px;
 }
 .info{
@@ -131,197 +160,250 @@ body{
     z-index: 1000;
     color: white;
     width: max-content;
-    border: 2px solid white;
+    border: 2px solid var(--progress-color);
     border-radius: 5px;
     padding-left: 5px;
     padding-right: 5px;
+	right: 50px;
+    top: 5px;
 }
-.thinkProgress{
-	width: 23px;
-    height: 15px;
-    background: yellow;
-	pointer-events: none;
-	position: absolute;
-	border-radius: 5px;
-	top: 361px;
+.info2{
+	left: 5px;
+    top: 25px;
 }
-.thinkProgress0{
-	left:69px;
+.info3{
+	top: -30px;
+    left: 120px;
 }
-.thinkProgress1{
-	left:93px;
+.unlockable{
+	width: 133px;
+    margin-bottom: 1px;
 }
-.thinkProgress2{
-	left:117px;
+.bottomBar{
+	position: fixed;
+	top: 335px;
 }
-.thinkProgress3{
-	left:141px;
+.infoWrapper{
+	position:relative;
 }
-.thinkProgress4{
-	left:165px;
-}
-.thinkProgress5{
-	left:189px;
-}
-.thinkProgress6{
-	left:213px;
-}
-.thinkProgress7{
-	left:237px;
-}
-.thinkProgress8{
-	left:261px;
-}
-.thinkProgress9{
-	left:285px;
-}
-.thinkProgress10{
-	left:309px;
-}
-.thinkProgress11{
-	left:333px;
+.unlockWrapper{
+	float: left;
+	position:relative;
 }
 #game{
-	width:800px;
-	height:800px;
+	width: 624px;
+    height: 362px;
 	background:black;
-}
-#gatherWrapper{
-	top: 91px;
     position: absolute;
-	float:left;
-	z-index:100;
+}
+#mineWrapper{
+	position:absolute;
+	top:0px;
+	pointer-events: all;
+}
+#chopWrapper{
+	position:absolute;
+	top:111px;
+	pointer-events: all;
 }
 #rawWrapper{
-    float: left;
+    position:absolute;
+	pointer-events: none;
 }
 #processedWrapper{
-    float: left;
-	position:relative;
-	left:100px;
+	position:absolute;
+	left:258px;
+	top: 23px;
 }
-#woodWrapper,#plankWrapper,#buildingTownWrapper{
-    top: 25px;
+#woodWrapper{
+	position:absolute;
+	top:134px;
+}
+#oreWrapper{
+	position: relative;
+    top: 23px;
+}
+#plankWrapper{
+    top: 111px;
+    position: absolute;
+}
+#barCount{
+    right: 3px;
+    top: 2px;
+}
+#buildingTownWrapper{
+	top: 25px;
     position: relative;
 }
 #resourceWrapper,#buttonWrapper{
-    position: relative;
+    position: absolute;
 }
 #processWrapper{
 	display: inline-grid;
-    left: 154px;
-	top:3px;
+    left: 156px;
+	top:0px;
     position: absolute;
 	z-index:100;
 }
-#smeltProgress10,#smeltProgress11,#smeltProgress12,#smeltProgress13{
-    top:24px;
-}
-#smeltProgress20,#smeltProgress21,#smeltProgress22,#smeltProgress23{
-	top:45px;
-}
-#smeltProgress30,#smeltProgress31,#smeltProgress32,#smeltProgress33{
-	top:66px;
-}
-#planeProgress10,#planeProgress11,#planeProgress12,#planeProgress13{
-    top:139px;
-}
-#planeProgress20,#planeProgress21,#planeProgress22,#planeProgress23{
-	top:160px;
-}
-#planeProgress30,#planeProgress31,#planeProgress32,#planeProgress33{
-	top:181px;
-}
+
 #buildingWrapper{
 	position: absolute;
-    left: 600px;
+    left: 470px;
+	top: 21px;
 }
 #buyCraftingWrapper,#buyTownWrapper{
-	display:inline-grid;
-	position: absolute;
+	display: inline-grid;
+    position: absolute;
+    float: left;
+    left: -50px;
+    top: 0px;
 }
 #buyCraftingWrapper{
-	/* left: 540px; */
-    top: 3px;
+	left:-48px;
 }
 #buyTownWrapper{
-    /* left: 540px; */
-    top: 117px;
+    top: -3px;
 }
 #buildingBuyWrapper{
-	position:relative;
-	left:442px;
+	position:absolute;
+	left:420px;
 }
 #buyMine:hover +#mineInfo{
 	display:block;
 }
-#mineInfo{
-    right: 50px;
-    top: 10px;
-}
 #buyRefinery:hover +#refineryInfo{
 	display:block;
-}
-#refineryInfo{
-	right:50px;
-	top:30px;
 }
 #buyYard:hover +#yardInfo{
 	display:block;
 }
-#yardInfo{
-	right:50px;
-	top:50px;
-}
 #buySaw:hover +#sawInfo{
 	display:block;
-}
-#sawInfo{
-	right:50px;
-	top:70px;
 }
 #buyTavern:hover +#tavernInfo{
 	display:block;
 }
-#tavernInfo{
-	right:50px;
-	 top: 10px;
-}
 #buyHostel:hover +#hostelInfo{
 	display:block;
-}
-#hostelInfo{
-	right:50px;
-	top:30px;
 }
 #buyBrothel:hover +#brothelInfo{
 	display:block;
 }
-#brothelInfo{
-	right:50px;
-	top:50px;
-}
 #buyMarket:hover +#marketInfo{
 	display:block;
 }
-#marketInfo{
-	right:50px;
-	top:70px;
+#buyBank:hover +#bankInfo{
+	display:block;
+}
+#buyLab:hover +#labInfo{
+	display:block;
+}
+#unlockButton0:hover +#unlockInfo0{
+	display:block;
+}
+#unlockButton1:hover +#unlockInfo1{
+	display:block;
+}
+#unlockButton2:hover +#unlockInfo2{
+	display:block;
+}
+#unlockButton3:hover +#unlockInfo3{
+	display:block;
+}
+#unlockButton4:hover +#unlockInfo4{
+	display:block;
+}
+#unlockButton5:hover +#unlockInfo5{
+	display:block;
+}
+#unlockButton6:hover +#unlockInfo6{
+	display:block;
+}
+#unlockButton7:hover +#unlockInfo7{
+	display:block;
+}
+#unlockButton8:hover +#unlockInfo8{
+	display:block;
+}
+#unlockButton9:hover +#unlockInfo9{
+	display:block;
+}
+#unlockButton10:hover +#unlockInfo10{
+	display:block;
+}
+#unlockButton11:hover +#unlockInfo11{
+	display:block;
+}
+#unlockButton12:hover +#unlockInfo12{
+	display:block;
+}
+#unlockButton13:hover +#unlockInfo13{
+	display:block;
+}
+#unlockButton14:hover +#unlockInfo14{
+	display:block;
+}
+#unlockButton15:hover +#unlockInfo15{
+	display:block;
 }
 #resetButton{
-	position: fixed;
-	top: 785px;
-    left: 10px;
 }
 #GoBack{
-    position: fixed;
-    top: 785px;
-    left: 60px;
+    left: 48px;
 }
 #thinkButton{
-	top: 350px;
-    right: 250px;
     width: 293px;
+}
+#researchWrapper{
+	position:absolute;
+	top: 222px;
+}
+#thinkShopWrapper{
+	width: 408px;
+    height: 92px;
+	position: relative;
+    /* overflow-y: overlay; */
+	border:none;
+}
+#thinkShopPoints{
+	position: absolute;
+    bottom: 0px;
+    right: 0px;
+}
+#thinkWrapper{
+	position: relative;
+    top: 0px;
+}
+#thinkSpeed{
+	left: 297px;
+}
+#plane0Wrapper,#plane1Wrapper,#plane2Wrapper,#plane3Wrapper{
+	position:relative;
+}
+#smelt0Wrapper,#smelt1Wrapper,#smelt2Wrapper,#smelt3Wrapper{
+	position:relative;
+}
+#planeMasterWrapper{
+	top: 134px;
+    position: absolute;
+}
+#smeltMasterWrapper{
+	position: absolute;
+    top: 23px;
+}
+#townCraftWrapper{
+	bottom:126px;
+}
+#colorButton{
+    left: 178px;
+}
+#planeInfo,#smeltInfo{
+	position: absolute;
+    text-align: center;
+    top: -10px;
+    left: 44px;
+    font-size: 10px;
+    color: var(--progress-color);
 }
 .locked{
 	display:none;
