@@ -31,10 +31,14 @@ var save={
 	oreUnlocked:[false,false,false],//iron,silver,gold
 	woodUnlocked:[false,false,false],//hard,ebony,pearl
 	buildingsUnlocked:[false,false,false,false,false,false,false,false,false,false],//mine, smeltery, lumber yard, sawmill, tavern, hostel, brothel, market, bank, lab
+	mineUpgraded:[false,false,false],
+	refineryUpgraded:[false,false,false],
+	yardUpgraded:[false,false,false],
+	sawUpgraded:[false,false,false],
+	labUpgraded:[false,false,false],
 	thinkProgress:0,
 	thinkPoints:0,
 	thinkPointsTotal:0,
-	unlocksUnlocked:[false,false,false,false,false,false,false,false,false,false],
 	PColor:0,
 };
 var save3 = Object.assign({}, save); //JSON.parse(JSON.stringify(save));
@@ -101,9 +105,75 @@ function updateBuildings(){
 	document.getElementById("labCount").innerHTML=save.buildings[9].toLocaleString();
 }
 function updateSpeed(){
-	document.getElementById("mineSpeed").innerHTML=(0.2*save.buildings[0]).toFixed(2)+" Ore/sec";
-	document.getElementById("chopSpeed").innerHTML=(0.2*save.buildings[2]).toFixed(2)+" Wood/sec";
-	document.getElementById("thinkSpeed").innerHTML=((1/13)*save.buildings[9]).toFixed(2)+" TP/sec";
+	let a=document.getElementById("mineSpeed");
+	switch(true){
+		case save.mineUpgraded[2]==true:
+			a.innerHTML=((0.2*save.buildings[0])*4).toFixed(2)+" Ore/sec";
+		break;
+		case save.mineUpgraded[1]==true:
+			a.innerHTML=((0.2*save.buildings[0])*3).toFixed(2)+" Ore/sec";
+		break;
+		case save.mineUpgraded[0]==true:
+			a.innerHTML=((0.2*save.buildings[0])*2).toFixed(2)+" Ore/sec";
+		break;
+		default:
+			a.innerHTML=(0.2*save.buildings[0]).toFixed(2)+" Ore/sec";
+		break;
+	}
+	let b=document.getElementById("chopSpeed");
+	switch(true){
+		case save.yardUpgraded[2]==true:
+			b.innerHTML=((0.2*save.buildings[2])*4).toFixed(2)+" Wood/sec";
+		break;
+		case save.yardUpgraded[1]==true:
+			b.innerHTML=((0.2*save.buildings[2])*3).toFixed(2)+" Wood/sec";
+		break;
+		case save.yardUpgraded[2]==true:
+			b.innerHTML=((0.2*save.buildings[2])*2).toFixed(2)+" Wood/sec";
+		break;
+		default:
+			b.innerHTML=(0.2*save.buildings[2]).toFixed(2)+" Wood/sec";
+		break;
+	}
+	let c=document.getElementById("thinkSpeed");
+	switch(true){
+		case save.labUpgraded[2]==true:
+			c.innerHTML=(((1/13)*save.buildings[9])*4).toFixed(2)+" TP/sec";
+		break;
+		case save.labUpgraded[1]==true:
+			c.innerHTML=(((1/13)*save.buildings[9])*3).toFixed(2)+" TP/sec";
+		break;
+		case save.labUpgraded[0]==true:
+			c.innerHTML=(((1/13)*save.buildings[9])*2).toFixed(2)+" TP/sec";
+		break;
+		default:
+			c.innerHTML=((1/13)*save.buildings[9]).toFixed(2)+" TP/sec";
+		break;
+	}
+	let d=document.getElementById("smeltInfo")
+	switch(true){
+		case save.refineryUpgraded[0]==true:
+			d.innerHTML="2:1 | "+(0.2*save.buildings[1]).toFixed(2)+" Bar/s/Ea";
+		break;
+		case save.buildings[1]>=1:
+			d.innerHTML="2:1 | "+(0.2*save.buildings[1]).toFixed(2)+" Bar/sec";
+		break;
+		default:
+			d.innerHTML="2:1";
+		break;
+	}
+	let e=document.getElementById("planeInfo")
+	switch(true){
+		case save.sawUpgraded[0]==true:
+			e.innerHTML="1:2 | "+((0.2*save.buildings[3]).toFixed(2)*2)+" Plank/s/Ea";
+		break;
+		case save.buildings[3]>=1:
+			e.innerHTML="1:2 | "+((0.2*save.buildings[3]).toFixed(2)*2)+" Plank/sec";
+		break;
+		default:
+			e.innerHTML="1:2";
+		break;
+	}
 }
 function updateBuildingCost(id){
 	switch(id){
@@ -843,9 +913,25 @@ function changeColor(){
 function doThink(){
 	save.thinkProgress+=1;
 	if(save.thinkProgress>=13){
-		save.thinkPoints+=1;
 		save.thinkProgress=0;
-		save.thinkPointsTotal+=1;
+			switch(true){
+				case save.labUpgraded[2]==true:
+					save.thinkPointsTotal+=4;
+					save.thinkPoints+=4;
+				break;
+				case save.labUpgraded[1]==true:
+					save.thinkPointsTotal+=3;
+					save.thinkPoints+=3;
+				break;
+				case save.labUpgraded[0]==true:
+					save.thinkPointsTotal+=2;
+					save.thinkPoints+=2;
+				break;
+				default:
+					save.thinkPointsTotal+=1;
+					save.thinkPoints+=1;
+				break;
+			}
 		updateThinkPoints();
 		upgradeCheck();
 	}
@@ -858,7 +944,29 @@ function mine(){
 	updateMineProgress();
 	if(save.mineProgress>=5){
 		save.mineProgress=0;
-		doMine();
+		switch(true){
+			case save.mineUpgraded[2]==true:
+				let a;
+				for(a=0;a<=3;a++){
+					doMine();
+				}
+			break;
+			case save.mineUpgraded[1]==true:
+				let b;
+				for(b=0;b<=2;b++){
+					doMine();
+				}
+			break;
+			case save.mineUpgraded[0]==true:
+				let c;
+				for(c=0;c<=1;c++){
+					doMine();
+				}
+			break;
+			default:
+				doMine();
+			break;
+		}
 	}
 }
 function doMine(){
@@ -924,7 +1032,29 @@ function chop(){
 	save.chopProgress+=1;
 	if(save.chopProgress>=5){
 		save.chopProgress=0;
-		doChop();
+		switch(true){
+			case save.yardUpgraded[2]==true:
+				let a;
+				for(a=0;a<=3;a++){
+					doChop();
+				}
+			break;
+			case save.yardUpgraded[1]==true:
+				let b;
+				for(b=0;b<=2;b++){
+					doChop();
+				}
+			break;
+			case save.yardUpgraded[0]==true:
+				let c;
+				for(c=0;c<=1;c++){
+					doChop();
+				}
+			break;
+			default:
+				doChop();
+			break;
+		}
 	}
 	updateChopProgress();
 }
@@ -1362,17 +1492,42 @@ function buildingCheck(id){
 		break;
 		case 1:
 			if(save.buildings[1]>=1){
-				let ore2=[];
-				save.ore.forEach(oreForEach);
-				function oreForEach(value, index, array){
-					if (value>=1){
-					ore2.push(index);
-					}
+				switch(true){
+					case save.refineryUpgraded[2]==true:
+						smelt(0);
+						smelt(1);
+						smelt(2);
+						smelt(3);
+					break;
+					case save.refineryUpgraded[1]==true:
+						smelt(0);
+						smelt(1);
+						smelt(2);
+					break;
+					case save.refineryUpgraded[0]==true:
+						smelt(0);
+						smelt(1);
+					break;
+					default:
+						smelt(0);
+					break;
 				}
-					let result=randomInt(0,ore2.length-1)
-					smelt(ore2[result]);
-				}
+			}
 		break;
+		//This way picks a random ore from the possible choices and adds progress to that. Useful...but not what we want.
+		// case 1:
+			// if(save.buildings[1]>=1){
+				// let ore2=[];
+				// save.ore.forEach(oreForEach);
+				// function oreForEach(value, index, array){
+					// if (value>=1){
+					// ore2.push(index);
+					// }
+				// }
+					// let result=randomInt(0,ore2.length-1)
+					// smelt(ore2[result]);
+				// }
+		// break;
 		case 2:
 			if(save.buildings[2]>=1){
 				chop();
@@ -1380,16 +1535,29 @@ function buildingCheck(id){
 		break;
 		case 3:
 			if(save.buildings[3]>=1){
-				let wood2=[];
-				save.wood.forEach(woodForEach);
-				function woodForEach(value, index, array){
-					if (value>=1){
-					wood2.push(index);
-					}
+				switch(true){
+					case save.sawUpgraded[2]==true:
+						plane(0);
+						plane(1);
+						plane(2);
+						plane(3);
+					break;
+					case save.sawUpgraded[1]==true:
+						plane(0);
+						plane(1);
+						plane(2);
+					break;
+					case save.sawUpgraded[0]==true:
+						plane(0);
+						plane(1);
+					break;
+					default:
+						plane(0);
+					break;
 				}
-					let result=randomInt(0,wood2.length-1)
-					plane(wood2[result]);
 			}
+		break;
+		case 4:
 		break;
 		case 9:
 			if(save.buildings[9]>=1){
@@ -1469,78 +1637,124 @@ function upgradeCheck(){
 	switch(true){//amount of thinkpoints needed to unlock. also unlocks everything below it.
 		case save.thinkPointsTotal>=200:
 			if(save.buildingsUnlocked[8]==false){
-			unlockItem("unlockButton8");
+				unlockItem("unlockButton8");
 			}
 		case save.thinkPointsTotal>=125:
 			if(save.buildingsUnlocked[7]==false){
-			unlockItem("unlockButton7");
+				unlockItem("unlockButton7");
 			}
 		case save.thinkPointsTotal>=80:
 			if(save.buildingsUnlocked[6]==false){
-			unlockItem("unlockButton6");
+				unlockItem("unlockButton6");
 			}
 		case save.thinkPointsTotal>=45:
 			if(save.buildingsUnlocked[5]==false){
-			unlockItem("unlockButton5");
+				unlockItem("unlockButton5");
 			}
 		case save.thinkPointsTotal>=20:
 			if(save.buildingsUnlocked[4]==false){
-			unlockItem("unlockButton4");
+				unlockItem("unlockButton4");
 			}
 		case save.thinkPointsTotal>=7:
 			if(save.buildingsUnlocked[9]==false){
-			unlockItem("unlockButton9");
+				unlockItem("unlockButton9");
 			}
 		case save.thinkPointsTotal>=5:
 			if(save.buildingsUnlocked[1]==false){
-			unlockItem("unlockButton1");
+				unlockItem("unlockButton1");
 			}
 			if(save.buildingsUnlocked[3]==false){
-			unlockItem("unlockButton3");
+				unlockItem("unlockButton3");
 			}
 		case save.thinkPointsTotal>=2:
 			if(save.buildingsUnlocked[2]==false){
-			unlockItem("unlockButton2");
+				unlockItem("unlockButton2");
 			}
 		case save.thinkPointsTotal>=1:
 			if(save.buildingsUnlocked[0]==false){
-			unlockItem("unlockButton0");
+				unlockItem("unlockButton0");
 			}
 			unlockItem("thinkShopWrapper");
 			unlockItem("thinkShopPoints");
+		case save.thinkPointsTotal>=0:
+			if(save.mineUpgraded[0]==false){
+				unlockItem("unlockButton16");
+			}
+			if(save.mineUpgraded[1]==false){
+				unlockItem("unlockButton17");
+			}
+			if(save.mineUpgraded[2]==false){
+				unlockItem("unlockButton18");
+			}
+			if(save.refineryUpgraded[0]==false){
+				unlockItem("unlockButton19");
+			}
+			if(save.refineryUpgraded[1]==false){
+				unlockItem("unlockButton20");
+			}
+			if(save.refineryUpgraded[2]==false){
+				unlockItem("unlockButton21");
+			}
+			if(save.yardUpgraded[0]==false){
+				unlockItem("unlockButton22");
+			}
+			if(save.yardUpgraded[1]==false){
+				unlockItem("unlockButton23");
+			}
+			if(save.yardUpgraded[2]==false){
+				unlockItem("unlockButton24");
+			}
+			if(save.sawUpgraded[0]==false){
+				unlockItem("unlockButton25");
+			}
+			if(save.sawUpgraded[1]==false){
+				unlockItem("unlockButton26");
+			}
+			if(save.sawUpgraded[2]==false){
+				unlockItem("unlockButton27");
+			}
+			if(save.labUpgraded[0]==false){
+				unlockItem("unlockButton28");
+			}
+			if(save.labUpgraded[1]==false){
+				unlockItem("unlockButton29");
+			}
+			if(save.labUpgraded[2]==false){
+				unlockItem("unlockButton30");
+			}
 		break;
 	}
-	switch(save.buildings[0]){
-		case 30:
+	switch(true){
+		case save.buildings[0]>=30:
 			if(save.oreUnlocked[2]==false){
 				unlockItem("unlockButton12");
 			}
-		case 20:
+		case save.buildings[0]>=20:
 			if(save.oreUnlocked[1]==false){
 				unlockItem("unlockButton11");
 			}
-		case 10:
+		case save.buildings[0]>=10:
 			if(save.oreUnlocked[0]==false){
 				unlockItem("unlockButton10");
 			}
-		case 1:
+		case save.buildings[0]>=1:
 			unlockItem("mineSpeed");
 		break;
 	}
-	switch(save.buildings[2]){
-		case 30:
+	switch(true){
+		case save.buildings[2]>=30:
 			if(save.woodUnlocked[2]==false){
 				unlockItem("unlockButton15");
 			}
-		case 20:
+		case save.buildings[2]>=20:
 			if(save.woodUnlocked[1]==false){
 				unlockItem("unlockButton14");
 			}
-		case 10:
+		case save.buildings[2]>=10:
 			if(save.woodUnlocked[0]==false){
 				unlockItem("unlockButton13");
 			}
-		case 1:
+		case save.buildings[2]>=1:
 			unlockItem("chopSpeed");
 		break;
 	}
@@ -1626,29 +1840,100 @@ function upgradeCheck(){
 }
 function unlockUpgrade(id){
 	switch(id){
+		case 30:
+			save.labUpgraded[2]=true;
+			lockItem("unlockButton30");
+			updateSpeed();
+		break;
+		case 29:
+			save.labUpgraded[1]=true;
+			lockItem("unlockButton29");
+			updateSpeed();
+		break;
+		case 28:
+			save.labUpgraded[0]=true;
+			lockItem("unlockButton28");
+			updateSpeed();
+		break;
+		case 27:
+			save.sawUpgraded[2]=true;
+			lockItem("unlockButton27");
+		break;
+		case 26:
+			save.sawUpgraded[1]=true;
+			lockItem("unlockButton26");
+		break;
+		case 25:
+			save.sawUpgraded[0]=true;
+			lockItem("unlockButton25");
+			updateSpeed();
+		break;
+		case 24:
+			save.yardUpgraded[2]=true;
+			lockItem("unlockButton24");
+			updateSpeed();
+		break;
+		case 23:
+			save.yardUpgraded[1]=true;
+			lockItem("unlockButton23");
+			updateSpeed();
+		break;
+		case 22:
+			save.yardUpgraded[0]=true;
+			lockItem("unlockButton22");
+			updateSpeed();
+		break;
+		case 21:
+			save.refineryUpgraded[2]=true;
+			lockItem("unlockButton21");
+		break;
+		case 20:
+			save.refineryUpgraded[1]=true;
+			lockItem("unlockButton20");
+		break;
+		case 19:
+			save.refineryUpgraded[0]=true;
+			lockItem("unlockButton19");
+			updateSpeed();
+		break;
+		case 18:
+			save.mineUpgraded[2]=true;
+			lockItem("unlockButton18");
+			updateSpeed();
+		break;
+		case 17:
+			save.mineUpgraded[1]=true;
+			lockItem("unlockButton17");
+			updateSpeed();
+		break;
+		case 16:
+			save.mineUpgraded[0]=true;
+			lockItem("unlockButton16");
+			updateSpeed();
+		break;
 		case 15:
 			save.woodUnlocked[2]=true;
-			lockItem("unlockButton15")
+			lockItem("unlockButton15");
 		break;
 		case 14:
 			save.woodUnlocked[1]=true;
-			lockItem("unlockButton14")
+			lockItem("unlockButton14");
 		break;
 		case 13:
 			save.woodUnlocked[0]=true;
-			lockItem("unlockButton13")
+			lockItem("unlockButton13");
 		break;
 		case 12:
 			save.oreUnlocked[2]=true;
-			lockItem("unlockButton12")
+			lockItem("unlockButton12");
 		break;
 		case 11:
 			save.oreUnlocked[1]=true;
-			lockItem("unlockButton11")
+			lockItem("unlockButton11");
 		break;
 		case 10:
 			save.oreUnlocked[0]=true;
-			lockItem("unlockButton10")
+			lockItem("unlockButton10");
 		break;
 		case 9:
 			if(save.thinkPoints>=3){
@@ -1812,6 +2097,21 @@ function lockOnReset(){
 	unlockItem("unlockButton13");
 	unlockItem("unlockButton14");
 	unlockItem("unlockButton15");
+	unlockItem("unlockButton16");
+	unlockItem("unlockButton17");
+	unlockItem("unlockButton18");
+	unlockItem("unlockButton19");
+	unlockItem("unlockButton20");
+	unlockItem("unlockButton21");
+	unlockItem("unlockButton22");
+	unlockItem("unlockButton23");
+	unlockItem("unlockButton24");
+	unlockItem("unlockButton25");
+	unlockItem("unlockButton26");
+	unlockItem("unlockButton27");
+	unlockItem("unlockButton28");
+	unlockItem("unlockButton29");
+	unlockItem("unlockButton30");
 	unlockItem("thinkSpeed");
 	unlockItem("mineSpeed");
 	unlockItem("chopSpeed");
@@ -1913,6 +2213,21 @@ function lockOnReset(){
 	lockItem("unlockButton13");
 	lockItem("unlockButton14");
 	lockItem("unlockButton15");
+	lockItem("unlockButton16");
+	lockItem("unlockButton17");
+	lockItem("unlockButton18");
+	lockItem("unlockButton19");
+	lockItem("unlockButton20");
+	lockItem("unlockButton21");
+	lockItem("unlockButton22");
+	lockItem("unlockButton23");
+	lockItem("unlockButton24");
+	lockItem("unlockButton25");
+	lockItem("unlockButton26");
+	lockItem("unlockButton27");
+	lockItem("unlockButton28");
+	lockItem("unlockButton29");
+	lockItem("unlockButton30");
 	lockItem("thinkSpeed");
 	lockItem("mineSpeed");
 	lockItem("chopSpeed");

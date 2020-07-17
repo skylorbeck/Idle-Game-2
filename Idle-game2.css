@@ -399,9 +399,8 @@ body{
 }
 #planeInfo,#smeltInfo{
 	position: absolute;
-    text-align: center;
     top: -10px;
-    left: 44px;
+	right: 0px;
     font-size: 10px;
     color: var(--progress-color);
 }
