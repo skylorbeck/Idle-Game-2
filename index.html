@@ -8,7 +8,8 @@
 	</head>
 	<body>
 		<div id=game>
-			<div id=buttonWrapper>
+			<div id=theMountain>
+				<div id=buttonWrapper>
 				<div id=processWrapper>
 					<div id=smeltMasterWrapper>
 						<div id=smelt0Wrapper>
@@ -74,7 +75,7 @@
 					</div>
 				</div>
 			</div>
-			<div id=resourceWrapper>
+				<div id=resourceWrapper>
 				<div id=rawWrapper>
 					 <div id=oreWrapper class="resource locked">
 						<div id=oreName>
@@ -152,19 +153,21 @@
 					</div>
 				</div>
 			</div>
-			<div id=buildingWrapper>
+				<div id=buildingWrapper>
 				<div id=buildingCraftingWrapper class="resource locked">
 					<div id=craftNameWrapper>
 						<div id=mineName class=" locked">Mine:</div>
 						<div id=refineryName class=" locked">Refinery:</div>
 						<div id=yardName class=" locked">Lumber Yard:</div>
 						<div id=sawName class=" locked">Sawmill:</div>
+						<div id=labName class=" locked">Laboratory:</div>
 					</div>
 					<div id=craftBuildingCount class=resourceCount>
 						<div id=mineCount class=" locked">0</div>
 						<div id=refineryCount class=" locked">0</div>
 						<div id=yardCount class=" locked">0</div>
 						<div id=sawCount class=" locked">0</div>
+						<div id=labCount class=" locked">0</div>
 					</div>
 					<div id=buyCraftingWrapper>
 						<div id=mineInfoWrapper class=infoWrapper>
@@ -183,6 +186,10 @@
 							<input id=buySaw type=button class="button locked" value="Build" onclick=buyBuilding(3);>
 							<div id=sawInfo class=info>saw cost</div>
 						</div>
+						<div id=labInfoWrapper class=infoWrapper>
+							<input id=buyLab type=button class="button locked" value="Build" onclick=buyBuilding(9);>
+							<div id=labInfo class=info>lab cost</div>
+						</div>
 					</div>
 				</div>
 				<div id=buildingTownWrapper class="resource locked">
@@ -192,7 +199,6 @@
 						<div id=brothelName class=" locked">Brothel:</div>
 						<div id=marketName class=" locked">Market:</div>
 						<div id=bankName class=" locked">Bank:</div>
-						<div id=labName class=" locked">Laboratory:</div>
 					</div>
 					<div id=townCraftWrapper class=resourceCount>
 						<div id=tavernCount class=" locked">0</div>
@@ -200,7 +206,6 @@
 						<div id=brothelCount class=" locked">0</div>
 						<div id=marketCount class=" locked">0</div>
 						<div id=bankCount class=" locked">0</div>
-						<div id=labCount class=" locked">0</div>
 					</div>
 					<div id=buyTownWrapper>
 						<div id=tavernInfoWrapper class=infoWrapper>
@@ -223,14 +228,10 @@
 							<input id=buyBank type=button class="button locked" value="Build" onclick=buyBuilding(8);>
 							<div id=bankInfo class=info>bank cost</div>
 						</div>
-						<div id=labInfoWrapper class=infoWrapper>
-							<input id=buyLab type=button class="button locked" value="Build" onclick=buyBuilding(9);>
-							<div id=labInfo class=info>lab cost</div>
-						</div>
 					</div>
 				</div>
 			</div>
-			<div id=researchWrapper>
+				<div id=researchWrapper>
 				<div id=thinkWrapper>
 					<input id=thinkButton type=button class="button think locked" value="Do a Think" onclick=doThink();>
 					<div id=thinkProgress0 class="genericProgress thinkProgress0 locked"></div>
@@ -375,9 +376,43 @@
 					</div>
 				</div>
 			</div>
-			<input id=colorButton class="button bottomBar" type=button value="Cycle Colors" onclick=changeColor();>
-			<input id=resetButton class="button bottomBar" type=button value=reset onclick=resetAll();>
-			<input id=GoBack class="button bottomBar" type=button value="skylorbeck.website" onclick="window.location.href='https://www.skylorbeck.website';">
+			</div>
+			<div id=theTown class=" locked">
+				<div id=buildingTownWrapperT class="resource">
+					<div id=townNameWrapperT>
+						<div id=tavernNameT class="">Tavern:</div>
+						<div id=hostelNameT class="">Hostel:</div>
+						<div id=brothelNameT class=>Brothel:</div>
+						<div id=marketNameT class=>Market:</div>
+						<div id=bankNameT class=>Bank:</div>
+					</div>
+					<div id=townCraftWrapperT class=resourceCount>
+						<div id=tavernCountT class=>0</div>
+						<div id=hostelCountT class=>0</div>
+						<div id=brothelCountT class=>0</div>
+						<div id=marketCountT class=>0</div>
+						<div id=bankCountT class=>0</div>
+					</div>
+				</div>
+			</div>
+			<input id=settingsButton class="button bottomBar" type=button value="Settings" onclick=openSettings();>
+			<input id=mountainButton class="button bottomBar" type=button value="The Mountain" onclick=navigateTo(0);>
+			<input id=townButton class="button bottomBar locked" type=button value="The Town" onclick=navigateTo(1);>
+			<div id=settingsWrapper class=" locked">
+				<!-- <input id=colorButton class="button" type=button value="Cycle Colors" onclick=changeColor();> -->
+				<div id=colorPicker>
+					<div id=colorText>Pick a Theme:</div>
+					<div id=colorWrapper>
+						<input id=color0 class="button genericProgress settingsProgress" type=button onclick=changeColor(0)>
+						<input id=color1 class="button genericProgress settingsProgress" type=button onclick=changeColor(1)>
+						<input id=color2 class="button genericProgress settingsProgress" type=button onclick=changeColor(2)>
+						<input id=color3 class="button genericProgress settingsProgress" type=button onclick=changeColor(3)>
+						<input id=color4 class="button genericProgress settingsProgress" type=button onclick=changeColor(4)>
+					</div>
+				</div>
+				<input id=resetButton class="button settings" type=button value=reset onclick=resetAll();>
+				<input id=GoBack class="button settings" type=button value="skylorbeck.website" onclick=window.open("https://www.skylorbeck.website");>
+			</div>
 		</div>
 	</body>
 </html>

@@ -72,6 +72,10 @@ body{
     border-radius: 5px;
 	z-index:0;
 }
+.settingsProgress{
+	pointer-events: all;
+	position: relative;
+}
 .smeltProgress0{
 	left:3px;
 }
@@ -225,8 +229,13 @@ body{
 	color:#ead8c8;
 	font-size: 14px;
 }
+.settings{
+	position: relative;
+    left: 3px;
+    top: 2px;
+}
 #game{
-	width: 624px;
+	width: 575px;
     height: 362px;
 	background:black;
     position: absolute;
@@ -266,9 +275,18 @@ body{
     right: 3px;
     top: 2px;
 }
-#buildingTownWrapper{
+#buildingTownWrapper,#buildingTownWrapperT{
 	top: 25px;
     position: relative;
+	width: 100px;
+}
+#buildingCraftingWrapper{
+    width: 100px;
+}
+#buildingTownWrapperT{
+	position: absolute;
+    left: 470px;
+    top: 155px;
 }
 #resourceWrapper,#buttonWrapper{
     position: absolute;
@@ -430,7 +448,6 @@ body{
 #resetButton{
 }
 #GoBack{
-    left: 48px;
 }
 #thinkButton{
     width: 293px;
@@ -472,7 +489,7 @@ body{
 	position: absolute;
     top: 23px;
 }
-#townCraftWrapper{
+#townCraftWrapper,#townCraftWrapperT{
 	bottom:126px;
 }
 #colorButton{
@@ -484,6 +501,52 @@ body{
 	right: 0px;
     font-size: 10px;
     color: var(--progress-color);
+}
+#settingsWrapper{
+	border: white solid 2px;
+    border-radius: 5px;
+	width: 550px;
+    height: 300px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: black;
+    z-index: 9999;
+}
+#colorPicker{
+	width: 140px;
+    height: 45px;
+    position: inherit;
+    float: left;
+    left: 395px;
+    top: 10px;
+    border: grey solid 2px;
+    border-radius: 5px;
+}
+#color0{
+	background:#FFEB3B;
+}
+#color1{
+	background:#3BFFC0;
+}
+#color2{
+	background:#FF3B56;
+}
+#color3{
+	background:#B7E47C;
+}
+#color4{
+	background:#C3B0D9;
+}
+#colorText, #colorWrapper{
+    position: relative;
+	left: 5;
+}
+#mountainButton{
+	left: 65px;
+}
+#townButton{
+	left: 164px;
 }
 .locked{
 	display:none;

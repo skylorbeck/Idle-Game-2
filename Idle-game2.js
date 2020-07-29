@@ -39,14 +39,19 @@ var save={
 	thinkProgress:0,
 	thinkPoints:0,
 	thinkPointsTotal:0,
-	PColor:0,
+	townUnlocked:false,
 };
 var save3 = Object.assign({}, save); //JSON.parse(JSON.stringify(save));
 var save2 = JSON.parse(localStorage.getItem('idleGame2.save'));
 if(	localStorage.getItem('idleGame2.save') !== null){//if there is a save
 		Object.assign(save,save2);//copies loaded save overtop blank save ensuring all old saves get new save conent/features
-		
 }
+// Settings
+var PColor=0;
+if(	localStorage.getItem('idleGame2.PColor') !== null){
+	PColor=JSON.parse(localStorage.getItem('idleGame2.PColor'));
+};
+
 function gameSave(){
 	window.localStorage['idleGame2.save'] = JSON.stringify(save);
 }
@@ -135,6 +140,11 @@ function updateBuildings(){
 	document.getElementById("marketCount").innerHTML=save.buildings[7].toLocaleString();
 	document.getElementById("bankCount").innerHTML=save.buildings[8].toLocaleString();
 	document.getElementById("labCount").innerHTML=save.buildings[9].toLocaleString();
+	document.getElementById("tavernCountT").innerHTML=save.buildings[4].toLocaleString();
+	document.getElementById("hostelCountT").innerHTML=save.buildings[5].toLocaleString();
+	document.getElementById("brothelCountT").innerHTML=save.buildings[6].toLocaleString();
+	document.getElementById("marketCountT").innerHTML=save.buildings[7].toLocaleString();
+	document.getElementById("bankCountT").innerHTML=save.buildings[8].toLocaleString();
 }
 function updateSpeed(){
 	let a=document.getElementById("mineSpeed");
@@ -220,10 +230,13 @@ function updateBuildingCost(id){
 				case save.buildings[0]>=20 && save.buildings[0]<=29:
 					document.getElementById("mineInfo").innerHTML=parseInt(2+save.buildings[0]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[0]*4-72,10)+"x<span class=ebony>▬</span>";
 				break;
-				case save.buildings[0]>=30:
+				case save.buildings[0]>=30 && save.buildings[0]<=39:
 					document.getElementById("mineInfo").innerHTML=parseInt(save.buildings[0]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[0]*4-112,10)+"x<span class=pearl>▬</span>";
 				break;
-				
+				case save.buildings[0]>=40:
+					document.getElementById("mineInfo").innerHTML="Max Reached";
+					disableItem("buyMine");
+				break;
 			}
 		break;
 		case 1:
@@ -237,8 +250,12 @@ function updateBuildingCost(id){
 				case save.buildings[1]>=20 && save.buildings[1]<=29:
 					document.getElementById("refineryInfo").innerHTML=parseInt(2+save.buildings[1]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[1]*4-72,10)+"x<span class=ebony>▬</span>";
 				break;
-				case save.buildings[1]>=30:
+				case save.buildings[1]>=30 && save.buildings[0]<=39:
 					document.getElementById("refineryInfo").innerHTML=parseInt(save.buildings[1]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[1]*4-112,10)+"x<span class=pearl>▬</span>";
+				break;
+				case save.buildings[1]>=40:
+					document.getElementById("refineryInfo").innerHTML="Max Reached";
+					disableItem("buyRefinery");
 				break;
 			}
 		break;
@@ -253,8 +270,12 @@ function updateBuildingCost(id){
 				case save.buildings[2]>=20 && save.buildings[2]<=29:
 					document.getElementById("yardInfo").innerHTML=parseInt(2+save.buildings[2]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[2]*4-72,10)+"x<span class=ebony>▬</span>";
 				break;
-				case save.buildings[2]>=30:
+				case save.buildings[2]>=30 && save.buildings[0]<=39:
 					document.getElementById("yardInfo").innerHTML=parseInt(save.buildings[2]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[2]*4-112,10)+"x<span class=pearl>▬</span>";
+				break;
+				case save.buildings[2]>=40:
+					document.getElementById("yardInfo").innerHTML="Max Reached";
+					disableItem("buyYard");
 				break;
 			}
 		break;
@@ -269,8 +290,12 @@ function updateBuildingCost(id){
 				case save.buildings[3]>=20 && save.buildings[3]<=29:
 					document.getElementById("sawInfo").innerHTML=parseInt(2+save.buildings[3]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[3]*4-72,10)+"x<span class=ebony>▬</span>";
 				break;
-				case save.buildings[3]>=30:
+				case save.buildings[3]>=30 && save.buildings[0]<=39:
 					document.getElementById("sawInfo").innerHTML=parseInt(save.buildings[3]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[3]*4-112,10)+"x<span class=pearl>▬</span>";
+				break;
+				case save.buildings[3]>=40:
+					document.getElementById("sawInfo").innerHTML="Max Reached";
+					disableItem("buySaw");
 				break;
 			}
 		break;
@@ -285,8 +310,12 @@ function updateBuildingCost(id){
 				case save.buildings[4]>=20 && save.buildings[4]<=29:
 					document.getElementById("tavernInfo").innerHTML=parseInt(2+save.buildings[4]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[4]*4-72,10)+"x<span class=ebony>▬</span>";
 				break;
-				case save.buildings[4]>=30:
+				case save.buildings[4]>=30 && save.buildings[0]<=39:
 					document.getElementById("tavernInfo").innerHTML=parseInt(save.buildings[4]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[4]*4-112,10)+"x<span class=pearl>▬</span>";
+				break;
+				case save.buildings[4]>=40:
+					document.getElementById("tavernInfo").innerHTML="Max Reached";
+					disableItem("buyTavern");
 				break;
 			}
 		break;
@@ -301,8 +330,12 @@ function updateBuildingCost(id){
 				case save.buildings[5]>=20 && save.buildings[5]<=29:
 					document.getElementById("hostelInfo").innerHTML=parseInt(2+save.buildings[5]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[5]*4-72,10)+"x<span class=ebony>▬</span>";
 				break;
-				case save.buildings[5]>=30:
+				case save.buildings[5]>=30 && save.buildings[0]<=39:
 					document.getElementById("hostelInfo").innerHTML=parseInt(save.buildings[5]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[5]*4-112,10)+"x<span class=pearl>▬</span>";
+				break;
+				case save.buildings[5]>=40:
+					document.getElementById("hostelInfo").innerHTML="Max Reached";
+					disableItem("buyHostel");
 				break;
 			}
 		break;
@@ -317,8 +350,12 @@ function updateBuildingCost(id){
 				case save.buildings[6]>=20 && save.buildings[6]<=29:
 					document.getElementById("brothelInfo").innerHTML=parseInt(2+save.buildings[6]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[6]*4-72,10)+"x<span class=ebony>▬</span>";
 				break;
-				case save.buildings[6]>=30:
+				case save.buildings[6]>=30 && save.buildings[0]<=39:
 					document.getElementById("brothelInfo").innerHTML=parseInt(save.buildings[6]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[6]*4-112,10)+"x<span class=pearl>▬</span>";
+				break;
+				case save.buildings[6]>=40:
+					document.getElementById("brothelInfo").innerHTML="Max Reached";
+					disableItem("buyBrothel");
 				break;
 			}
 		break;
@@ -333,8 +370,12 @@ function updateBuildingCost(id){
 				case save.buildings[7]>=20 && save.buildings[7]<=29:
 					document.getElementById("marketInfo").innerHTML=parseInt(2+save.buildings[7]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[7]*4-72,10)+"x<span class=ebony>▬</span>";
 				break;
-				case save.buildings[7]>=30:
+				case save.buildings[7]>=30 && save.buildings[0]<=39:
 					document.getElementById("marketInfo").innerHTML=parseInt(save.buildings[7]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[7]*4-112,10)+"x<span class=pearl>▬</span>";
+				break;
+				case save.buildings[7]>=40:
+					document.getElementById("marketInfo").innerHTML="Max Reached";
+					disableItem("buyMarket");
 				break;
 			}
 		break;
@@ -349,8 +390,12 @@ function updateBuildingCost(id){
 				case save.buildings[8]>=20 && save.buildings[8]<=29:
 					document.getElementById("bankInfo").innerHTML=parseInt(2+save.buildings[8]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[8]*4-72,10)+"x<span class=ebony>▬</span>";
 				break;
-				case save.buildings[8]>=30:
+				case save.buildings[8]>=30 && save.buildings[0]<=39:
 					document.getElementById("bankInfo").innerHTML=parseInt(save.buildings[8]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[8]*4-112,10)+"x<span class=pearl>▬</span>";
+				break;
+				case save.buildings[8]>=40:
+					document.getElementById("bankInfo").innerHTML="Max Reached";
+					disableItem("buyBank");
 				break;
 			}
 		break;
@@ -365,8 +410,12 @@ function updateBuildingCost(id){
 				case save.buildings[9]>=26 && save.buildings[9]<=38:
 					document.getElementById("labInfo").innerHTML=parseInt(2+save.buildings[9]-26,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[9]*4-96,10)+"x<span class=ebony>▬</span>";
 				break;
-				case save.buildings[9]>=39:
+				case save.buildings[9]>=39 && save.buildings[9]<=51:
 					document.getElementById("labInfo").innerHTML=parseInt(save.buildings[9]-37,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[9]*4-148,10)+"x<span class=pearl>▬</span>";
+				break;
+				case save.buildings[9]>=52:
+					document.getElementById("labInfo").innerHTML="Max Reached";
+					disableItem("buyLab");
 				break;
 			}
 		break;
@@ -917,16 +966,44 @@ function updateAll(){
 }
 function updateProgressColors(){
 	switch(true){
-		case save.PColor==0:
+		case PColor==0:
 			document.querySelector("body").style.setProperty("--progress-color", "#FFEB3B")
 		break;
-		case save.PColor==1:
+		case PColor==1:
 			document.querySelector("body").style.setProperty("--progress-color", "#3BFFC0")
 		break;
-		case save.PColor==2:
+		case PColor==2:
 			document.querySelector("body").style.setProperty("--progress-color", "#FF3B56")
 		break;
+		case PColor==3:
+			document.querySelector("body").style.setProperty("--progress-color", "#B7E47C")
+		break;
+		case PColor==4:
+			document.querySelector("body").style.setProperty("--progress-color", "#C3B0D9")
+		break;
+		
 	}
+}
+function changeColor(value){
+	switch(value){
+		case 0:
+			PColor=0;
+		break;
+		case 1:
+			PColor=1;
+		break;
+		case 2:
+			PColor=2;
+		break;
+		case 3:
+			PColor=3;
+		break;
+		case 4:
+			PColor=4;
+		break;
+	}
+	window.localStorage['idleGame2.PColor'] = JSON.stringify(PColor);
+	updateProgressColors();
 }
 function updateThinkPoints(){
 	switch(true){
@@ -940,13 +1017,6 @@ function updateThinkPoints(){
 			document.getElementById("thinkShopPoints").innerHTML="Think Points: "+save.thinkPoints.toLocaleString();
 		break;
 	}
-}
-function changeColor(){
-	save.PColor+=1;
-	if(save.PColor==3){
-		save.PColor=0
-	}
-	updateProgressColors();
 }
 // Think
 function doThink(){
@@ -1211,26 +1281,8 @@ function buyBuilding(id){
 	switch(id){
 		case 0:
 			switch(true){
-				case save.buildings[0]>=0 && save.buildings[0]<=9:
-					if(save.bar[0]>=2+save.buildings[0]  && save.plank[0]>=8+save.buildings[0]*4 ){
-					save.bar[0]-=2+save.buildings[0];
-					save.plank[0]-=8+save.buildings[0]*4;
-					save.buildings[0]+=1;
-					}
-				break;
-				case save.buildings[0]>=10 && save.buildings[0]<=19:
-					if(save.bar[1]>=save.buildings[0]-8 && save.plank[1]>=save.buildings[0]*4-32){
-					save.bar[1]-=save.buildings[0]-8;
-					save.plank[1]-=save.buildings[0]*4-32;
-					save.buildings[0]+=1;
-					}
-				break;
-				case save.buildings[0]>=20 && save.buildings[0]<=29:
-					if(save.bar[2]>=save.buildings[0]-18 && save.plank[2]>=save.buildings[0]*4-72){
-					save.bar[2]-=save.buildings[0]-18;
-					save.plank[2]-=save.buildings[0]*4-72;
-					save.buildings[0]+=1;
-					}
+				case save.buildings[0]>=40:
+					
 				break;
 				case save.buildings[0]>=30:
 					if(save.bar[3]>=save.buildings[0]-28 && save.plank[2]>=save.buildings[0]*4-112){
@@ -1239,31 +1291,34 @@ function buyBuilding(id){
 					save.buildings[0]+=1;
 					}
 				break;
+				case save.buildings[0]>=20:
+					if(save.bar[2]>=save.buildings[0]-18 && save.plank[2]>=save.buildings[0]*4-72){
+					save.bar[2]-=save.buildings[0]-18;
+					save.plank[2]-=save.buildings[0]*4-72;
+					save.buildings[0]+=1;
+					}
+				break;
+				case save.buildings[0]>=10:
+					if(save.bar[1]>=save.buildings[0]-8 && save.plank[1]>=save.buildings[0]*4-32){
+					save.bar[1]-=save.buildings[0]-8;
+					save.plank[1]-=save.buildings[0]*4-32;
+					save.buildings[0]+=1;
+					}
+				break;
+				case save.buildings[0]>=0:
+					if(save.bar[0]>=2+save.buildings[0]  && save.plank[0]>=8+save.buildings[0]*4 ){
+					save.bar[0]-=2+save.buildings[0];
+					save.plank[0]-=8+save.buildings[0]*4;
+					save.buildings[0]+=1;
+					}
+				break;
 			}
 			updateBuildingCost(0);
 		break;
 		case 1:
 			switch(true){
-				case save.buildings[1]>=0 && save.buildings[1]<=9:
-					if(save.bar[0]>=2+save.buildings[1]  && save.plank[0]>=8+save.buildings[1]*4 ){
-					save.bar[0]-=2+save.buildings[1];
-					save.plank[0]-=8+save.buildings[1]*4;
-					save.buildings[1]+=1;
-					}
-				break;
-				case save.buildings[1]>=10 && save.buildings[1]<=19:
-					if(save.bar[1]>=save.buildings[1]-8 && save.plank[1]>=save.buildings[1]*4-32){
-					save.bar[1]-=save.buildings[1]-8;
-					save.plank[1]-=save.buildings[1]*4-32;
-					save.buildings[1]+=1;
-					}
-				break;
-				case save.buildings[1]>=20 && save.buildings[1]<=29:
-					if(save.bar[2]>=save.buildings[1]-18 && save.plank[2]>=save.buildings[1]*4-72){
-					save.bar[2]-=save.buildings[1]-18;
-					save.plank[2]-=save.buildings[1]*4-72;
-					save.buildings[1]+=1;
-					}
+				case save.buildings[0]>=40:
+					
 				break;
 				case save.buildings[1]>=30:
 					if(save.bar[3]>=save.buildings[1]-28 && save.plank[2]>=save.buildings[1]*4-112){
@@ -1272,31 +1327,34 @@ function buyBuilding(id){
 					save.buildings[1]+=1;
 					}
 				break;
+				case save.buildings[1]>=20:
+					if(save.bar[2]>=save.buildings[1]-18 && save.plank[2]>=save.buildings[1]*4-72){
+					save.bar[2]-=save.buildings[1]-18;
+					save.plank[2]-=save.buildings[1]*4-72;
+					save.buildings[1]+=1;
+					}
+				break;
+				case save.buildings[1]>=10:
+					if(save.bar[1]>=save.buildings[1]-8 && save.plank[1]>=save.buildings[1]*4-32){
+					save.bar[1]-=save.buildings[1]-8;
+					save.plank[1]-=save.buildings[1]*4-32;
+					save.buildings[1]+=1;
+					}
+				break;
+				case save.buildings[1]>=0:
+					if(save.bar[0]>=2+save.buildings[1]  && save.plank[0]>=8+save.buildings[1]*4 ){
+					save.bar[0]-=2+save.buildings[1];
+					save.plank[0]-=8+save.buildings[1]*4;
+					save.buildings[1]+=1;
+					}
+				break;
 			}
 			updateBuildingCost(1);
 		break;
 		case 2:
 			switch(true){
-				case save.buildings[2]>=0 && save.buildings[2]<=9:
-					if(save.bar[0]>=2+save.buildings[2]  && save.plank[0]>=8+save.buildings[2]*4 ){
-					save.bar[0]-=2+save.buildings[2];
-					save.plank[0]-=8+save.buildings[2]*4;
-					save.buildings[2]+=1;
-					}
-				break;
-				case save.buildings[2]>=10 && save.buildings[2]<=19:
-					if(save.bar[1]>=save.buildings[2]-8 && save.plank[1]>=save.buildings[2]*4-32){
-					save.bar[1]-=save.buildings[2]-8;
-					save.plank[1]-=save.buildings[2]*4-32;
-					save.buildings[2]+=1;
-					}
-				break;
-				case save.buildings[2]>=20 && save.buildings[2]<=29:
-					if(save.bar[2]>=save.buildings[2]-18 && save.plank[2]>=save.buildings[2]*4-72){
-					save.bar[2]-=save.buildings[2]-18;
-					save.plank[2]-=save.buildings[2]*4-72;
-					save.buildings[2]+=1;
-					}
+				case save.buildings[0]>=40:
+					
 				break;
 				case save.buildings[2]>=30:
 					if(save.bar[3]>=save.buildings[2]-28 && save.plank[2]>=save.buildings[2]*4-112){
@@ -1305,31 +1363,34 @@ function buyBuilding(id){
 					save.buildings[2]+=1;
 					}
 				break;
+				case save.buildings[2]>=20:
+					if(save.bar[2]>=save.buildings[2]-18 && save.plank[2]>=save.buildings[2]*4-72){
+					save.bar[2]-=save.buildings[2]-18;
+					save.plank[2]-=save.buildings[2]*4-72;
+					save.buildings[2]+=1;
+					}
+				break;
+				case save.buildings[2]>=10:
+					if(save.bar[1]>=save.buildings[2]-8 && save.plank[1]>=save.buildings[2]*4-32){
+					save.bar[1]-=save.buildings[2]-8;
+					save.plank[1]-=save.buildings[2]*4-32;
+					save.buildings[2]+=1;
+					}
+				break;
+				case save.buildings[2]>=0:
+					if(save.bar[0]>=2+save.buildings[2]  && save.plank[0]>=8+save.buildings[2]*4 ){
+					save.bar[0]-=2+save.buildings[2];
+					save.plank[0]-=8+save.buildings[2]*4;
+					save.buildings[2]+=1;
+					}
+				break;
 			}
 			updateBuildingCost(2);
 		break;
 		case 3:
 			switch(true){
-				case save.buildings[3]>=0 && save.buildings[3]<=9:
-					if(save.bar[0]>=2+save.buildings[3]  && save.plank[0]>=8+save.buildings[3]*4 ){
-					save.bar[0]-=2+save.buildings[3];
-					save.plank[0]-=8+save.buildings[3]*4;
-					save.buildings[3]+=1;
-					}
-				break;
-				case save.buildings[3]>=10 && save.buildings[3]<=19:
-					if(save.bar[1]>=save.buildings[3]-8 && save.plank[1]>=save.buildings[3]*4-32){
-					save.bar[1]-=save.buildings[3]-8;
-					save.plank[1]-=save.buildings[3]*4-32;
-					save.buildings[3]+=1;
-					}
-				break;
-				case save.buildings[3]>=20 && save.buildings[3]<=29:
-					if(save.bar[2]>=save.buildings[3]-18 && save.plank[2]>=save.buildings[3]*4-72){
-					save.bar[2]-=save.buildings[3]-18;
-					save.plank[2]-=save.buildings[3]*4-72;
-					save.buildings[3]+=1;
-					}
+				case save.buildings[0]>=40:
+					
 				break;
 				case save.buildings[3]>=30:
 					if(save.bar[3]>=save.buildings[3]-28 && save.plank[2]>=save.buildings[3]*4-112){
@@ -1338,31 +1399,34 @@ function buyBuilding(id){
 					save.buildings[3]+=1;
 					}
 				break;
+				case save.buildings[3]>=20:
+					if(save.bar[2]>=save.buildings[3]-18 && save.plank[2]>=save.buildings[3]*4-72){
+					save.bar[2]-=save.buildings[3]-18;
+					save.plank[2]-=save.buildings[3]*4-72;
+					save.buildings[3]+=1;
+					}
+				break;
+				case save.buildings[3]>=10:
+					if(save.bar[1]>=save.buildings[3]-8 && save.plank[1]>=save.buildings[3]*4-32){
+					save.bar[1]-=save.buildings[3]-8;
+					save.plank[1]-=save.buildings[3]*4-32;
+					save.buildings[3]+=1;
+					}
+				break;
+				case save.buildings[3]>=0:
+					if(save.bar[0]>=2+save.buildings[3]  && save.plank[0]>=8+save.buildings[3]*4 ){
+					save.bar[0]-=2+save.buildings[3];
+					save.plank[0]-=8+save.buildings[3]*4;
+					save.buildings[3]+=1;
+					}
+				break;
 			}
 			updateBuildingCost(3);
 		break;
 		case 4:
 			switch(true){
-				case save.buildings[4]>=0 && save.buildings[4]<=9:
-					if(save.bar[0]>=2+save.buildings[4]  && save.plank[0]>=8+save.buildings[4]*4 ){
-					save.bar[0]-=2+save.buildings[4];
-					save.plank[0]-=8+save.buildings[4]*4;
-					save.buildings[4]+=1;
-					}
-				break;
-				case save.buildings[4]>=10 && save.buildings[4]<=19:
-					if(save.bar[1]>=save.buildings[4]-8 && save.plank[1]>=save.buildings[4]*4-32){
-					save.bar[1]-=save.buildings[4]-8;
-					save.plank[1]-=save.buildings[4]*4-32;
-					save.buildings[4]+=1;
-					}
-				break;
-				case save.buildings[4]>=20 && save.buildings[4]<=29:
-					if(save.bar[2]>=save.buildings[4]-18 && save.plank[2]>=save.buildings[4]*4-72){
-					save.bar[2]-=save.buildings[4]-18;
-					save.plank[2]-=save.buildings[4]*4-72;
-					save.buildings[4]+=1;
-					}
+				case save.buildings[0]>=40:
+					
 				break;
 				case save.buildings[4]>=30:
 					if(save.bar[3]>=save.buildings[4]-28 && save.plank[2]>=save.buildings[4]*4-112){
@@ -1371,31 +1435,34 @@ function buyBuilding(id){
 					save.buildings[4]+=1;
 					}
 				break;
+				case save.buildings[4]>=20:
+					if(save.bar[2]>=save.buildings[4]-18 && save.plank[2]>=save.buildings[4]*4-72){
+					save.bar[2]-=save.buildings[4]-18;
+					save.plank[2]-=save.buildings[4]*4-72;
+					save.buildings[4]+=1;
+					}
+				break;
+				case save.buildings[4]>=10:
+					if(save.bar[1]>=save.buildings[4]-8 && save.plank[1]>=save.buildings[4]*4-32){
+					save.bar[1]-=save.buildings[4]-8;
+					save.plank[1]-=save.buildings[4]*4-32;
+					save.buildings[4]+=1;
+					}
+				break;
+				case save.buildings[4]>=0:
+					if(save.bar[0]>=2+save.buildings[4]  && save.plank[0]>=8+save.buildings[4]*4 ){
+					save.bar[0]-=2+save.buildings[4];
+					save.plank[0]-=8+save.buildings[4]*4;
+					save.buildings[4]+=1;
+					}
+				break;
 			}
 			updateBuildingCost(4);
 		break;
 		case 5:
 			switch(true){
-				case save.buildings[5]>=0 && save.buildings[5]<=9:
-					if(save.bar[0]>=2+save.buildings[5]  && save.plank[0]>=8+save.buildings[5]*4 ){
-					save.bar[0]-=2+save.buildings[5];
-					save.plank[0]-=8+save.buildings[5]*4;
-					save.buildings[5]+=1;
-					}
-				break;
-				case save.buildings[5]>=10 && save.buildings[5]<=19:
-					if(save.bar[1]>=save.buildings[5]-8 && save.plank[1]>=save.buildings[5]*4-32){
-					save.bar[1]-=save.buildings[5]-8;
-					save.plank[1]-=save.buildings[5]*4-32;
-					save.buildings[5]+=1;
-					}
-				break;
-				case save.buildings[5]>=20 && save.buildings[5]<=29:
-					if(save.bar[2]>=save.buildings[5]-18 && save.plank[2]>=save.buildings[5]*4-72){
-					save.bar[2]-=save.buildings[5]-18;
-					save.plank[2]-=save.buildings[5]*4-72;
-					save.buildings[5]+=1;
-					}
+				case save.buildings[0]>=40:
+					
 				break;
 				case save.buildings[5]>=30:
 					if(save.bar[3]>=save.buildings[5]-28 && save.plank[2]>=save.buildings[5]*4-112){
@@ -1404,31 +1471,34 @@ function buyBuilding(id){
 					save.buildings[5]+=1;
 					}
 				break;
+				case save.buildings[5]>=20:
+					if(save.bar[2]>=save.buildings[5]-18 && save.plank[2]>=save.buildings[5]*4-72){
+					save.bar[2]-=save.buildings[5]-18;
+					save.plank[2]-=save.buildings[5]*4-72;
+					save.buildings[5]+=1;
+					}
+				break;
+				case save.buildings[5]>=10:
+					if(save.bar[1]>=save.buildings[5]-8 && save.plank[1]>=save.buildings[5]*4-32){
+					save.bar[1]-=save.buildings[5]-8;
+					save.plank[1]-=save.buildings[5]*4-32;
+					save.buildings[5]+=1;
+					}
+				break;
+				case save.buildings[5]>=0:
+					if(save.bar[0]>=2+save.buildings[5]  && save.plank[0]>=8+save.buildings[5]*4 ){
+					save.bar[0]-=2+save.buildings[5];
+					save.plank[0]-=8+save.buildings[5]*4;
+					save.buildings[5]+=1;
+					}
+				break;
 			}
 			updateBuildingCost(5);
 		break;
 		case 6:
 			switch(true){
-				case save.buildings[6]>=0 && save.buildings[6]<=9:
-					if(save.bar[0]>=2+save.buildings[6]  && save.plank[0]>=8+save.buildings[6]*4 ){
-					save.bar[0]-=2+save.buildings[6];
-					save.plank[0]-=8+save.buildings[6]*4;
-					save.buildings[6]+=1;
-					}
-				break;
-				case save.buildings[6]>=10 && save.buildings[6]<=19:
-					if(save.bar[1]>=save.buildings[6]-8 && save.plank[1]>=save.buildings[6]*4-32){
-					save.bar[1]-=save.buildings[6]-8;
-					save.plank[1]-=save.buildings[6]*4-32;
-					save.buildings[6]+=1;
-					}
-				break;
-				case save.buildings[6]>=20 && save.buildings[6]<=29:
-					if(save.bar[2]>=save.buildings[6]-18 && save.plank[2]>=save.buildings[6]*4-72){
-					save.bar[2]-=save.buildings[6]-18;
-					save.plank[2]-=save.buildings[6]*4-72;
-					save.buildings[6]+=1;
-					}
+				case save.buildings[0]>=40:
+					
 				break;
 				case save.buildings[6]>=30:
 					if(save.bar[3]>=save.buildings[6]-28 && save.plank[2]>=save.buildings[6]*4-112){
@@ -1437,31 +1507,34 @@ function buyBuilding(id){
 					save.buildings[6]+=1;
 					}
 				break;
+				case save.buildings[6]>=20:
+					if(save.bar[2]>=save.buildings[6]-18 && save.plank[2]>=save.buildings[6]*4-72){
+					save.bar[2]-=save.buildings[6]-18;
+					save.plank[2]-=save.buildings[6]*4-72;
+					save.buildings[6]+=1;
+					}
+				break;
+				case save.buildings[6]>=10:
+					if(save.bar[1]>=save.buildings[6]-8 && save.plank[1]>=save.buildings[6]*4-32){
+					save.bar[1]-=save.buildings[6]-8;
+					save.plank[1]-=save.buildings[6]*4-32;
+					save.buildings[6]+=1;
+					}
+				break;
+				case save.buildings[6]>=0:
+					if(save.bar[0]>=2+save.buildings[6]  && save.plank[0]>=8+save.buildings[6]*4 ){
+					save.bar[0]-=2+save.buildings[6];
+					save.plank[0]-=8+save.buildings[6]*4;
+					save.buildings[6]+=1;
+					}
+				break;
 			}
 			updateBuildingCost(6);
 		break;
 		case 7:
 			switch(true){
-				case save.buildings[7]>=0 && save.buildings[7]<=9:
-					if(save.bar[0]>=2+save.buildings[7]  && save.plank[0]>=8+save.buildings[7]*4 ){
-					save.bar[0]-=2+save.buildings[7];
-					save.plank[0]-=8+save.buildings[7]*4;
-					save.buildings[7]+=1;
-					}
-				break;
-				case save.buildings[7]>=10 && save.buildings[7]<=19:
-					if(save.bar[1]>=save.buildings[7]-8 && save.plank[1]>=save.buildings[7]*4-32){
-					save.bar[1]-=save.buildings[7]-8;
-					save.plank[1]-=save.buildings[7]*4-32;
-					save.buildings[7]+=1;
-					}
-				break;
-				case save.buildings[7]>=20 && save.buildings[7]<=29:
-					if(save.bar[2]>=save.buildings[7]-18 && save.plank[2]>=save.buildings[7]*4-72){
-					save.bar[2]-=save.buildings[7]-18;
-					save.plank[2]-=save.buildings[7]*4-72;
-					save.buildings[7]+=1;
-					}
+				case save.buildings[0]>=40:
+					
 				break;
 				case save.buildings[7]>=30:
 					if(save.bar[3]>=save.buildings[7]-28 && save.plank[2]>=save.buildings[7]*4-112){
@@ -1470,31 +1543,34 @@ function buyBuilding(id){
 					save.buildings[7]+=1;
 					}
 				break;
+				case save.buildings[7]>=20:
+					if(save.bar[2]>=save.buildings[7]-18 && save.plank[2]>=save.buildings[7]*4-72){
+					save.bar[2]-=save.buildings[7]-18;
+					save.plank[2]-=save.buildings[7]*4-72;
+					save.buildings[7]+=1;
+					}
+				break;
+				case save.buildings[7]>=10:
+					if(save.bar[1]>=save.buildings[7]-8 && save.plank[1]>=save.buildings[7]*4-32){
+					save.bar[1]-=save.buildings[7]-8;
+					save.plank[1]-=save.buildings[7]*4-32;
+					save.buildings[7]+=1;
+					}
+				break;
+				case save.buildings[7]>=0:
+					if(save.bar[0]>=2+save.buildings[7]  && save.plank[0]>=8+save.buildings[7]*4 ){
+					save.bar[0]-=2+save.buildings[7];
+					save.plank[0]-=8+save.buildings[7]*4;
+					save.buildings[7]+=1;
+					}
+				break;
 			}
 			updateBuildingCost(7);
 		break;
 		case 8:
 			switch(true){
-				case save.buildings[8]>=0 && save.buildings[8]<=9:
-					if(save.bar[0]>=2+save.buildings[8]  && save.plank[0]>=8+save.buildings[8]*4 ){
-					save.bar[0]-=2+save.buildings[8];
-					save.plank[0]-=8+save.buildings[8]*4;
-					save.buildings[8]+=1;
-					}
-				break;
-				case save.buildings[8]>=10 && save.buildings[8]<=19:
-					if(save.bar[1]>=save.buildings[8]-8 && save.plank[1]>=save.buildings[8]*4-32){
-					save.bar[1]-=save.buildings[8]-8;
-					save.plank[1]-=save.buildings[8]*4-32;
-					save.buildings[8]+=1;
-					}
-				break;
-				case save.buildings[8]>=20 && save.buildings[8]<=29:
-					if(save.bar[2]>=save.buildings[8]-18 && save.plank[2]>=save.buildings[8]*4-72){
-					save.bar[2]-=save.buildings[8]-18;
-					save.plank[2]-=save.buildings[8]*4-72;
-					save.buildings[8]+=1;
-					}
+				case save.buildings[8]>=40:
+					
 				break;
 				case save.buildings[8]>=30:
 					if(save.bar[3]>=save.buildings[8]-28 && save.plank[2]>=save.buildings[8]*4-112){
@@ -1503,36 +1579,60 @@ function buyBuilding(id){
 					save.buildings[8]+=1;
 					}
 				break;
+				case save.buildings[8]>=20:
+					if(save.bar[2]>=save.buildings[8]-18 && save.plank[2]>=save.buildings[8]*4-72){
+					save.bar[2]-=save.buildings[8]-18;
+					save.plank[2]-=save.buildings[8]*4-72;
+					save.buildings[8]+=1;
+					}
+				break;
+				case save.buildings[8]>=10:
+					if(save.bar[1]>=save.buildings[8]-8 && save.plank[1]>=save.buildings[8]*4-32){
+					save.bar[1]-=save.buildings[8]-8;
+					save.plank[1]-=save.buildings[8]*4-32;
+					save.buildings[8]+=1;
+					}
+				break;
+				case save.buildings[8]>=0:
+					if(save.bar[0]>=2+save.buildings[8]  && save.plank[0]>=8+save.buildings[8]*4 ){
+					save.bar[0]-=2+save.buildings[8];
+					save.plank[0]-=8+save.buildings[8]*4;
+					save.buildings[8]+=1;
+					}
+				break;
 			}
 			updateBuildingCost(8);
 		break;
 		case 9:
 			switch(true){
-				case save.buildings[9]>=0 && save.buildings[9]<=12:
-					if(save.bar[0]>=2+save.buildings[9]  && save.plank[0]>=2+save.buildings[9] ){
-					save.bar[0]-=2+save.buildings[9];
-					save.plank[0]-=8+save.buildings[9]*4;
+				case save.buildings[9]>=52:
+					
+				break;
+				case save.buildings[9]>=39:
+					if(save.bar[3]>=save.buildings[9]-37 && save.plank[2]>=save.buildings[9]*4-148){
+					save.bar[3]-=save.buildings[9]-37;
+					save.plank[3]-=save.buildings[9]*4-148;
 					save.buildings[9]+=1;
 					}
 				break;
-				case save.buildings[9]>=13 && save.buildings[9]<=25:
-					if(save.bar[1]>=save.buildings[9]-11 && save.plank[1]>=save.buildings[9]*4-44){
-					save.bar[1]-=save.buildings[9]-11;
-					save.plank[1]-=save.buildings[9]*4-44;
-					save.buildings[9]+=1;
-					}
-				break;
-				case save.buildings[9]>=26 && save.buildings[9]<=38:
+				case save.buildings[9]>=26:
 					if(save.bar[2]>=save.buildings[9]-26 && save.plank[2]>=save.buildings[9]*4-96){
 					save.bar[2]-=save.buildings[9]-26;
 					save.plank[2]-=save.buildings[9]*4-96;
 					save.buildings[9]+=1;
 					}
 				break;
-				case save.buildings[9]>=39:
-					if(save.bar[3]>=save.buildings[9]-37 && save.plank[2]>=save.buildings[9]*4-148){
-					save.bar[3]-=save.buildings[9]-37;
-					save.plank[3]-=save.buildings[9]*4-148;
+				case save.buildings[9]>=13:
+					if(save.bar[1]>=save.buildings[9]-11 && save.plank[1]>=save.buildings[9]*4-44){
+					save.bar[1]-=save.buildings[9]-11;
+					save.plank[1]-=save.buildings[9]*4-44;
+					save.buildings[9]+=1;
+					}
+				break;
+				case save.buildings[9]>=0:
+					if(save.bar[0]>=2+save.buildings[9]  && save.plank[0]>=2+save.buildings[9] ){
+					save.bar[0]-=2+save.buildings[9];
+					save.plank[0]-=8+save.buildings[9]*4;
 					save.buildings[9]+=1;
 					}
 				break;
@@ -1702,6 +1802,7 @@ function upgradeCheckStart(){
 	if(save.wood[1]>=1){enableItem("planeButton1")}else{disableItem("planeButton1")};
 	if(save.wood[2]>=1){enableItem("planeButton2")}else{disableItem("planeButton2")};
 	if(save.wood[3]>=1){enableItem("planeButton3")}else{disableItem("planeButton3")};
+	if(save.townUnlocked==true){unlockItem("townButton")};
 }
 function upgradeCheck(){
 	switch(true){//amount of thinkpoints needed to unlock. also unlocks everything below it.
@@ -1935,6 +2036,9 @@ function upgradeCheck(){
 	if(save.barTotal[0]>=2 && save.plankTotal[0]>=4){
 		unlockItem("thinkButton")
 	}
+	if(save.buildings[4]>=1 || save.buildings[5]>=1 || save.buildings[6]>=1 || save.buildings[7]>=1 ||save.buildings[8]>=1){
+		unlockItem("townButton");
+	}
 }
 function unlockUpgrade(id){
 	switch(id){
@@ -2103,7 +2207,7 @@ function unlockUpgrade(id){
 				unlockItem("labName");
 				unlockItem("labCount");
 				unlockItem("buyLab");
-				unlockItem("buildingTownWrapper");
+				unlockItem("buildingCraftingWrapper");
 				save.thinkPoints-=3;
 			}
 		break;
@@ -2209,6 +2313,22 @@ function unlockUpgrade(id){
 	}
 	updateThinkPoints();
 }
+function navigateTo(page){
+	switch(page){
+		case 0:
+			unlockItem("theMountain");
+			unlockItem("theTown");
+			lockItem("theTown");
+		break;
+		case 1:
+			unlockItem("theMountain");
+			unlockItem("theTown");
+			lockItem("theMountain");
+		break;
+	}
+	
+}
+
 function lockOnReset(){
 	unlockItem("mineName");
 	unlockItem("mineCount");
@@ -2326,6 +2446,8 @@ function lockOnReset(){
 	unlockItem("plankWrapper");
 	unlockItem("smeltInfo");
 	unlockItem("planeInfo");
+	unlockItem("mountainButton");
+	unlockItem("townButton");
 	lockItem("mineName");
 	lockItem("mineCount");
 	lockItem("buyMine");
@@ -2442,8 +2564,22 @@ function lockOnReset(){
 	lockItem("plankWrapper");
 	lockItem("smeltInfo");
 	lockItem("planeInfo");
+	lockItem("townButton");
 }
-
+var settingsOpen=0;
+function openSettings(){
+	switch(settingsOpen){
+		case 0:
+		unlockItem("settingsWrapper");
+		settingsOpen=1;
+		break;
+		case 1:
+		lockItem("settingsWrapper");
+		settingsOpen=0;
+		break;
+	}
+	
+}
 function devMode(value){
 	save.oreTotal[0]+=value;save.oreTotal[1]+=value;save.oreTotal[2]+=value;save.oreTotal[3]+=value;save.woodTotal[0]+=value;save.woodTotal[1]+=value;save.woodTotal[2]+=value;save.woodTotal[3]+=value;save.barTotal[0]+=value;save.barTotal[1]+=value;save.barTotal[2]+=value;save.barTotal[3]+=value;save.plankTotal[0]+=value;save.plankTotal[1]+=value;save.plankTotal[2]+=value;save.plankTotal[3]+=value;save.ore[0]+=value;save.ore[1]+=value;save.ore[2]+=value;save.ore[3]+=value;save.wood[0]+=value;save.wood[1]+=value;save.wood[2]+=value;save.wood[3]+=value;save.bar[0]+=value;save.bar[1]+=value;save.bar[2]+=value;save.bar[3]+=value;save.plank[0]+=value;save.plank[1]+=value;save.plank[2]+=value;save.plank[3]+=value;save.thinkPoints+=value;save.thinkPointsTotal+=value;updateAll();
 }
