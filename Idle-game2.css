@@ -10,7 +10,7 @@ body{
 	
 }
 .resource{
-	border: white double 2px;
+	border: white solid 2px;
     width: 150px;
     height: auto;
 	border-radius:5px;
@@ -28,7 +28,7 @@ body{
 	background:black;
 	color:white;
 	border-radius:5px;
-	border-style:double;
+	border-style:solid;
 	z-index:1;
 	outline:none;
 	width: fit-content;
@@ -38,6 +38,9 @@ body{
 }
 .button:hover{
 	border-color:var(--progress-color);
+}
+.button:disabled:hover{
+	border-color:revert;
 }
 .button:active{
 	border-color:var(--progress-color);
@@ -189,6 +192,38 @@ body{
 .unlockWrapper{
 	float: left;
 	position:relative;
+}
+.copper{
+    color:#b87333;
+    font-size: 14px;
+}
+.iron{
+	color:#8c9da7;
+	font-size: 14px;
+}
+.silver{
+	color:#d2d2d2;
+	font-size: 14px;
+}
+.gold{
+	color:#ffd700;
+	font-size: 14px;
+}
+.soft{
+	color:#b58b1d;
+	font-size: 14px;
+}
+.hard{
+	color:#5d340f;
+	font-size: 14px;
+}
+.ebony{
+	color:#282C34;
+	font-size: 14px;
+}
+.pearl{
+	color:#ead8c8;
+	font-size: 14px;
 }
 #game{
 	width: 624px;
@@ -346,6 +381,52 @@ body{
 #unlockButton15:hover +#unlockInfo15{
 	display:block;
 }
+#unlockButton16:hover +#unlockInfo16{
+	display:block;
+}
+#unlockButton17:hover +#unlockInfo17{
+	display:block;
+}
+#unlockButton18:hover +#unlockInfo18{
+	display:block;
+}
+#unlockButton19:hover +#unlockInfo19{
+	display:block;
+}
+#unlockButton20:hover +#unlockInfo20{
+	display:block;
+}
+#unlockButton21:hover +#unlockInfo21{
+	display:block;
+}
+#unlockButton22:hover +#unlockInfo22{
+	display:block;
+}
+#unlockButton23:hover +#unlockInfo23{
+	display:block;
+}
+#unlockButton24:hover +#unlockInfo24{
+	display:block;
+}
+#unlockButton25:hover +#unlockInfo25{
+	display:block;
+}
+#unlockButton26:hover +#unlockInfo26{
+	display:block;
+}
+#unlockButton27:hover +#unlockInfo27{
+	display:block;
+}
+#unlockButton28:hover +#unlockInfo28{
+	display:block;
+}
+#unlockButton29:hover +#unlockInfo29{
+	display:block;
+}
+#unlockButton30:hover +#unlockInfo30{
+	display:block;
+}
+
 #resetButton{
 }
 #GoBack{

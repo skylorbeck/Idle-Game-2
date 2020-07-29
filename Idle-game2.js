@@ -75,22 +75,54 @@ function startTickVar(){
 
 // visual updates
 function updateResources(){
-	document.getElementById("copperOre").innerHTML=save.ore[0].toLocaleString();
-	document.getElementById("ironOre").innerHTML=save.ore[1].toLocaleString();
-	document.getElementById("silverOre").innerHTML=save.ore[2].toLocaleString();
-	document.getElementById("goldOre").innerHTML=save.ore[3].toLocaleString();
-	document.getElementById("copperBar").innerHTML=save.bar[0].toLocaleString();
-	document.getElementById("ironBar").innerHTML=save.bar[1].toLocaleString();
-	document.getElementById("silverBar").innerHTML=save.bar[2].toLocaleString();
-	document.getElementById("goldBar").innerHTML=save.bar[3].toLocaleString();
-	document.getElementById("softWood").innerHTML=save.wood[0].toLocaleString();
-	document.getElementById("hardWood").innerHTML=save.wood[1].toLocaleString();
-	document.getElementById("ebonyWood").innerHTML=save.wood[2].toLocaleString();
-	document.getElementById("pearlWood").innerHTML=save.wood[3].toLocaleString();
-	document.getElementById("softPlank").innerHTML=save.plank[0].toLocaleString();
-	document.getElementById("hardPlank").innerHTML=save.plank[1].toLocaleString();
-	document.getElementById("ebonyPlank").innerHTML=save.plank[2].toLocaleString();
-	document.getElementById("pearlPlank").innerHTML=save.plank[3].toLocaleString();
+	if(save.ore[0]>=1000000){
+		document.getElementById("copperOre").innerHTML=save.ore[0].toExponential(2)
+	}else{document.getElementById("copperOre").innerHTML=save.ore[0].toLocaleString();}
+	if(save.ore[1]>=1000000){
+		document.getElementById("ironOre").innerHTML=save.ore[1].toExponential(2)
+	}else{document.getElementById("ironOre").innerHTML=save.ore[1].toLocaleString();}
+	if(save.ore[2]>=1000000){
+		document.getElementById("silverOre").innerHTML=save.ore[2].toExponential(2)
+	}else{document.getElementById("silverOre").innerHTML=save.ore[2].toLocaleString();}
+	if(save.ore[3]>=1000000){
+		document.getElementById("goldOre").innerHTML=save.ore[3].toExponential(2)
+	}else{document.getElementById("goldOre").innerHTML=save.ore[3].toLocaleString();}
+	if(save.bar[0]>=1000000){
+		document.getElementById("copperBar").innerHTML=save.bar[0].toExponential(2)
+	}else{document.getElementById("copperBar").innerHTML=save.bar[0].toLocaleString();}
+	if(save.bar[1]>=1000000){
+		document.getElementById("ironBar").innerHTML=save.bar[1].toExponential(2)
+	}else{document.getElementById("ironBar").innerHTML=save.bar[1].toLocaleString();}
+	if(save.bar[2]>=1000000){
+		document.getElementById("silverBar").innerHTML=save.bar[2].toExponential(2)
+	}else{document.getElementById("silverBar").innerHTML=save.bar[2].toLocaleString();}
+	if(save.bar[3]>=1000000){
+		document.getElementById("goldBar").innerHTML=save.bar[3].toExponential(2)
+	}else{document.getElementById("goldBar").innerHTML=save.bar[3].toLocaleString();}
+	if(save.wood[0]>=1000000){
+		document.getElementById("softWood").innerHTML=save.wood[0].toExponential(2)
+	}else{document.getElementById("softWood").innerHTML=save.wood[0].toLocaleString();}
+	if(save.wood[1]>=1000000){
+		document.getElementById("hardWood").innerHTML=save.wood[1].toExponential(2)
+	}else{document.getElementById("hardWood").innerHTML=save.wood[1].toLocaleString();}
+	if(save.wood[2]>=1000000){
+		document.getElementById("ebonyWood").innerHTML=save.wood[2].toExponential(2)
+	}else{document.getElementById("ebonyWood").innerHTML=save.wood[2].toLocaleString();}
+	if(save.wood[3]>=1000000){
+		document.getElementById("pearlWood").innerHTML=save.wood[3].toExponential(2)
+	}else{document.getElementById("pearlWood").innerHTML=save.wood[3].toLocaleString();}
+	if(save.plank[0]>=1000000){
+		document.getElementById("softPlank").innerHTML=save.plank[0].toExponential(2)
+	}else{document.getElementById("softPlank").innerHTML=save.plank[0].toLocaleString();}
+	if(save.plank[1]>=1000000){
+		document.getElementById("hardPlank").innerHTML=save.plank[1].toExponential(2)
+	}else{document.getElementById("hardPlank").innerHTML=save.plank[1].toLocaleString();}
+	if(save.plank[2]>=1000000){
+		document.getElementById("ebonyPlank").innerHTML=save.plank[2].toExponential(2)
+	}else{document.getElementById("ebonyPlank").innerHTML=save.plank[2].toLocaleString();}
+	if(save.plank[3]>=1000000){
+		document.getElementById("pearlPlank").innerHTML=save.plank[3].toExponential(2)
+	}else{document.getElementById("pearlPlank").innerHTML=save.plank[3].toLocaleString();}
 }
 function updateBuildings(){
 	document.getElementById("mineCount").innerHTML=save.buildings[0].toLocaleString();
@@ -180,160 +212,161 @@ function updateBuildingCost(id){
 		case 0:
 			switch(true){
 				case save.buildings[0]>=0 && save.buildings[0]<=9:
-					document.getElementById("mineInfo").innerHTML="Copper Bars: " + parseInt(2+save.buildings[0],10) +" Soft Planks: " + parseInt(8+save.buildings[0]*4,10);
+					document.getElementById("mineInfo").innerHTML=parseInt(2+save.buildings[0],10)+"x<span class=copper>▰</span>, " + parseInt(8+save.buildings[0]*4,10)+"x<span class=soft>▬</span>";
 				break;
 				case save.buildings[0]>=10 && save.buildings[0]<=19:
-					document.getElementById("mineInfo").innerHTML="Iron Bars: " + parseInt(save.buildings[0]-8,10) +" Hard Planks: " + parseInt(save.buildings[0]*4-32,10);
+					document.getElementById("mineInfo").innerHTML=parseInt(save.buildings[0]-8,10)+"x<span class=iron>▰</span>, "+parseInt(save.buildings[0]*4-32,10)+"x<span class=hard>▬</span>";
 				break;
 				case save.buildings[0]>=20 && save.buildings[0]<=29:
-					document.getElementById("mineInfo").innerHTML="Silver Bars: " + parseInt(2+save.buildings[0]-18,10) +" Ebony Planks: " + parseInt(save.buildings[0]*4-72,10);
+					document.getElementById("mineInfo").innerHTML=parseInt(2+save.buildings[0]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[0]*4-72,10)+"x<span class=ebony>▬</span>";
 				break;
 				case save.buildings[0]>=30:
-					document.getElementById("mineInfo").innerHTML="Gold Bars: " + parseInt(save.buildings[0]-28,10) +" Pearl Planks: " + parseInt(save.buildings[0]*4-112,10);
+					document.getElementById("mineInfo").innerHTML=parseInt(save.buildings[0]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[0]*4-112,10)+"x<span class=pearl>▬</span>";
 				break;
+				
 			}
 		break;
 		case 1:
 			switch(true){
 				case save.buildings[1]>=0 && save.buildings[1]<=9:
-					document.getElementById("refineryInfo").innerHTML="Copper Bars: " + parseInt(2+save.buildings[1],10) +" Soft Planks: " + parseInt(8+save.buildings[1]*4,10);
+					document.getElementById("refineryInfo").innerHTML=parseInt(2+save.buildings[1],10)+"x<span class=copper>▰</span>, " + parseInt(8+save.buildings[1]*4,10)+"x<span class=soft>▬</span>";
 				break;
 				case save.buildings[1]>=10 && save.buildings[1]<=19:
-					document.getElementById("refineryInfo").innerHTML="Iron Bars: " + parseInt(save.buildings[1]-8,10) +" Hard Planks: " + parseInt(save.buildings[1]*4-32,10);
+					document.getElementById("refineryInfo").innerHTML=parseInt(save.buildings[1]-8,10)+"x<span class=iron>▰</span>, "+parseInt(save.buildings[1]*4-32,10)+"x<span class=hard>▬</span>";
 				break;
 				case save.buildings[1]>=20 && save.buildings[1]<=29:
-					document.getElementById("refineryInfo").innerHTML="Silver Bars: " + parseInt(2+save.buildings[1]-18,10) +" Ebony Planks: " + parseInt(save.buildings[1]*4-72,10);
+					document.getElementById("refineryInfo").innerHTML=parseInt(2+save.buildings[1]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[1]*4-72,10)+"x<span class=ebony>▬</span>";
 				break;
 				case save.buildings[1]>=30:
-					document.getElementById("refineryInfo").innerHTML="Gold Bars: " + parseInt(save.buildings[1]-28,10) +" Pearl Planks: " + parseInt(save.buildings[1]*4-112,10);
+					document.getElementById("refineryInfo").innerHTML=parseInt(save.buildings[1]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[1]*4-112,10)+"x<span class=pearl>▬</span>";
 				break;
 			}
 		break;
 		case 2:
 			switch(true){
 				case save.buildings[2]>=0 && save.buildings[2]<=9:
-					document.getElementById("yardInfo").innerHTML="Copper Bars: " + parseInt(2+save.buildings[2],10) +" Soft Planks: " + parseInt(8+save.buildings[2]*4,10);
+					document.getElementById("yardInfo").innerHTML=parseInt(2+save.buildings[2],10)+"x<span class=copper>▰</span>, " + parseInt(8+save.buildings[2]*4,10)+"x<span class=soft>▬</span>";
 				break;
 				case save.buildings[2]>=10 && save.buildings[2]<=19:
-					document.getElementById("yardInfo").innerHTML="Iron Bars: " + parseInt(save.buildings[2]-8,10) +" Hard Planks: " + parseInt(save.buildings[2]*4-32,10);
+					document.getElementById("yardInfo").innerHTML=parseInt(save.buildings[2]-8,10)+"x<span class=iron>▰</span>, "+parseInt(save.buildings[2]*4-32,10)+"x<span class=hard>▬</span>";
 				break;
 				case save.buildings[2]>=20 && save.buildings[2]<=29:
-					document.getElementById("yardInfo").innerHTML="Silver Bars: " + parseInt(2+save.buildings[2]-18,10) +" Ebony Planks: " + parseInt(save.buildings[2]*4-72,10);
+					document.getElementById("yardInfo").innerHTML=parseInt(2+save.buildings[2]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[2]*4-72,10)+"x<span class=ebony>▬</span>";
 				break;
 				case save.buildings[2]>=30:
-					document.getElementById("yardInfo").innerHTML="Gold Bars: " + parseInt(save.buildings[2]-28,10) +" Pearl Planks: " + parseInt(save.buildings[2]*4-112,10);
+					document.getElementById("yardInfo").innerHTML=parseInt(save.buildings[2]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[2]*4-112,10)+"x<span class=pearl>▬</span>";
 				break;
 			}
 		break;
 		case 3:
 			switch(true){
 				case save.buildings[3]>=0 && save.buildings[3]<=9:
-					document.getElementById("sawInfo").innerHTML="Copper Bars: " + parseInt(2+save.buildings[3],10) +" Soft Planks: " + parseInt(8+save.buildings[3]*4,10);
+					document.getElementById("sawInfo").innerHTML=parseInt(2+save.buildings[3],10)+"x<span class=copper>▰</span>, " + parseInt(8+save.buildings[3]*4,10)+"x<span class=soft>▬</span>";
 				break;
 				case save.buildings[3]>=10 && save.buildings[3]<=19:
-					document.getElementById("sawInfo").innerHTML="Iron Bars: " + parseInt(save.buildings[3]-8,10) +" Hard Planks: " + parseInt(save.buildings[3]*4-32,10);
+					document.getElementById("sawInfo").innerHTML=parseInt(save.buildings[3]-8,10)+"x<span class=iron>▰</span>, "+parseInt(save.buildings[3]*4-32,10)+"x<span class=hard>▬</span>";
 				break;
 				case save.buildings[3]>=20 && save.buildings[3]<=29:
-					document.getElementById("sawInfo").innerHTML="Silver Bars: " + parseInt(2+save.buildings[3]-18,10) +" Ebony Planks: " + parseInt(save.buildings[3]*4-72,10);
+					document.getElementById("sawInfo").innerHTML=parseInt(2+save.buildings[3]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[3]*4-72,10)+"x<span class=ebony>▬</span>";
 				break;
 				case save.buildings[3]>=30:
-					document.getElementById("sawInfo").innerHTML="Gold Bars: " + parseInt(save.buildings[3]-28,10) +" Pearl Planks: " + parseInt(save.buildings[3]*4-112,10);
+					document.getElementById("sawInfo").innerHTML=parseInt(save.buildings[3]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[3]*4-112,10)+"x<span class=pearl>▬</span>";
 				break;
 			}
 		break;
 		case 4:
 			switch(true){
 				case save.buildings[4]>=0 && save.buildings[4]<=9:
-					document.getElementById("tavernInfo").innerHTML="Copper Bars: " + parseInt(2+save.buildings[4],10) +" Soft Planks: " + parseInt(8+save.buildings[4]*4,10);
+					document.getElementById("tavernInfo").innerHTML=parseInt(2+save.buildings[4],10)+"x<span class=copper>▰</span>, " + parseInt(8+save.buildings[4]*4,10)+"x<span class=soft>▬</span>";
 				break;
 				case save.buildings[4]>=10 && save.buildings[4]<=19:
-					document.getElementById("tavernInfo").innerHTML="Iron Bars: " + parseInt(save.buildings[4]-8,10) +" Hard Planks: " + parseInt(save.buildings[4]*4-32,10);
+					document.getElementById("tavernInfo").innerHTML=parseInt(save.buildings[4]-8,10)+"x<span class=iron>▰</span>, "+parseInt(save.buildings[4]*4-32,10)+"x<span class=hard>▬</span>";
 				break;
 				case save.buildings[4]>=20 && save.buildings[4]<=29:
-					document.getElementById("tavernInfo").innerHTML="Silver Bars: " + parseInt(2+save.buildings[4]-18,10) +" Ebony Planks: " + parseInt(save.buildings[4]*4-72,10);
+					document.getElementById("tavernInfo").innerHTML=parseInt(2+save.buildings[4]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[4]*4-72,10)+"x<span class=ebony>▬</span>";
 				break;
 				case save.buildings[4]>=30:
-					document.getElementById("tavernInfo").innerHTML="Gold Bars: " + parseInt(save.buildings[4]-28,10) +" Pearl Planks: " + parseInt(save.buildings[4]*4-112,10);
+					document.getElementById("tavernInfo").innerHTML=parseInt(save.buildings[4]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[4]*4-112,10)+"x<span class=pearl>▬</span>";
 				break;
 			}
 		break;
 		case 5:
 			switch(true){
 				case save.buildings[5]>=0 && save.buildings[5]<=9:
-					document.getElementById("hostelInfo").innerHTML="Copper Bars: " + parseInt(2+save.buildings[5],10) +" Soft Planks: " + parseInt(8+save.buildings[5]*4,10);
+					document.getElementById("hostelInfo").innerHTML=parseInt(2+save.buildings[5],10)+"x<span class=copper>▰</span>, " + parseInt(8+save.buildings[5]*4,10)+"x<span class=soft>▬</span>";
 				break;
 				case save.buildings[5]>=10 && save.buildings[5]<=19:
-					document.getElementById("hostelInfo").innerHTML="Iron Bars: " + parseInt(save.buildings[5]-8,10) +" Hard Planks: " + parseInt(save.buildings[5]*4-32,10);
+					document.getElementById("hostelInfo").innerHTML=parseInt(save.buildings[5]-8,10)+"x<span class=iron>▰</span>, "+parseInt(save.buildings[5]*4-32,10)+"x<span class=hard>▬</span>";
 				break;
 				case save.buildings[5]>=20 && save.buildings[5]<=29:
-					document.getElementById("hostelInfo").innerHTML="Silver Bars: " + parseInt(2+save.buildings[5]-18,10) +" Ebony Planks: " + parseInt(save.buildings[5]*4-72,10);
+					document.getElementById("hostelInfo").innerHTML=parseInt(2+save.buildings[5]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[5]*4-72,10)+"x<span class=ebony>▬</span>";
 				break;
 				case save.buildings[5]>=30:
-					document.getElementById("hostelInfo").innerHTML="Gold Bars: " + parseInt(save.buildings[5]-28,10) +" Pearl Planks: " + parseInt(save.buildings[5]*4-112,10);
+					document.getElementById("hostelInfo").innerHTML=parseInt(save.buildings[5]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[5]*4-112,10)+"x<span class=pearl>▬</span>";
 				break;
 			}
 		break;
 		case 6:
 			switch(true){
 				case save.buildings[6]>=0 && save.buildings[6]<=9:
-					document.getElementById("brothelInfo").innerHTML="Copper Bars: " + parseInt(2+save.buildings[6],10) +" Soft Planks: " + parseInt(8+save.buildings[6]*4,10);
+					document.getElementById("brothelInfo").innerHTML=parseInt(2+save.buildings[6],10)+"x<span class=copper>▰</span>, " + parseInt(8+save.buildings[6]*4,10)+"x<span class=soft>▬</span>";
 				break;
 				case save.buildings[6]>=10 && save.buildings[6]<=19:
-					document.getElementById("brothelInfo").innerHTML="Iron Bars: " + parseInt(save.buildings[6]-8,10) +" Hard Planks: " + parseInt(save.buildings[6]*4-32,10);
+					document.getElementById("brothelInfo").innerHTML=parseInt(save.buildings[6]-8,10)+"x<span class=iron>▰</span>, "+parseInt(save.buildings[6]*4-32,10)+"x<span class=hard>▬</span>";
 				break;
 				case save.buildings[6]>=20 && save.buildings[6]<=29:
-					document.getElementById("brothelInfo").innerHTML="Silver Bars: " + parseInt(2+save.buildings[6]-18,10) +" Ebony Planks: " + parseInt(save.buildings[6]*4-72,10);
+					document.getElementById("brothelInfo").innerHTML=parseInt(2+save.buildings[6]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[6]*4-72,10)+"x<span class=ebony>▬</span>";
 				break;
 				case save.buildings[6]>=30:
-					document.getElementById("brothelInfo").innerHTML="Gold Bars: " + parseInt(save.buildings[6]-28,10) +" Pearl Planks: " + parseInt(save.buildings[6]*4-112,10);
+					document.getElementById("brothelInfo").innerHTML=parseInt(save.buildings[6]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[6]*4-112,10)+"x<span class=pearl>▬</span>";
 				break;
 			}
 		break;
 		case 7:
 			switch(true){
 				case save.buildings[7]>=0 && save.buildings[7]<=9:
-					document.getElementById("marketInfo").innerHTML="Copper Bars: " + parseInt(2+save.buildings[7],10) +" Soft Planks: " + parseInt(8+save.buildings[7]*4,10);
+					document.getElementById("marketInfo").innerHTML=parseInt(2+save.buildings[7],10)+"x<span class=copper>▰</span>, " + parseInt(8+save.buildings[7]*4,10)+"x<span class=soft>▬</span>";
 				break;
 				case save.buildings[7]>=10 && save.buildings[7]<=19:
-					document.getElementById("marketInfo").innerHTML="Iron Bars: " + parseInt(save.buildings[7]-8,10) +" Hard Planks: " + parseInt(save.buildings[7]*4-32,10);
+					document.getElementById("marketInfo").innerHTML=parseInt(save.buildings[7]-8,10)+"x<span class=iron>▰</span>, "+parseInt(save.buildings[7]*4-32,10)+"x<span class=hard>▬</span>";
 				break;
 				case save.buildings[7]>=20 && save.buildings[7]<=29:
-					document.getElementById("marketInfo").innerHTML="Silver Bars: " + parseInt(2+save.buildings[7]-18,10) +" Ebony Planks: " + parseInt(save.buildings[7]*4-72,10);
+					document.getElementById("marketInfo").innerHTML=parseInt(2+save.buildings[7]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[7]*4-72,10)+"x<span class=ebony>▬</span>";
 				break;
 				case save.buildings[7]>=30:
-					document.getElementById("marketInfo").innerHTML="Gold Bars: " + parseInt(save.buildings[7]-28,10) +" Pearl Planks: " + parseInt(save.buildings[7]*4-112,10);
+					document.getElementById("marketInfo").innerHTML=parseInt(save.buildings[7]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[7]*4-112,10)+"x<span class=pearl>▬</span>";
 				break;
 			}
 		break;
 		case 8:
 			switch(true){
 				case save.buildings[8]>=0 && save.buildings[8]<=9:
-					document.getElementById("bankInfo").innerHTML="Copper Bars: " + parseInt(2+save.buildings[8],10) +" Soft Planks: " + parseInt(8+save.buildings[8]*4,10);
+					document.getElementById("bankInfo").innerHTML=parseInt(2+save.buildings[8],10)+"x<span class=copper>▰</span>, " + parseInt(8+save.buildings[8]*4,10)+"x<span class=soft>▬</span>";
 				break;
 				case save.buildings[8]>=10 && save.buildings[8]<=19:
-					document.getElementById("bankInfo").innerHTML="Iron Bars: " + parseInt(save.buildings[8]-8,10) +" Hard Planks: " + parseInt(save.buildings[8]*4-32,10);
+					document.getElementById("bankInfo").innerHTML=parseInt(save.buildings[8]-8,10)+"x<span class=iron>▰</span>, "+parseInt(save.buildings[8]*4-32,10)+"x<span class=hard>▬</span>";
 				break;
 				case save.buildings[8]>=20 && save.buildings[8]<=29:
-					document.getElementById("bankInfo").innerHTML="Silver Bars: " + parseInt(2+save.buildings[8]-18,10) +" Ebony Planks: " + parseInt(save.buildings[8]*4-72,10);
+					document.getElementById("bankInfo").innerHTML=parseInt(2+save.buildings[8]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[8]*4-72,10)+"x<span class=ebony>▬</span>";
 				break;
 				case save.buildings[8]>=30:
-					document.getElementById("bankInfo").innerHTML="Gold Bars: " + parseInt(save.buildings[8]-28,10) +" Pearl Planks: " + parseInt(save.buildings[8]*4-112,10);
+					document.getElementById("bankInfo").innerHTML=parseInt(save.buildings[8]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[8]*4-112,10)+"x<span class=pearl>▬</span>";
 				break;
 			}
 		break;
 		case 9:
 			switch(true){
 				case save.buildings[9]>=0 && save.buildings[9]<=12:
-					document.getElementById("labInfo").innerHTML="Copper Bars: " + parseInt(2+save.buildings[9],10) +" Soft Planks: " + parseInt(8+save.buildings[9]*4,10);
+					document.getElementById("labInfo").innerHTML=parseInt(2+save.buildings[9],10)+"x<span class=copper>▰</span>, " + parseInt(8+save.buildings[9]*4,10)+"x<span class=soft>▬</span>";
 				break;
 				case save.buildings[9]>=13 && save.buildings[9]<=25:
-					document.getElementById("labInfo").innerHTML="Iron Bars: " + parseInt(save.buildings[9]-11,10) +" Hard Planks: " + parseInt(save.buildings[9]*4-44,10);
+					document.getElementById("labInfo").innerHTML=parseInt(save.buildings[9]-11,10)+"x<span class=iron>▰</span>, "+parseInt(save.buildings[9]*4-44,10)+"x<span class=hard>▬</span>";
 				break;
 				case save.buildings[9]>=26 && save.buildings[9]<=38:
-					document.getElementById("labInfo").innerHTML="Silver Bars: " + parseInt(2+save.buildings[9]-26,10) +" Ebony Planks: " + parseInt(save.buildings[9]*4-96,10);
+					document.getElementById("labInfo").innerHTML=parseInt(2+save.buildings[9]-26,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[9]*4-96,10)+"x<span class=ebony>▬</span>";
 				break;
 				case save.buildings[9]>=39:
-					document.getElementById("labInfo").innerHTML="Gold Bars: " + parseInt(save.buildings[9]-37,10) +" Pearl Planks: " + parseInt(save.buildings[9]*4-148,10);
+					document.getElementById("labInfo").innerHTML=parseInt(save.buildings[9]-37,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[9]*4-148,10)+"x<span class=pearl>▬</span>";
 				break;
 			}
 		break;
@@ -795,7 +828,7 @@ function updateThinkProgress(){
 		break;
 	}
 }
-function updateSmeltPlanet‌ThinkOnStart(){
+function updateSmeltPlane‌ThinkOnStart(){
 	updateSmeltProgress(0);
 	updateSmeltProgress(1);
 	updateSmeltProgress(2);
@@ -871,7 +904,7 @@ function updateChopProgress(){
 	}
 }
 function updateAll(){
-	updateSmeltPlanet‌ThinkOnStart();
+	updateSmeltPlane‌ThinkOnStart();
 	updateResources();
 	updateBuildings();
 	updateBuildingCosts();
@@ -896,10 +929,16 @@ function updateProgressColors(){
 	}
 }
 function updateThinkPoints(){
-	if(save.buildings[9]>=1){
-		document.getElementById("thinkShopPoints").innerHTML="TP: "+save.thinkPoints;
-	}else{
-	document.getElementById("thinkShopPoints").innerHTML="Think Points: "+save.thinkPoints;
+	switch(true){
+		case save.thinkPoints>=1000000:
+					document.getElementById("thinkShopPoints").innerHTML="TP: "+save.thinkPoints.toExponential(2);
+		break;
+		case save.buildings[9]>=1 || save.thinkPoints>=1000:
+			document.getElementById("thinkShopPoints").innerHTML="TP: "+save.thinkPoints.toLocaleString();
+		break;
+		default:
+			document.getElementById("thinkShopPoints").innerHTML="Think Points: "+save.thinkPoints.toLocaleString();
+		break;
 	}
 }
 function changeColor(){
@@ -977,18 +1016,22 @@ function doMine(){
 				case result>=9:
 					save.ore[3]+=1;
 					save.oreTotal[3]+=1;
+					if(save.ore[3]>=2){enableItem("smeltButton3")};
 				break;
 				case result>=7:
 					save.ore[2]+=1;
 					save.oreTotal[2]+=1;
+					if(save.ore[2]>=2){enableItem("smeltButton2")};
 				break;
 				case result>=4:
 					save.ore[1]+=1;
 					save.oreTotal[1]+=1;
+					if(save.ore[1]>=2){enableItem("smeltButton1")};
 				break;
 				default:
 					save.ore[0]+=1;
 					save.oreTotal[0]+=1;
+					if(save.ore[0]>=2){enableItem("smeltButton0")};
 				break;
 			}
 		break;
@@ -997,14 +1040,17 @@ function doMine(){
 				case result>=8:
 					save.ore[2]+=1;
 					save.oreTotal[2]+=1;
+					if(save.ore[2]>=2){enableItem("smeltButton2")};
 				break;
 				case result>=5:
 					save.ore[1]+=1;
 					save.oreTotal[1]+=1;
+					if(save.ore[1]>=2){enableItem("smeltButton1")};
 				break;
 				default:
 					save.ore[0]+=1;
 					save.oreTotal[0]+=1;
+					if(save.ore[0]>=2){enableItem("smeltButton0")};
 				break;
 			}
 		break;
@@ -1013,16 +1059,19 @@ function doMine(){
 				case result>=7:
 					save.ore[1]+=1;
 					save.oreTotal[1]+=1;
+					if(save.ore[1]>=2){enableItem("smeltButton1")};
 				break;
 				default:
 					save.ore[0]+=1;
 					save.oreTotal[0]+=1;
+					if(save.ore[0]>=2){enableItem("smeltButton0")};
 				break;
 			}
 		break;
 		default:
 			save.ore[0]+=1;
 			save.oreTotal[0]+=1;
+			if(save.ore[0]>=2){enableItem("smeltButton0")};
 		break;
 	}
 	updateResources();
@@ -1066,18 +1115,22 @@ function doChop(){
 				case result>=9:
 					save.wood[3]+=1;
 					save.woodTotal[3]+=1;
+					if(save.wood[3]>=1){enableItem("planeButton3")};
 				break;
 				case result>=7:
 					save.wood[2]+=1;
 					save.woodTotal[2]+=1;
+					if(save.wood[2]>=1){enableItem("planeButton2")};
 				break;
 				case result>=4:
 					save.wood[1]+=1;
 					save.woodTotal[1]+=1;
+					if(save.wood[1]>=1){enableItem("planeButton1")};
 				break;
 				default:
 					save.wood[0]+=1;
 					save.woodTotal[0]+=1;
+					if(save.wood[0]>=1){enableItem("planeButton0")};
 				break;
 			}
 		break;
@@ -1086,14 +1139,17 @@ function doChop(){
 				case result>=8:
 					save.wood[2]+=1;
 					save.woodTotal[2]+=1;
+					if(save.wood[2]>=1){enableItem("planeButton2")};
 				break;
 				case result>=5:
 					save.wood[1]+=1;
 					save.woodTotal[1]+=1;
+					if(save.wood[1]>=1){enableItem("planeButton1")};
 				break;
 				default:
 					save.wood[0]+=1;
 					save.woodTotal[0]+=1;
+					if(save.wood[0]>=1){enableItem("planeButton0")};
 				break;
 			}
 		break;
@@ -1102,21 +1158,25 @@ function doChop(){
 				case result>=7:
 					save.wood[1]+=1;
 					save.woodTotal[1]+=1;
+					if(save.wood[1]>=1){enableItem("planeButton1")};
 				break;
 				default:
 					save.wood[0]+=1;
 					save.woodTotal[0]+=1;
+					if(save.wood[0]>=1){enableItem("planeButton0")};
 				break;
 			}
 		break;
 		default:
 			save.wood[0]+=1;
 			save.woodTotal[0]+=1;
+			if(save.wood[0]>=1){enableItem("planeButton0")};
 		break;
 	}
 	updateResources();
 	
 }// Smelt
+// Smelt
 function smelt(id){
 	if(save.ore[id]>=2){
 		save.smeltProgress[id]+=1;
@@ -1125,6 +1185,7 @@ function smelt(id){
 			save.barTotal[id]+=1;
 			save.ore[id]-=2;
 			save.smeltProgress[id]=0;
+			if(save.ore[id]<=1){disableItem("smeltButton"+id)};
 		}
 		updateResources();
 		updateSmeltProgress(id);
@@ -1139,6 +1200,7 @@ function plane(id){
 			save.plankTotal[id]+=2;
 			save.wood[id]-=1;
 			save.planeProgress[id]=0;
+			if(save.wood[id]<=0){disableItem("planeButton"+id)};
 		}
 		updateResources();
 		updatePlaneProgress(id);
@@ -1449,7 +1511,7 @@ function buyBuilding(id){
 				case save.buildings[9]>=0 && save.buildings[9]<=12:
 					if(save.bar[0]>=2+save.buildings[9]  && save.plank[0]>=2+save.buildings[9] ){
 					save.bar[0]-=2+save.buildings[9];
-					save.plank[0]-=save.buildings[9]*4;
+					save.plank[0]-=8+save.buildings[9]*4;
 					save.buildings[9]+=1;
 					}
 				break;
@@ -1632,6 +1694,14 @@ function upgradeCheckStart(){
 		unlockItem("thinkShopWrapper");
 		unlockItem("thinkShopPoints");
 	}
+	if(save.ore[0]>=2){enableItem("smeltButton0")}else{disableItem("smeltButton0")};
+	if(save.ore[1]>=2){enableItem("smeltButton1")}else{disableItem("smeltButton1")};
+	if(save.ore[2]>=2){enableItem("smeltButton2")}else{disableItem("smeltButton2")};
+	if(save.ore[3]>=2){enableItem("smeltButton3")}else{disableItem("smeltButton3")};
+	if(save.wood[0]>=1){enableItem("planeButton0")}else{disableItem("planeButton0")};
+	if(save.wood[1]>=1){enableItem("planeButton1")}else{disableItem("planeButton1")};
+	if(save.wood[2]>=1){enableItem("planeButton2")}else{disableItem("planeButton2")};
+	if(save.wood[3]>=1){enableItem("planeButton3")}else{disableItem("planeButton3")};
 }
 function upgradeCheck(){
 	switch(true){//amount of thinkpoints needed to unlock. also unlocks everything below it.
@@ -1677,42 +1747,7 @@ function upgradeCheck(){
 			unlockItem("thinkShopWrapper");
 			unlockItem("thinkShopPoints");
 		case save.thinkPointsTotal>=0:
-			if(save.mineUpgraded[0]==false){
-				unlockItem("unlockButton16");
-			}
-			if(save.mineUpgraded[1]==false){
-				unlockItem("unlockButton17");
-			}
-			if(save.mineUpgraded[2]==false){
-				unlockItem("unlockButton18");
-			}
-			if(save.refineryUpgraded[0]==false){
-				unlockItem("unlockButton19");
-			}
-			if(save.refineryUpgraded[1]==false){
-				unlockItem("unlockButton20");
-			}
-			if(save.refineryUpgraded[2]==false){
-				unlockItem("unlockButton21");
-			}
-			if(save.yardUpgraded[0]==false){
-				unlockItem("unlockButton22");
-			}
-			if(save.yardUpgraded[1]==false){
-				unlockItem("unlockButton23");
-			}
-			if(save.yardUpgraded[2]==false){
-				unlockItem("unlockButton24");
-			}
-			if(save.sawUpgraded[0]==false){
-				unlockItem("unlockButton25");
-			}
-			if(save.sawUpgraded[1]==false){
-				unlockItem("unlockButton26");
-			}
-			if(save.sawUpgraded[2]==false){
-				unlockItem("unlockButton27");
-			}
+
 			if(save.labUpgraded[0]==false){
 				unlockItem("unlockButton28");
 			}
@@ -1721,6 +1756,40 @@ function upgradeCheck(){
 			}
 			if(save.labUpgraded[2]==false){
 				unlockItem("unlockButton30");
+			}
+		break;
+	}
+	switch(true){
+		case save.buildings[0]>=30 && save.buildings[1]>=30 && save.refineryUpgraded[2]==true:
+			if(save.mineUpgraded[2]==false){
+				unlockItem("unlockButton18");
+			}
+		break;
+		case save.buildings[0]>=20 && save.buildings[1]>=20 && save.refineryUpgraded[1]==true:
+			if(save.mineUpgraded[1]==false){
+				unlockItem("unlockButton17");
+			}
+		break;
+		case save.buildings[0]>=10 && save.buildings[1]>=10 && save.refineryUpgraded[0]==true:
+			if(save.mineUpgraded[0]==false){
+				unlockItem("unlockButton16");
+			}
+		break;
+	}
+	switch(true){
+		case save.buildings[2]>=30 && save.buildings[3]>=30 && save.sawUpgraded[2]==true:
+			if(save.yardUpgraded[2]==false){
+				unlockItem("unlockButton24");
+			}
+		break;
+		case save.buildings[2]>=20 && save.buildings[3]>=20 && save.sawUpgraded[1]==true:
+			if(save.yardUpgraded[1]==false){
+				unlockItem("unlockButton23");
+			}
+		break;
+		case save.buildings[2]>=10 && save.buildings[3]>=10 && save.sawUpgraded[0]==true:
+			if(save.yardUpgraded[0]==false){
+				unlockItem("unlockButton22");
 			}
 		break;
 	}
@@ -1758,6 +1827,36 @@ function upgradeCheck(){
 			unlockItem("chopSpeed");
 		break;
 	}
+	switch(true){
+		case save.buildings[1]>=30:
+			if(save.refineryUpgraded[2]==false && save.oreUnlocked[2]==true){
+				unlockItem("unlockButton21");
+			}
+		case save.buildings[1]>=20:
+			if(save.refineryUpgraded[1]==false && save.oreUnlocked[1]==true){
+				unlockItem("unlockButton20");
+			}
+		case save.buildings[1]>=10:
+			if(save.refineryUpgraded[0]==false && save.oreUnlocked[0]==true){
+				unlockItem("unlockButton19");
+			}
+		break;
+	}
+	switch(true){
+		case save.buildings[3]>=30:
+			if(save.sawUpgraded[2]==false && save.woodUnlocked[2]==true){
+				unlockItem("unlockButton27");
+			}
+		case save.buildings[3]>=20:
+			if(save.sawUpgraded[1]==false && save.woodUnlocked[1]==true){
+				unlockItem("unlockButton26");
+			}
+		case save.buildings[3]>=10:
+			if(save.sawUpgraded[0]==false && save.woodUnlocked[0]==true){
+				unlockItem("unlockButton25");
+			}
+		break;
+	}
 	if(save.buildings[9]>=1){
 		unlockItem("thinkSpeed");
 		updateThinkPoints();
@@ -1786,7 +1885,6 @@ function upgradeCheck(){
 		unlockItem("ironBarName");
 		unlockItem("ironBar");
 	}
-
 	if(save.oreTotal[2]>=1){
 		unlockItem("silverOreName");
 		unlockItem("silverOre");
@@ -1856,84 +1954,147 @@ function unlockUpgrade(id){
 			updateSpeed();
 		break;
 		case 27:
-			save.sawUpgraded[2]=true;
-			lockItem("unlockButton27");
+			if(save.plank[3]>=40){
+				save.sawUpgraded[2]=true;
+				save.plank[3]-=40;
+				lockItem("unlockButton27");
+			}
 		break;
 		case 26:
-			save.sawUpgraded[1]=true;
-			lockItem("unlockButton26");
+			if(save.plank[2]>=40){
+				save.sawUpgraded[1]=true;
+				save.plank[2]-=40;
+				lockItem("unlockButton26");
+			}
 		break;
 		case 25:
-			save.sawUpgraded[0]=true;
-			lockItem("unlockButton25");
-			updateSpeed();
+			if(save.plank[1]>=40){
+				save.sawUpgraded[0]=true;
+				save.plank[1]-=40;
+				lockItem("unlockButton25");
+				updateSpeed();
+			}
 		break;
 		case 24:
-			save.yardUpgraded[2]=true;
-			lockItem("unlockButton24");
-			updateSpeed();
+			if(save.plank[2]>=40 && save.plank[3]>=40){
+				save.yardUpgraded[2]=true;
+				save.plank[2]-=40;
+				save.plank[3]-=40;
+				lockItem("unlockButton24");
+				updateSpeed();
+			}
 		break;
 		case 23:
-			save.yardUpgraded[1]=true;
-			lockItem("unlockButton23");
-			updateSpeed();
+			if(save.plank[1]>=40 && save.plank[2]>=40){
+				save.yardUpgraded[1]=true;
+				save.plank[1]-=40;
+				save.plank[2]-=40;
+				lockItem("unlockButton23");
+				updateSpeed();
+		}
 		break;
 		case 22:
-			save.yardUpgraded[0]=true;
-			lockItem("unlockButton22");
-			updateSpeed();
+			if(save.plank[0]>=40 && save.plank[1]>=40){
+				save.yardUpgraded[0]=true;
+				save.plank[0]-=40;
+				save.plank[1]-=40;
+				lockItem("unlockButton22");
+				updateSpeed();
+		}
 		break;
 		case 21:
-			save.refineryUpgraded[2]=true;
-			lockItem("unlockButton21");
+			if(save.bar[3]>=10){
+				save.refineryUpgraded[2]=true;
+				save.bar[3]-=10;
+				lockItem("unlockButton21");
+			}
 		break;
 		case 20:
-			save.refineryUpgraded[1]=true;
-			lockItem("unlockButton20");
+			if(save.bar[2]>=10){
+				save.refineryUpgraded[1]=true;
+				save.bar[2]-=10;
+				lockItem("unlockButton20");
+			}
 		break;
 		case 19:
-			save.refineryUpgraded[0]=true;
-			lockItem("unlockButton19");
-			updateSpeed();
+			if(save.bar[1]>=10){
+				save.refineryUpgraded[0]=true;
+				save.bar[1]-=10;
+				lockItem("unlockButton19");
+				updateSpeed();
+			}
 		break;
 		case 18:
-			save.mineUpgraded[2]=true;
-			lockItem("unlockButton18");
-			updateSpeed();
+			if(save.bar[2]>=10 && save.bar[3]>=10){
+				save.mineUpgraded[2]=true;
+				save.bar[2]-=10;
+				save.bar[3]-=10;
+				lockItem("unlockButton18");
+				updateSpeed();
+			}
 		break;
 		case 17:
-			save.mineUpgraded[1]=true;
-			lockItem("unlockButton17");
-			updateSpeed();
+			if(save.bar[1]>=10 && save.bar[2]>=10){
+				save.mineUpgraded[1]=true;
+				save.bar[1]-=10;
+				save.bar[2]-=10;
+				lockItem("unlockButton17");
+				updateSpeed();
+			}
 		break;
 		case 16:
-			save.mineUpgraded[0]=true;
-			lockItem("unlockButton16");
-			updateSpeed();
+			if(save.bar[0]>=10 && save.bar[1]>=10){
+				save.mineUpgraded[0]=true;
+				save.bar[0]-=10;
+				save.bar[1]-=10;
+				lockItem("unlockButton16");
+				updateSpeed();
+			}
 		break;
 		case 15:
-			save.woodUnlocked[2]=true;
-			lockItem("unlockButton15");
+			if(save.plank[2]>=600){
+				save.woodUnlocked[2]=true;
+				save.plank[2]-=600;
+				lockItem("unlockButton15");
+			}
 		break;
 		case 14:
-			save.woodUnlocked[1]=true;
-			lockItem("unlockButton14");
+			if(save.plank[1]>=400){
+				save.woodUnlocked[1]=true;
+				save.plank[1]-=400;
+				lockItem("unlockButton14");
+			}
 		break;
 		case 13:
-			save.woodUnlocked[0]=true;
-			lockItem("unlockButton13");
+			if(save.plank[0]>=100){
+				save.woodUnlocked[0]=true;
+				save.plank[0]-=100;
+				lockItem("unlockButton13");
+			}
 		break;
 		case 12:
-			save.oreUnlocked[2]=true;
-			lockItem("unlockButton12");
+			if(save.bar[2]>=150){
+				save.oreUnlocked[2]=true;
+				save.bar[2]-=50;
+				lockItem("unlockButton12");
+				updateResources();
+			}
 		break;
 		case 11:
-			save.oreUnlocked[1]=true;
-			lockItem("unlockButton11");
+			if(save.bar[1]>=100){
+				save.oreUnlocked[1]=true;
+				save.bar[1]-=50;
+				lockItem("unlockButton11");
+				updateResources();
+			}
 		break;
 		case 10:
-			save.oreUnlocked[0]=true;
-			lockItem("unlockButton10");
+			if(save.bar[0]>=50){
+				save.oreUnlocked[0]=true;
+				save.bar[0]-=50;
+				lockItem("unlockButton10");
+				updateResources();
+			}
 		break;
 		case 9:
 			if(save.thinkPoints>=3){
@@ -2013,7 +2174,7 @@ function unlockUpgrade(id){
 			}
 		break;
 		case 2:
-		if(save.thinkPoints>=1){
+			if(save.thinkPoints>=1){
 				save.buildingsUnlocked[2]=true;
 				lockItem("unlockButton2");
 				unlockItem("yardName");
@@ -2281,6 +2442,19 @@ function lockOnReset(){
 	lockItem("plankWrapper");
 	lockItem("smeltInfo");
 	lockItem("planeInfo");
+}
+
+function devMode(value){
+	save.oreTotal[0]+=value;save.oreTotal[1]+=value;save.oreTotal[2]+=value;save.oreTotal[3]+=value;save.woodTotal[0]+=value;save.woodTotal[1]+=value;save.woodTotal[2]+=value;save.woodTotal[3]+=value;save.barTotal[0]+=value;save.barTotal[1]+=value;save.barTotal[2]+=value;save.barTotal[3]+=value;save.plankTotal[0]+=value;save.plankTotal[1]+=value;save.plankTotal[2]+=value;save.plankTotal[3]+=value;save.ore[0]+=value;save.ore[1]+=value;save.ore[2]+=value;save.ore[3]+=value;save.wood[0]+=value;save.wood[1]+=value;save.wood[2]+=value;save.wood[3]+=value;save.bar[0]+=value;save.bar[1]+=value;save.bar[2]+=value;save.bar[3]+=value;save.plank[0]+=value;save.plank[1]+=value;save.plank[2]+=value;save.plank[3]+=value;save.thinkPoints+=value;save.thinkPointsTotal+=value;updateAll();
+}
+function devMode2(value){
+	let x;
+	for(x=0;x<save.buildings.length;x++){
+		save.buildings[x]+=value;
+		save.buildingsUnlocked[x]=true;
+	}
+	upgradeCheckStart();
+	updateAll();
 }
 // lock and unlock
 function lockItem(item){

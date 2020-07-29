@@ -78,10 +78,10 @@
 				<div id=rawWrapper>
 					 <div id=oreWrapper class="resource locked">
 						<div id=oreName>
-							<div id=copperOreName class=" locked">Copper ore:</div>
-							<div id=ironOreName class=" locked">Iron ore:</div>
-							<div id=silverOreName class=" locked">Silver ore:</div>
-							<div id=goldOreName class=" locked">Gold ore:</div>
+							<div id=copperOreName class=" locked"><span class=copper>◉</span>Copper ore:</div>
+							<div id=ironOreName class=" locked"><span class=iron>◉</span>Iron ore:</div>
+							<div id=silverOreName class=" locked"><span class=silver>◉</span>Silver ore:</div>
+							<div id=goldOreName class=" locked"><span class=gold>◉</span>Gold ore:</div>
 						</div>
 						<div id=oreCount class=resourceCount>
 							<div id=copperOre class=" locked">0</div>
@@ -100,10 +100,10 @@
 					</div>
 					<div id=woodWrapper class="resource locked">
 						<div id=woodName>
-							<div id=softWoodName class=" locked">Softwood log:</div>
-							<div id=hardWoodName class=" locked">Hardwood log:</div>
-							<div id=ebonyWoodName class=" locked">Ebony log:</div>
-							<div id=pearlWoodName class=" locked">Pearl log:</div>
+							<div id=softWoodName class=" locked"><span class=soft>▮</span>Soft log:</div>
+							<div id=hardWoodName class=" locked"><span class=hard>▮</span>Hard log:</div>
+							<div id=ebonyWoodName class=" locked"><span class=ebony>▮</span>Ebony log:</div>
+							<div id=pearlWoodName class=" locked"><span class=pearl>▮</span>Pearl log:</div>
 						</div>
 						<div id=woodCount class=resourceCount>
 							<div id=softWood class=" locked">0</div>
@@ -124,10 +124,10 @@
 				<div id=processedWrapper>
 					<div id=barWrapper class="resource locked">
 						<div id=barName>
-							<div id=copperBarName class=" locked">Copper bar:</div>
-							<div id=ironBarName class=" locked">Iron bar:</div>
-							<div id=silverBarName class=" locked">Silver bar:</div>
-							<div id=goldBarName class=" locked">Gold bar:</div>
+							<div id=copperBarName class=" locked"><span class=copper>▰</span>Copper bar:</div>
+							<div id=ironBarName class=" locked"><span class=iron>▰</span>Iron bar:</div>
+							<div id=silverBarName class=" locked"><span class=silver>▰</span>Silver bar:</div>
+							<div id=goldBarName class=" locked"><span class=gold>▰</span>Gold bar:</div>
 						</div>
 						<div id=barCount class=resourceCount>
 							<div id=copperBar class=" locked">0</div>
@@ -138,10 +138,10 @@
 					</div>
 					<div id=plankWrapper class="resource locked">
 						<div id=plankName>
-							<div id=softPlankName class=" locked">Softwood plank:</div>
-							<div id=hardPlankName class=" locked">Hardwood plank:</div>
-							<div id=ebonyPlankName class=" locked">Ebony plank:</div>
-							<div id=pearlPlankName class=" locked">Pearl plank:</div>
+							<div id=softPlankName class=" locked"><span class=soft>▬</span>Soft plank:</div>
+							<div id=hardPlankName class=" locked"><span class=hard>▬</span>Hard plank:</div>
+							<div id=ebonyPlankName class=" locked"><span class=ebony>▬</span>Ebony plank:</div>
+							<div id=pearlPlankName class=" locked"><span class=pearl>▬</span>Pearl plank:</div>
 						</div>
 						<div id=plankCount class=resourceCount>
 							<div id=softPlank class=" locked">0</div>
@@ -291,75 +291,75 @@
 					</div>
 					<div id=unlockWrapper10 class=unlockWrapper>
 						<input id=unlockButton10 class="button unlockable locked" type=button value="unlock iron" onclick=unlockUpgrade(10);>
-						<div id=unlockInfo10 class="info info3"> TP</div>
+						<div id=unlockInfo10 class="info info3">50x<span class=copper>▰</span></div>
 					</div>
 					<div id=unlockWrapper11 class=unlockWrapper>
 						<input id=unlockButton11 class="button unlockable locked" type=button value="unlock silver" onclick=unlockUpgrade(11);>
-						<div id=unlockInfo11 class="info info3"> TP</div>
+						<div id=unlockInfo11 class="info info3">100x<span class=iron>▰</span></div>
 					</div>
 					<div id=unlockWrapper12 class=unlockWrapper>
 						<input id=unlockButton12 class="button unlockable locked" type=button value="unlock gold" onclick=unlockUpgrade(12);>
-						<div id=unlockInfo12 class="info info3"> TP</div>
+						<div id=unlockInfo12 class="info info3">150x<span class=silver>▰</span></div>
 					</div>
 					<div id=unlockWrapper13 class=unlockWrapper>
 						<input id=unlockButton13 class="button unlockable locked" type=button value="unlock hardwood" onclick=unlockUpgrade(13);>
-						<div id=unlockInfo13 class="info info3"> TP</div>
+						<div id=unlockInfo13 class="info info3">200x<span class=soft>▬</span></div>
 					</div>
 					<div id=unlockWrapper14 class=unlockWrapper>
 						<input id=unlockButton14 class="button unlockable locked" type=button value="unlock ebonywood" onclick=unlockUpgrade(14);>
-						<div id=unlockInfo14 class="info info3"> TP</div>
+						<div id=unlockInfo14 class="info info3">400x<span class=hard>▬</span></div>
 					</div>
 					<div id=unlockWrapper15 class=unlockWrapper>
 						<input id=unlockButton15 class="button unlockable locked" type=button value="unlock pearlwood" onclick=unlockUpgrade(15);>
-						<div id=unlockInfo15 class="info info3"> TP</div>
+						<div id=unlockInfo15 class="info info3">600x<span class=ebony>▬</span></div>
 					</div>
 					<div id=unlockWrapper16 class=unlockWrapper>
 						<input id=unlockButton16 class="button unlockable locked" type=button value="mine 2x" onclick=unlockUpgrade(16);>
-						<div id=unlockInfo16 class="info info3"> TP</div>
+						<div id=unlockInfo16 class="info info3">10x<span class=copper>▰</span> & 10x<span class=iron>▰</span></div>
 					</div>
 					<div id=unlockWrapper17 class=unlockWrapper>
 						<input id=unlockButton17 class="button unlockable locked" type=button value="mine 3x" onclick=unlockUpgrade(17);>
-						<div id=unlockInfo17 class="info info3"> TP</div>
+						<div id=unlockInfo17 class="info info3">10x<span class=iron>▰</span> & 10x<span class=silver>▰</span></div>
 					</div>
 					<div id=unlockWrapper18 class=unlockWrapper>
 						<input id=unlockButton18 class="button unlockable locked" type=button value="mine 4x" onclick=unlockUpgrade(18);>
-						<div id=unlockInfo18 class="info info3"> TP</div>
+						<div id=unlockInfo18 class="info info3">10x<span class=silver>▰</span> & 10x<span class=gold>▰</span></div>
 					</div>
 					<div id=unlockWrapper19 class=unlockWrapper>
 						<input id=unlockButton19 class="button unlockable locked" type=button value="smelt iron" onclick=unlockUpgrade(19);>
-						<div id=unlockInfo19 class="info info3"> TP</div>
+						<div id=unlockInfo19 class="info info3">10x<span class=iron>▰</span></div>
 					</div>
 					<div id=unlockWrapper20 class=unlockWrapper>
 						<input id=unlockButton20 class="button unlockable locked" type=button value="smelt silver" onclick=unlockUpgrade(20);>
-						<div id=unlockInfo20 class="info info3"> TP</div>
+						<div id=unlockInfo20 class="info info3">10x<span class=silver>▰</span></div>
 					</div>
 					<div id=unlockWrapper21 class=unlockWrapper>
 						<input id=unlockButton21 class="button unlockable locked" type=button value="smelt gold" onclick=unlockUpgrade(21);>
-						<div id=unlockInfo21 class="info info3"> TP</div>
+						<div id=unlockInfo21 class="info info3">10x<span class=gold>▰</span></div>
 					</div>
 					<div id=unlockWrapper22 class=unlockWrapper>
 						<input id=unlockButton22 class="button unlockable locked" type=button value="yard 2x" onclick=unlockUpgrade(22);>
-						<div id=unlockInfo22 class="info info3"> TP</div>
+						<div id=unlockInfo22 class="info info3">40x<span class=soft>▬</span> & 40x<span class=hard>▬</span></div>
 					</div>
 					<div id=unlockWrapper23 class=unlockWrapper>
 						<input id=unlockButton23 class="button unlockable locked" type=button value="yard 3x" onclick=unlockUpgrade(23);>
-						<div id=unlockInfo23 class="info info3"> TP</div>
+						<div id=unlockInfo23 class="info info3">40x<span class=hard>▬</span> & 40x<span class=ebony>▬</span></div>
 					</div>
 					<div id=unlockWrapper24 class=unlockWrapper>
 						<input id=unlockButton24 class="button unlockable locked" type=button value="yard 4x" onclick=unlockUpgrade(24);>
-						<div id=unlockInfo24 class="info info3"> TP</div>
+						<div id=unlockInfo24 class="info info3">40x<span class=ebony>▬</span> & 40x<span class=pearl>▬</span></div>
 					</div>
 					<div id=unlockWrapper25 class=unlockWrapper>
 						<input id=unlockButton25 class="button unlockable locked" type=button value="plane hard" onclick=unlockUpgrade(25);>
-						<div id=unlockInfo25 class="info info3"> TP</div>
+						<div id=unlockInfo25 class="info info3">40x<span class=hard>▬</span></div>
 					</div>
 					<div id=unlockWrapper26 class=unlockWrapper>
 						<input id=unlockButton26 class="button unlockable locked" type=button value="plane ebony" onclick=unlockUpgrade(26);>
-						<div id=unlockInfo26 class="info info3"> TP</div>
+						<div id=unlockInfo26 class="info info3">40x<span class=ebony>▬</span></div>
 					</div>
 					<div id=unlockWrapper27 class=unlockWrapper>
 						<input id=unlockButton27 class="button unlockable locked" type=button value="plane pearl" onclick=unlockUpgrade(27);>
-						<div id=unlockInfo27 class="info info3"> TP</div>
+						<div id=unlockInfo27 class="info info3">40x<span class=pearl>▬</span></div>
 					</div>
 					<div id=unlockWrapper28 class=unlockWrapper>
 						<input id=unlockButton28 class="button unlockable locked" type=button value="lab x2" onclick=unlockUpgrade(28);>
