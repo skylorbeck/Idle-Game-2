@@ -23,14 +23,14 @@ var save={
 	barTotal:[0,0,0,0],
 	plank:[0,0,0,0],//soft, hard. ebony, pearl
 	plankTotal:[0,0,0,0],
-	buildings:[0,0,0,0,0,0,0,0,0,0],//mine, smeltery, lumber yard, sawmill, tavern, blacksmith, woodshop, market, bank, lab
+	buildings:[0,0,0,0,0,0,0,0,0,0],//mine, smeltery, lumber yard, sawmill, tavern, hostel, brothel, market, bank, lab
 	smeltProgress:[0,0,0,0],//c,i,s,g
 	planeProgress:[0,0,0,0],//s,h,e,p
 	mineProgress:0,
 	chopProgress:0,
 	oreUnlocked:[false,false,false],//iron,silver,gold
 	woodUnlocked:[false,false,false],//hard,ebony,pearl
-	buildingsUnlocked:[false,false,false,false,false,false,false,false,false,false],//mine, smeltery, lumber yard, sawmill, tavern, blacksmith, woodshop, market, bank, lab
+	buildingsUnlocked:[false,false,false,false,false,false,false,false,false,false],//mine, smeltery, lumber yard, sawmill, tavern, hostel, brothel, market, bank, lab
 	mineUpgraded:[false,false,false],
 	refineryUpgraded:[false,false,false],
 	yardUpgraded:[false,false,false],
@@ -40,11 +40,6 @@ var save={
 	thinkPoints:0,
 	thinkPointsTotal:0,
 	townUnlocked:false,
-	thinkOneOffs:[false,false],
-	chopOneOffs:[false,false],
-	mineOneOffs:[false,false],
-	planeOneOffs:[false,false,false,false,false,false,false,false],
-	smeltOneOffs:[false,false,false,false,false,false,false,false],
 };
 var save3 = Object.assign({}, save); //JSON.parse(JSON.stringify(save));
 var save2 = JSON.parse(localStorage.getItem('idleGame2.save'));
@@ -140,14 +135,14 @@ function updateBuildings(){
 	document.getElementById("yardCount").innerHTML=save.buildings[2].toLocaleString();
 	document.getElementById("sawCount").innerHTML=save.buildings[3].toLocaleString();
 	document.getElementById("tavernCount").innerHTML=save.buildings[4].toLocaleString();
-	document.getElementById("blacksmithCount").innerHTML=save.buildings[5].toLocaleString();
-	document.getElementById("woodshopCount").innerHTML=save.buildings[6].toLocaleString();
+	document.getElementById("hostelCount").innerHTML=save.buildings[5].toLocaleString();
+	document.getElementById("brothelCount").innerHTML=save.buildings[6].toLocaleString();
 	document.getElementById("marketCount").innerHTML=save.buildings[7].toLocaleString();
 	document.getElementById("bankCount").innerHTML=save.buildings[8].toLocaleString();
 	document.getElementById("labCount").innerHTML=save.buildings[9].toLocaleString();
 	document.getElementById("tavernCountT").innerHTML=save.buildings[4].toLocaleString();
-	document.getElementById("blacksmithCountT").innerHTML=save.buildings[5].toLocaleString();
-	document.getElementById("woodshopCountT").innerHTML=save.buildings[6].toLocaleString();
+	document.getElementById("hostelCountT").innerHTML=save.buildings[5].toLocaleString();
+	document.getElementById("brothelCountT").innerHTML=save.buildings[6].toLocaleString();
 	document.getElementById("marketCountT").innerHTML=save.buildings[7].toLocaleString();
 	document.getElementById("bankCountT").innerHTML=save.buildings[8].toLocaleString();
 }
@@ -327,40 +322,40 @@ function updateBuildingCost(id){
 		case 5:
 			switch(true){
 				case save.buildings[5]>=0 && save.buildings[5]<=9:
-					document.getElementById("blacksmithInfo").innerHTML=parseInt(2+save.buildings[5],10)+"x<span class=copper>▰</span>, " + parseInt(8+save.buildings[5]*4,10)+"x<span class=soft>▬</span>";
+					document.getElementById("hostelInfo").innerHTML=parseInt(2+save.buildings[5],10)+"x<span class=copper>▰</span>, " + parseInt(8+save.buildings[5]*4,10)+"x<span class=soft>▬</span>";
 				break;
 				case save.buildings[5]>=10 && save.buildings[5]<=19:
-					document.getElementById("blacksmithInfo").innerHTML=parseInt(save.buildings[5]-8,10)+"x<span class=iron>▰</span>, "+parseInt(save.buildings[5]*4-32,10)+"x<span class=hard>▬</span>";
+					document.getElementById("hostelInfo").innerHTML=parseInt(save.buildings[5]-8,10)+"x<span class=iron>▰</span>, "+parseInt(save.buildings[5]*4-32,10)+"x<span class=hard>▬</span>";
 				break;
 				case save.buildings[5]>=20 && save.buildings[5]<=29:
-					document.getElementById("blacksmithInfo").innerHTML=parseInt(2+save.buildings[5]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[5]*4-72,10)+"x<span class=ebony>▬</span>";
+					document.getElementById("hostelInfo").innerHTML=parseInt(2+save.buildings[5]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[5]*4-72,10)+"x<span class=ebony>▬</span>";
 				break;
 				case save.buildings[5]>=30 && save.buildings[0]<=39:
-					document.getElementById("blacksmithInfo").innerHTML=parseInt(save.buildings[5]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[5]*4-112,10)+"x<span class=pearl>▬</span>";
+					document.getElementById("hostelInfo").innerHTML=parseInt(save.buildings[5]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[5]*4-112,10)+"x<span class=pearl>▬</span>";
 				break;
 				case save.buildings[5]>=40:
-					document.getElementById("blacksmithInfo").innerHTML="Max Reached";
-					disableItem("buyBlacksmith");
+					document.getElementById("hostelInfo").innerHTML="Max Reached";
+					disableItem("buyHostel");
 				break;
 			}
 		break;
 		case 6:
 			switch(true){
 				case save.buildings[6]>=0 && save.buildings[6]<=9:
-					document.getElementById("woodshopInfo").innerHTML=parseInt(2+save.buildings[6],10)+"x<span class=copper>▰</span>, " + parseInt(8+save.buildings[6]*4,10)+"x<span class=soft>▬</span>";
+					document.getElementById("brothelInfo").innerHTML=parseInt(2+save.buildings[6],10)+"x<span class=copper>▰</span>, " + parseInt(8+save.buildings[6]*4,10)+"x<span class=soft>▬</span>";
 				break;
 				case save.buildings[6]>=10 && save.buildings[6]<=19:
-					document.getElementById("woodshopInfo").innerHTML=parseInt(save.buildings[6]-8,10)+"x<span class=iron>▰</span>, "+parseInt(save.buildings[6]*4-32,10)+"x<span class=hard>▬</span>";
+					document.getElementById("brothelInfo").innerHTML=parseInt(save.buildings[6]-8,10)+"x<span class=iron>▰</span>, "+parseInt(save.buildings[6]*4-32,10)+"x<span class=hard>▬</span>";
 				break;
 				case save.buildings[6]>=20 && save.buildings[6]<=29:
-					document.getElementById("woodshopInfo").innerHTML=parseInt(2+save.buildings[6]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[6]*4-72,10)+"x<span class=ebony>▬</span>";
+					document.getElementById("brothelInfo").innerHTML=parseInt(2+save.buildings[6]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[6]*4-72,10)+"x<span class=ebony>▬</span>";
 				break;
 				case save.buildings[6]>=30 && save.buildings[0]<=39:
-					document.getElementById("woodshopInfo").innerHTML=parseInt(save.buildings[6]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[6]*4-112,10)+"x<span class=pearl>▬</span>";
+					document.getElementById("brothelInfo").innerHTML=parseInt(save.buildings[6]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[6]*4-112,10)+"x<span class=pearl>▬</span>";
 				break;
 				case save.buildings[6]>=40:
-					document.getElementById("woodshopInfo").innerHTML="Max Reached";
-					disableItem("buyWoodshop");
+					document.getElementById("brothelInfo").innerHTML="Max Reached";
+					disableItem("buyBrothel");
 				break;
 			}
 		break;
@@ -442,341 +437,153 @@ function updateSmeltProgress(id){
 	switch(true){
 		case id==0:
 			switch(true){
-				case save.buildings[2]>=40:
-					unlockItem("smeltProgress06");
+				case save.smeltProgress[0]==1:
+					unlockItem("smeltProgress00");
 				break;
-				case save.buildings[2]>=30:
-					switch(true){
-						case save.smeltOneOffs[1]==false:
-							unlockItem("smeltProgress04");
-							unlockItem("smeltProgress05");
-							lockItem("smeltProgress04");
-							lockItem("smeltProgress05");
-							save.smeltOneOffs[1]=true;
-						break;
-						case save.smeltProgress[0]>=1:
-							unlockItem("smeltProgress06");
-						break;
-						default:
-							unlockItem("smeltProgress06");
-							lockItem("smeltProgress06");
-						break;
-					}
+				case save.smeltProgress[0]==2:
+					unlockItem("smeltProgress00");
+					unlockItem("smeltProgress01");
 				break;
-				case save.buildings[2]>=20:
-					switch(true){
-						case save.smeltOneOffs[0]==false:
-							unlockItem("smeltProgress00");
-							unlockItem("smeltProgress01");
-							unlockItem("smeltProgress02");
-							unlockItem("smeltProgress03");
-							lockItem("smeltProgress00");
-							lockItem("smeltProgress01");
-							lockItem("smeltProgress02");
-							lockItem("smeltProgress03");
-							save.smeltOneOffs[0]=true;
-						break;
-						case save.smeltProgress[0]>=3:
-							unlockItem("smeltProgress04");
-							unlockItem("smeltProgress05");
-						break;
-						case save.smeltProgress[0]>=1:
-							unlockItem("smeltProgress04");
-						break;
-						default:
-							unlockItem("smeltProgress04");
-							unlockItem("smeltProgress05");
-							lockItem("smeltProgress04");
-							lockItem("smeltProgress05");
-						break;
-					}
+				case save.smeltProgress[0]==3:
+					unlockItem("smeltProgress00");
+					unlockItem("smeltProgress01");
+					unlockItem("smeltProgress02");
+				break;
+				case save.smeltProgress[0]==4:
+					unlockItem("smeltProgress00");
+					unlockItem("smeltProgress01");
+					unlockItem("smeltProgress02");
+					unlockItem("smeltProgress03");
+				break;
+				case save.smeltProgress[0]>=5:
+					lockItem("smeltProgress00");
+					lockItem("smeltProgress01");
+					lockItem("smeltProgress02");
+					lockItem("smeltProgress03");
 				break;
 				default:
-					switch(true){
-						case save.smeltProgress[0]==1:
-							unlockItem("smeltProgress00");
-						break;
-						case save.smeltProgress[0]==2:
-							unlockItem("smeltProgress00");
-							unlockItem("smeltProgress01");
-						break;
-						case save.smeltProgress[0]==3:
-							unlockItem("smeltProgress00");
-							unlockItem("smeltProgress01");
-							unlockItem("smeltProgress02");
-						break;
-						case save.smeltProgress[0]==4:
-							unlockItem("smeltProgress00");
-							unlockItem("smeltProgress01");
-							unlockItem("smeltProgress02");
-							unlockItem("smeltProgress03");
-						break;
-						default:
-							unlockItem("smeltProgress00");
-							unlockItem("smeltProgress01");
-							unlockItem("smeltProgress02");
-							unlockItem("smeltProgress03");
-							lockItem("smeltProgress00");
-							lockItem("smeltProgress01");
-							lockItem("smeltProgress02");
-							lockItem("smeltProgress03");
-						break;
-					}
+					unlockItem("smeltProgress00");
+					unlockItem("smeltProgress01");
+					unlockItem("smeltProgress02");
+					unlockItem("smeltProgress03");
+					lockItem("smeltProgress00");
+					lockItem("smeltProgress01");
+					lockItem("smeltProgress02");
+					lockItem("smeltProgress03");
 				break;
 			}
 		break;
 		case id==1:
 			switch(true){
-				case save.buildings[2]>=40:
-					unlockItem("smeltProgress16");
+				case save.smeltProgress[1]==1:
+					unlockItem("smeltProgress10");
 				break;
-				case save.buildings[2]>=30:
-					switch(true){
-						case save.smeltOneOffs[3]==false:
-							unlockItem("smeltProgress14");
-							unlockItem("smeltProgress15");
-							lockItem("smeltProgress14");
-							lockItem("smeltProgress15");
-							save.smeltOneOffs[3]=true;
-						break;
-						case save.smeltProgress[1]>=1:
-							unlockItem("smeltProgress16");
-						break;
-						default:
-							unlockItem("smeltProgress16");
-							lockItem("smeltProgress16");
-						break;
-					}
+				case save.smeltProgress[1]==2:
+					unlockItem("smeltProgress10");
+					unlockItem("smeltProgress11");
 				break;
-				case save.buildings[2]>=20:
-					switch(true){
-						case save.smeltOneOffs[2]==false:
-							unlockItem("smeltProgress10");
-							unlockItem("smeltProgress11");
-							unlockItem("smeltProgress12");
-							unlockItem("smeltProgress13");
-							lockItem("smeltProgress10");
-							lockItem("smeltProgress11");
-							lockItem("smeltProgress12");
-							lockItem("smeltProgress13");
-							save.smeltOneOffs[2]=true;
-						break;
-						case save.smeltProgress[1]>=3:
-							unlockItem("smeltProgress14");
-							unlockItem("smeltProgress15");
-						break;
-						case save.smeltProgress[1]>=1:
-							unlockItem("smeltProgress14");
-						break;
-						default:
-							unlockItem("smeltProgress14");
-							unlockItem("smeltProgress15");
-							lockItem("smeltProgress14");
-							lockItem("smeltProgress15");
-						break;
-					}
+				case save.smeltProgress[1]==3:
+					unlockItem("smeltProgress10");
+					unlockItem("smeltProgress11");
+					unlockItem("smeltProgress12");
+				break;
+				case save.smeltProgress[1]==4:
+					unlockItem("smeltProgress10");
+					unlockItem("smeltProgress11");
+					unlockItem("smeltProgress12");
+					unlockItem("smeltProgress13");
+				break;
+				case save.smeltProgress[1]>=5:
+					lockItem("smeltProgress10");
+					lockItem("smeltProgress11");
+					lockItem("smeltProgress12");
+					lockItem("smeltProgress13");
 				break;
 				default:
-					switch(true){
-						case save.smeltProgress[1]==1:
-							unlockItem("smeltProgress10");
-						break;
-						case save.smeltProgress[1]==2:
-							unlockItem("smeltProgress10");
-							unlockItem("smeltProgress11");
-						break;
-						case save.smeltProgress[1]==3:
-							unlockItem("smeltProgress10");
-							unlockItem("smeltProgress11");
-							unlockItem("smeltProgress12");
-						break;
-						case save.smeltProgress[1]==4:
-							unlockItem("smeltProgress10");
-							unlockItem("smeltProgress11");
-							unlockItem("smeltProgress12");
-							unlockItem("smeltProgress13");
-						break;
-						default:
-							unlockItem("smeltProgress10");
-							unlockItem("smeltProgress11");
-							unlockItem("smeltProgress12");
-							unlockItem("smeltProgress13");
-							lockItem("smeltProgress10");
-							lockItem("smeltProgress11");
-							lockItem("smeltProgress12");
-							lockItem("smeltProgress13");
-						break;
-					}
+					unlockItem("smeltProgress10");
+					unlockItem("smeltProgress11");
+					unlockItem("smeltProgress12");
+					unlockItem("smeltProgress13");
+					lockItem("smeltProgress10");
+					lockItem("smeltProgress11");
+					lockItem("smeltProgress12");
+					lockItem("smeltProgress13");
 				break;
 			}
 		break;
 		case id==2:
 			switch(true){
-				case save.buildings[2]>=40:
-					unlockItem("smeltProgress26");
+				case save.smeltProgress[2]==1:
+					unlockItem("smeltProgress20");
 				break;
-				case save.buildings[2]>=30:
-					switch(true){
-						case save.smeltOneOffs[5]==false:
-							unlockItem("smeltProgress24");
-							unlockItem("smeltProgress25");
-							lockItem("smeltProgress24");
-							lockItem("smeltProgress25");
-							save.smeltOneOffs[5]=true;
-						break;
-						case save.smeltProgress[2]>=1:
-							unlockItem("smeltProgress26");
-						break;
-						default:
-							unlockItem("smeltProgress26");
-							lockItem("smeltProgress26");
-						break;
-					}
+				case save.smeltProgress[2]==2:
+					unlockItem("smeltProgress20");
+					unlockItem("smeltProgress21");
 				break;
-				case save.buildings[2]>=20:
-					switch(true){
-						case save.smeltOneOffs[4]==false:
-							unlockItem("smeltProgress20");
-							unlockItem("smeltProgress21");
-							unlockItem("smeltProgress22");
-							unlockItem("smeltProgress23");
-							lockItem("smeltProgress20");
-							lockItem("smeltProgress21");
-							lockItem("smeltProgress22");
-							lockItem("smeltProgress23");
-							save.smeltOneOffs[4]=true;
-						break;
-						case save.smeltProgress[2]>=3:
-							unlockItem("smeltProgress24");
-							unlockItem("smeltProgress25");
-						break;
-						case save.smeltProgress[2]>=1:
-							unlockItem("smeltProgress24");
-						break;
-						default:
-							unlockItem("smeltProgress24");
-							unlockItem("smeltProgress25");
-							lockItem("smeltProgress24");
-							lockItem("smeltProgress25");
-						break;
-					}
+				case save.smeltProgress[2]==3:
+					unlockItem("smeltProgress20");
+					unlockItem("smeltProgress21");
+					unlockItem("smeltProgress22");
+				break;
+				case save.smeltProgress[2]==4:
+					unlockItem("smeltProgress20");
+					unlockItem("smeltProgress21");
+					unlockItem("smeltProgress22");
+					unlockItem("smeltProgress23");
+				break;
+				case save.smeltProgress[2]>=5:
+					lockItem("smeltProgress20");
+					lockItem("smeltProgress21");
+					lockItem("smeltProgress22");
+					lockItem("smeltProgress23");
 				break;
 				default:
-					switch(true){
-						case save.smeltProgress[2]==1:
-							unlockItem("smeltProgress20");
-						break;
-						case save.smeltProgress[2]==2:
-							unlockItem("smeltProgress20");
-							unlockItem("smeltProgress21");
-						break;
-						case save.smeltProgress[2]==3:
-							unlockItem("smeltProgress20");
-							unlockItem("smeltProgress21");
-							unlockItem("smeltProgress22");
-						break;
-						case save.smeltProgress[2]==4:
-							unlockItem("smeltProgress20");
-							unlockItem("smeltProgress21");
-							unlockItem("smeltProgress22");
-							unlockItem("smeltProgress23");
-						break;
-						default:
-							unlockItem("smeltProgress20");
-							unlockItem("smeltProgress21");
-							unlockItem("smeltProgress22");
-							unlockItem("smeltProgress23");
-							lockItem("smeltProgress20");
-							lockItem("smeltProgress21");
-							lockItem("smeltProgress22");
-							lockItem("smeltProgress23");
-						break;
-					}
+					unlockItem("smeltProgress20");
+					unlockItem("smeltProgress21");
+					unlockItem("smeltProgress22");
+					unlockItem("smeltProgress23");
+					lockItem("smeltProgress20");
+					lockItem("smeltProgress21");
+					lockItem("smeltProgress22");
+					lockItem("smeltProgress23");
 				break;
 			}
 		break;
 		case id==3:
 			switch(true){
-				case save.buildings[2]>=40:
-					unlockItem("smeltProgress36");
+				case save.smeltProgress[3]==1:
+					unlockItem("smeltProgress30");
 				break;
-				case save.buildings[2]>=30:
-					switch(true){
-						case save.smeltOneOffs[7]==false:
-							unlockItem("smeltProgress34");
-							unlockItem("smeltProgress35");
-							lockItem("smeltProgress34");
-							lockItem("smeltProgress35");
-							save.smeltOneOffs[7]=true;
-						break;
-						case save.smeltProgress[3]>=1:
-							unlockItem("smeltProgress36");
-						break;
-						default:
-							unlockItem("smeltProgress36");
-							lockItem("smeltProgress36");
-						break;
-					}
+				case save.smeltProgress[3]==2:
+					unlockItem("smeltProgress30");
+					unlockItem("smeltProgress31");
 				break;
-				case save.buildings[2]>=20:
-					switch(true){
-						case save.smeltOneOffs[6]==false:
-							unlockItem("smeltProgress30");
-							unlockItem("smeltProgress31");
-							unlockItem("smeltProgress32");
-							unlockItem("smeltProgress33");
-							lockItem("smeltProgress30");
-							lockItem("smeltProgress31");
-							lockItem("smeltProgress32");
-							lockItem("smeltProgress33");
-							save.smeltOneOffs[6]=true;
-						break;
-						case save.smeltProgress[3]>=3:
-							unlockItem("smeltProgress34");
-							unlockItem("smeltProgress35");
-						break;
-						case save.smeltProgress[3]>=1:
-							unlockItem("smeltProgress34");
-						break;
-						default:
-							unlockItem("smeltProgress34");
-							unlockItem("smeltProgress35");
-							lockItem("smeltProgress34");
-							lockItem("smeltProgress35");
-						break;
-					}
+				case save.smeltProgress[3]==3:
+					unlockItem("smeltProgress30");
+					unlockItem("smeltProgress31");
+					unlockItem("smeltProgress32");
+				break;
+				case save.smeltProgress[3]==4:
+					unlockItem("smeltProgress30");
+					unlockItem("smeltProgress31");
+					unlockItem("smeltProgress32");
+					unlockItem("smeltProgress33");
+				break;
+				case save.smeltProgress[3]>=5:
+					lockItem("smeltProgress30");
+					lockItem("smeltProgress31");
+					lockItem("smeltProgress32");
+					lockItem("smeltProgress33");
 				break;
 				default:
-					switch(true){
-						case save.smeltProgress[3]==1:
-							unlockItem("smeltProgress30");
-						break;
-						case save.smeltProgress[3]==2:
-							unlockItem("smeltProgress30");
-							unlockItem("smeltProgress31");
-						break;
-						case save.smeltProgress[3]==3:
-							unlockItem("smeltProgress30");
-							unlockItem("smeltProgress31");
-							unlockItem("smeltProgress32");
-						break;
-						case save.smeltProgress[3]==4:
-							unlockItem("smeltProgress30");
-							unlockItem("smeltProgress31");
-							unlockItem("smeltProgress32");
-							unlockItem("smeltProgress33");
-						break;
-						default:
-							unlockItem("smeltProgress30");
-							unlockItem("smeltProgress31");
-							unlockItem("smeltProgress32");
-							unlockItem("smeltProgress33");
-							lockItem("smeltProgress30");
-							lockItem("smeltProgress31");
-							lockItem("smeltProgress32");
-							lockItem("smeltProgress33");
-						break;
-					}
+					unlockItem("smeltProgress30");
+					unlockItem("smeltProgress31");
+					unlockItem("smeltProgress32");
+					unlockItem("smeltProgress33");
+					lockItem("smeltProgress30");
+					lockItem("smeltProgress31");
+					lockItem("smeltProgress32");
+					lockItem("smeltProgress33");
 				break;
 			}
 		break;
@@ -786,341 +593,153 @@ function updatePlaneProgress(id){
 	switch(true){
 		case id==0:
 			switch(true){
-				case save.buildings[4]>=40:
-					unlockItem("planeProgress06");
+				case save.planeProgress[0]==1:
+					unlockItem("planeProgress00");
 				break;
-				case save.buildings[4]>=30:
-					switch(true){
-						case save.planeOneOffs[1]==false:
-							unlockItem("planeProgress04");
-							unlockItem("planeProgress05");
-							lockItem("planeProgress04");
-							lockItem("planeProgress05");
-							save.planeOneOffs[1]=true;
-						break;
-						case save.planeProgress[0]>=1:
-							unlockItem("planeProgress06");
-						break;
-						default:
-							unlockItem("planeProgress06");
-							lockItem("planeProgress06");
-						break;
-					}
+				case save.planeProgress[0]==2:
+					unlockItem("planeProgress00");
+					unlockItem("planeProgress01");
 				break;
-				case save.buildings[4]>=20:
-					switch(true){
-						case save.planeOneOffs[0]==false:
-							unlockItem("planeProgress00");
-							unlockItem("planeProgress01");
-							unlockItem("planeProgress02");
-							unlockItem("planeProgress03");
-							lockItem("planeProgress00");
-							lockItem("planeProgress01");
-							lockItem("planeProgress02");
-							lockItem("planeProgress03");
-							save.planeOneOffs[0]=true;
-						break;
-						case save.planeProgress[0]>=3:
-							unlockItem("planeProgress04");
-							unlockItem("planeProgress05");
-						break;
-						case save.planeProgress[0]>=1:
-							unlockItem("planeProgress04");
-						break;
-						default:
-							unlockItem("planeProgress04");
-							unlockItem("planeProgress05");
-							lockItem("planeProgress04");
-							lockItem("planeProgress05");
-						break;
-					}
+				case save.planeProgress[0]==3:
+					unlockItem("planeProgress00");
+					unlockItem("planeProgress01");
+					unlockItem("planeProgress02");
+				break;
+				case save.planeProgress[0]==4:
+					unlockItem("planeProgress00");
+					unlockItem("planeProgress01");
+					unlockItem("planeProgress02");
+					unlockItem("planeProgress03");
+				break;
+				case save.planeProgress[0]>=5:
+					lockItem("planeProgress00");
+					lockItem("planeProgress01");
+					lockItem("planeProgress02");
+					lockItem("planeProgress03");
 				break;
 				default:
-					switch(true){
-						case save.planeProgress[0]==1:
-							unlockItem("planeProgress00");
-						break;
-						case save.planeProgress[0]==2:
-							unlockItem("planeProgress00");
-							unlockItem("planeProgress01");
-						break;
-						case save.planeProgress[0]==3:
-							unlockItem("planeProgress00");
-							unlockItem("planeProgress01");
-							unlockItem("planeProgress02");
-						break;
-						case save.planeProgress[0]==4:
-							unlockItem("planeProgress00");
-							unlockItem("planeProgress01");
-							unlockItem("planeProgress02");
-							unlockItem("planeProgress03");
-						break;
-						default:
-							unlockItem("planeProgress00");
-							unlockItem("planeProgress01");
-							unlockItem("planeProgress02");
-							unlockItem("planeProgress03");
-							lockItem("planeProgress00");
-							lockItem("planeProgress01");
-							lockItem("planeProgress02");
-							lockItem("planeProgress03");
-						break;
-					}
+					unlockItem("planeProgress00");
+					unlockItem("planeProgress01");
+					unlockItem("planeProgress02");
+					unlockItem("planeProgress03");
+					lockItem("planeProgress00");
+					lockItem("planeProgress01");
+					lockItem("planeProgress02");
+					lockItem("planeProgress03");
 				break;
 			}
 		break;
 		case id==1:
 			switch(true){
-				case save.buildings[4]>=40:
-					unlockItem("planeProgress16");
+				case save.planeProgress[1]==1:
+					unlockItem("planeProgress10");
 				break;
-				case save.buildings[4]>=30:
-					switch(true){
-						case save.planeOneOffs[3]==false:
-							unlockItem("planeProgress14");
-							unlockItem("planeProgress15");
-							lockItem("planeProgress14");
-							lockItem("planeProgress15");
-							save.planeOneOffs[3]=true;
-						break;
-						case save.planeProgress[1]>=1:
-							unlockItem("planeProgress16");
-						break;
-						default:
-							unlockItem("planeProgress16");
-							lockItem("planeProgress16");
-						break;
-					}
+				case save.planeProgress[1]==2:
+					unlockItem("planeProgress10");
+					unlockItem("planeProgress11");
 				break;
-				case save.buildings[4]>=20:
-					switch(true){
-						case save.planeOneOffs[2]==false:
-							unlockItem("planeProgress10");
-							unlockItem("planeProgress11");
-							unlockItem("planeProgress12");
-							unlockItem("planeProgress13");
-							lockItem("planeProgress10");
-							lockItem("planeProgress11");
-							lockItem("planeProgress12");
-							lockItem("planeProgress13");
-							save.planeOneOffs[2]=true;
-						break;
-						case save.planeProgress[1]>=3:
-							unlockItem("planeProgress14");
-							unlockItem("planeProgress15");
-						break;
-						case save.planeProgress[1]>=1:
-							unlockItem("planeProgress14");
-						break;
-						default:
-							unlockItem("planeProgress14");
-							unlockItem("planeProgress15");
-							lockItem("planeProgress14");
-							lockItem("planeProgress15");
-						break;
-					}
+				case save.planeProgress[1]==3:
+					unlockItem("planeProgress10");
+					unlockItem("planeProgress11");
+					unlockItem("planeProgress12");
+				break;
+				case save.planeProgress[1]==4:
+					unlockItem("planeProgress10");
+					unlockItem("planeProgress11");
+					unlockItem("planeProgress12");
+					unlockItem("planeProgress13");
+				break;
+				case save.planeProgress[1]>=5:
+					lockItem("planeProgress10");
+					lockItem("planeProgress11");
+					lockItem("planeProgress12");
+					lockItem("planeProgress13");
 				break;
 				default:
-					switch(true){
-						case save.planeProgress[1]==1:
-							unlockItem("planeProgress10");
-						break;
-						case save.planeProgress[1]==2:
-							unlockItem("planeProgress10");
-							unlockItem("planeProgress11");
-						break;
-						case save.planeProgress[1]==3:
-							unlockItem("planeProgress10");
-							unlockItem("planeProgress11");
-							unlockItem("planeProgress12");
-						break;
-						case save.planeProgress[1]==4:
-							unlockItem("planeProgress10");
-							unlockItem("planeProgress11");
-							unlockItem("planeProgress12");
-							unlockItem("planeProgress13");
-						break;
-						default:
-							unlockItem("planeProgress10");
-							unlockItem("planeProgress11");
-							unlockItem("planeProgress12");
-							unlockItem("planeProgress13");
-							lockItem("planeProgress10");
-							lockItem("planeProgress11");
-							lockItem("planeProgress12");
-							lockItem("planeProgress13");
-						break;
-					}
+					unlockItem("planeProgress10");
+					unlockItem("planeProgress11");
+					unlockItem("planeProgress12");
+					unlockItem("planeProgress13");
+					lockItem("planeProgress10");
+					lockItem("planeProgress11");
+					lockItem("planeProgress12");
+					lockItem("planeProgress13");
 				break;
 			}
 		break;
 		case id==2:
 			switch(true){
-				case save.buildings[4]>=40:
-					unlockItem("planeProgress26");
+				case save.planeProgress[2]==1:
+					unlockItem("planeProgress20");
 				break;
-				case save.buildings[4]>=30:
-					switch(true){
-						case save.planeOneOffs[5]==false:
-							unlockItem("planeProgress24");
-							unlockItem("planeProgress25");
-							lockItem("planeProgress24");
-							lockItem("planeProgress25");
-							save.planeOneOffs[5]=true;
-						break;
-						case save.planeProgress[2]>=1:
-							unlockItem("planeProgress26");
-						break;
-						default:
-							unlockItem("planeProgress26");
-							lockItem("planeProgress26");
-						break;
-					}
+				case save.planeProgress[2]==2:
+					unlockItem("planeProgress20");
+					unlockItem("planeProgress21");
 				break;
-				case save.buildings[4]>=20:
-					switch(true){
-						case save.planeOneOffs[4]==false:
-							unlockItem("planeProgress20");
-							unlockItem("planeProgress21");
-							unlockItem("planeProgress22");
-							unlockItem("planeProgress23");
-							lockItem("planeProgress20");
-							lockItem("planeProgress21");
-							lockItem("planeProgress22");
-							lockItem("planeProgress23");
-							save.planeOneOffs[4]=true;
-						break;
-						case save.planeProgress[2]>=3:
-							unlockItem("planeProgress24");
-							unlockItem("planeProgress25");
-						break;
-						case save.planeProgress[2]>=1:
-							unlockItem("planeProgress24");
-						break;
-						default:
-							unlockItem("planeProgress24");
-							unlockItem("planeProgress25");
-							lockItem("planeProgress24");
-							lockItem("planeProgress25");
-						break;
-					}
+				case save.planeProgress[2]==3:
+					unlockItem("planeProgress20");
+					unlockItem("planeProgress21");
+					unlockItem("planeProgress22");
+				break;
+				case save.planeProgress[2]==4:
+					unlockItem("planeProgress20");
+					unlockItem("planeProgress21");
+					unlockItem("planeProgress22");
+					unlockItem("planeProgress23");
+				break;
+				case save.planeProgress[2]>=5:
+					lockItem("planeProgress20");
+					lockItem("planeProgress21");
+					lockItem("planeProgress22");
+					lockItem("planeProgress23");
 				break;
 				default:
-					switch(true){
-						case save.planeProgress[2]==1:
-							unlockItem("planeProgress20");
-						break;
-						case save.planeProgress[2]==2:
-							unlockItem("planeProgress20");
-							unlockItem("planeProgress21");
-						break;
-						case save.planeProgress[2]==3:
-							unlockItem("planeProgress20");
-							unlockItem("planeProgress21");
-							unlockItem("planeProgress22");
-						break;
-						case save.planeProgress[2]==4:
-							unlockItem("planeProgress20");
-							unlockItem("planeProgress21");
-							unlockItem("planeProgress22");
-							unlockItem("planeProgress23");
-						break;
-						default:
-							unlockItem("planeProgress20");
-							unlockItem("planeProgress21");
-							unlockItem("planeProgress22");
-							unlockItem("planeProgress23");
-							lockItem("planeProgress20");
-							lockItem("planeProgress21");
-							lockItem("planeProgress22");
-							lockItem("planeProgress23");
-						break;
-					}
+					unlockItem("planeProgress20");
+					unlockItem("planeProgress21");
+					unlockItem("planeProgress22");
+					unlockItem("planeProgress23");
+					lockItem("planeProgress20");
+					lockItem("planeProgress21");
+					lockItem("planeProgress22");
+					lockItem("planeProgress23");
 				break;
 			}
 		break;
 		case id==3:
 			switch(true){
-				case save.buildings[4]>=40:
-					unlockItem("planeProgress36");
+				case save.planeProgress[3]==1:
+					unlockItem("planeProgress30");
 				break;
-				case save.buildings[4]>=30:
-					switch(true){
-						case save.planeOneOffs[7]==false:
-							unlockItem("planeProgress34");
-							unlockItem("planeProgress35");
-							lockItem("planeProgress34");
-							lockItem("planeProgress35");
-							save.planeOneOffs[7]=true;
-						break;
-						case save.planeProgress[3]>=1:
-							unlockItem("planeProgress36");
-						break;
-						default:
-							unlockItem("planeProgress36");
-							lockItem("planeProgress36");
-						break;
-					}
+				case save.planeProgress[3]==2:
+					unlockItem("planeProgress30");
+					unlockItem("planeProgress31");
 				break;
-				case save.buildings[4]>=20:
-					switch(true){
-						case save.planeOneOffs[6]==false:
-							unlockItem("planeProgress30");
-							unlockItem("planeProgress31");
-							unlockItem("planeProgress32");
-							unlockItem("planeProgress33");
-							lockItem("planeProgress30");
-							lockItem("planeProgress31");
-							lockItem("planeProgress32");
-							lockItem("planeProgress33");
-							save.planeOneOffs[6]=true;
-						break;
-						case save.planeProgress[3]>=3:
-							unlockItem("planeProgress34");
-							unlockItem("planeProgress35");
-						break;
-						case save.planeProgress[3]>=1:
-							unlockItem("planeProgress34");
-						break;
-						default:
-							unlockItem("planeProgress34");
-							unlockItem("planeProgress35");
-							lockItem("planeProgress34");
-							lockItem("planeProgress35");
-						break;
-					}
+				case save.planeProgress[3]==3:
+					unlockItem("planeProgress30");
+					unlockItem("planeProgress31");
+					unlockItem("planeProgress32");
+				break;
+				case save.planeProgress[3]==4:
+					unlockItem("planeProgress30");
+					unlockItem("planeProgress31");
+					unlockItem("planeProgress32");
+					unlockItem("planeProgress33");
+				break;
+				case save.planeProgress[3]>=5:
+					lockItem("planeProgress30");
+					lockItem("planeProgress31");
+					lockItem("planeProgress32");
+					lockItem("planeProgress33");
 				break;
 				default:
-					switch(true){
-						case save.planeProgress[3]==1:
-							unlockItem("planeProgress30");
-						break;
-						case save.planeProgress[3]==2:
-							unlockItem("planeProgress30");
-							unlockItem("planeProgress31");
-						break;
-						case save.planeProgress[3]==3:
-							unlockItem("planeProgress30");
-							unlockItem("planeProgress31");
-							unlockItem("planeProgress32");
-						break;
-						case save.planeProgress[3]==4:
-							unlockItem("planeProgress30");
-							unlockItem("planeProgress31");
-							unlockItem("planeProgress32");
-							unlockItem("planeProgress33");
-						break;
-						default:
-							unlockItem("planeProgress30");
-							unlockItem("planeProgress31");
-							unlockItem("planeProgress32");
-							unlockItem("planeProgress33");
-							lockItem("planeProgress30");
-							lockItem("planeProgress31");
-							lockItem("planeProgress32");
-							lockItem("planeProgress33");
-						break;
-					}
+					unlockItem("planeProgress30");
+					unlockItem("planeProgress31");
+					unlockItem("planeProgress32");
+					unlockItem("planeProgress33");
+					lockItem("planeProgress30");
+					lockItem("planeProgress31");
+					lockItem("planeProgress32");
+					lockItem("planeProgress33");
 				break;
 			}
 		break;
@@ -1128,254 +747,133 @@ function updatePlaneProgress(id){
 }
 function updateThinkProgress(){
 	switch(true){
-		case save.buildings[9]>=39:
-			switch(true){
-				case save.thinkOneOffs[1]==false:
-					unlockItem("thinkProgress12");
-					unlockItem("thinkProgress13");
-					unlockItem("thinkProgress14");
-					unlockItem("thinkProgress15");
-					unlockItem("thinkProgress16");
-					unlockItem("thinkProgress17");
-					lockItem("thinkProgress12");
-					lockItem("thinkProgress13");
-					lockItem("thinkProgress14");
-					lockItem("thinkProgress15");
-					lockItem("thinkProgress16");
-					lockItem("thinkProgress17");
-					save.thinkOneOffs[1]=true;
-				break;
-				case save.thinkProgress>=9:
-					unlockItem("thinkProgress18");
-					unlockItem("thinkProgress19");
-					unlockItem("thinkProgress20");
-				break;
-				case save.thinkProgress>=5:
-					unlockItem("thinkProgress18");
-					unlockItem("thinkProgress19");
-				break;
-				case save.thinkProgress>=1:
-					unlockItem("thinkProgress18");
-				break;
-				default:
-					unlockItem("thinkProgress18");
-					unlockItem("thinkProgress19");
-					unlockItem("thinkProgress20");
-					lockItem("thinkProgress18");
-					lockItem("thinkProgress19");
-					lockItem("thinkProgress20");
-				break;
-			}
+		case save.thinkProgress==1:
+			unlockItem("thinkProgress0");
 		break;
-		case save.buildings[9]>=26:
-			switch(true){
-				case save.thinkOneOffs[0]==false:
-					unlockItem("thinkProgress0");
-					unlockItem("thinkProgress1");
-					unlockItem("thinkProgress2");
-					unlockItem("thinkProgress3");
-					unlockItem("thinkProgress4");
-					unlockItem("thinkProgress5");
-					unlockItem("thinkProgress6");
-					unlockItem("thinkProgress7");
-					unlockItem("thinkProgress8");
-					unlockItem("thinkProgress9");
-					unlockItem("thinkProgress10");
-					unlockItem("thinkProgress11");
-					lockItem("thinkProgress0");
-					lockItem("thinkProgress1");
-					lockItem("thinkProgress2");
-					lockItem("thinkProgress3");
-					lockItem("thinkProgress4");
-					lockItem("thinkProgress5");
-					lockItem("thinkProgress6");
-					lockItem("thinkProgress7");
-					lockItem("thinkProgress8");
-					lockItem("thinkProgress9");
-					lockItem("thinkProgress10");
-					lockItem("thinkProgress11");
-					save.thinkOneOffs[0]=true;
-				break;
-				case save.thinkProgress>=11:
-					unlockItem("thinkProgress12");
-					unlockItem("thinkProgress13");
-					unlockItem("thinkProgress14");
-					unlockItem("thinkProgress15");
-					unlockItem("thinkProgress16");
-					unlockItem("thinkProgress17");
-				break;
-				case save.thinkProgress>=9:
-					unlockItem("thinkProgress12");
-					unlockItem("thinkProgress13");
-					unlockItem("thinkProgress14");
-					unlockItem("thinkProgress15");
-					unlockItem("thinkProgress16");
-				break;
-				case save.thinkProgress>=7:
-					unlockItem("thinkProgress12");
-					unlockItem("thinkProgress13");
-					unlockItem("thinkProgress14");
-					unlockItem("thinkProgress15");
-				break;
-				case save.thinkProgress>=5:
-					unlockItem("thinkProgress12");
-					unlockItem("thinkProgress13");
-					unlockItem("thinkProgress14");
-				break;
-				case save.thinkProgress>=3:
-					unlockItem("thinkProgress12");
-					unlockItem("thinkProgress13");
-				break;
-				case save.thinkProgress>=1:
-					unlockItem("thinkProgress12");
-				break;
-				default:
-					unlockItem("thinkProgress12");
-					unlockItem("thinkProgress13");
-					unlockItem("thinkProgress14");
-					unlockItem("thinkProgress15");
-					unlockItem("thinkProgress16");
-					unlockItem("thinkProgress17");
-					lockItem("thinkProgress12");
-					lockItem("thinkProgress13");
-					lockItem("thinkProgress14");
-					lockItem("thinkProgress15");
-					lockItem("thinkProgress16");
-					lockItem("thinkProgress17");
-				break;
-			}
+		case save.thinkProgress==2:
+			unlockItem("thinkProgress0");
+			unlockItem("thinkProgress1");
+		break;
+		case save.thinkProgress==3:
+			unlockItem("thinkProgress0");
+			unlockItem("thinkProgress1");
+			unlockItem("thinkProgress2");
+		break;
+		case save.thinkProgress==4:
+			unlockItem("thinkProgress0");
+			unlockItem("thinkProgress1");
+			unlockItem("thinkProgress2");
+			unlockItem("thinkProgress3");
+		break;
+		case save.thinkProgress==5:
+			unlockItem("thinkProgress0");
+			unlockItem("thinkProgress1");
+			unlockItem("thinkProgress2");
+			unlockItem("thinkProgress3");
+			unlockItem("thinkProgress4");
+		break;
+		case save.thinkProgress==6:
+			unlockItem("thinkProgress0");
+			unlockItem("thinkProgress1");
+			unlockItem("thinkProgress2");
+			unlockItem("thinkProgress3");
+			unlockItem("thinkProgress4");
+			unlockItem("thinkProgress5");
+		break;
+		case save.thinkProgress==7:
+			unlockItem("thinkProgress0");
+			unlockItem("thinkProgress1");
+			unlockItem("thinkProgress2");
+			unlockItem("thinkProgress3");
+			unlockItem("thinkProgress4");
+			unlockItem("thinkProgress5");
+			unlockItem("thinkProgress6");
+		break;
+		case save.thinkProgress==8:
+			unlockItem("thinkProgress0");
+			unlockItem("thinkProgress1");
+			unlockItem("thinkProgress2");
+			unlockItem("thinkProgress3");
+			unlockItem("thinkProgress4");
+			unlockItem("thinkProgress5");
+			unlockItem("thinkProgress6");
+			unlockItem("thinkProgress7");
+		break;
+		case save.thinkProgress==9:
+			unlockItem("thinkProgress0");
+			unlockItem("thinkProgress1");
+			unlockItem("thinkProgress2");
+			unlockItem("thinkProgress3");
+			unlockItem("thinkProgress4");
+			unlockItem("thinkProgress5");
+			unlockItem("thinkProgress6");
+			unlockItem("thinkProgress7");
+			unlockItem("thinkProgress8");
+		break;
+		case save.thinkProgress==10:
+			unlockItem("thinkProgress0");
+			unlockItem("thinkProgress1");
+			unlockItem("thinkProgress2");
+			unlockItem("thinkProgress3");
+			unlockItem("thinkProgress4");
+			unlockItem("thinkProgress5");
+			unlockItem("thinkProgress6");
+			unlockItem("thinkProgress7");
+			unlockItem("thinkProgress8");
+			unlockItem("thinkProgress9");
+		break;
+		case save.thinkProgress==11:
+			unlockItem("thinkProgress0");
+			unlockItem("thinkProgress1");
+			unlockItem("thinkProgress2");
+			unlockItem("thinkProgress3");
+			unlockItem("thinkProgress4");
+			unlockItem("thinkProgress5");
+			unlockItem("thinkProgress6");
+			unlockItem("thinkProgress7");
+			unlockItem("thinkProgress8");
+			unlockItem("thinkProgress9");
+			unlockItem("thinkProgress10");
+		break;
+		case save.thinkProgress==12:
+			unlockItem("thinkProgress0");
+			unlockItem("thinkProgress1");
+			unlockItem("thinkProgress2");
+			unlockItem("thinkProgress3");
+			unlockItem("thinkProgress4");
+			unlockItem("thinkProgress5");
+			unlockItem("thinkProgress6");
+			unlockItem("thinkProgress7");
+			unlockItem("thinkProgress8");
+			unlockItem("thinkProgress9");
+			unlockItem("thinkProgress10");
+			unlockItem("thinkProgress11");
 		break;
 		default:
-			switch(true){
-				case save.thinkProgress==1:
-					unlockItem("thinkProgress0");
-				break;
-				case save.thinkProgress==2:
-					unlockItem("thinkProgress0");
-					unlockItem("thinkProgress1");
-				break;
-				case save.thinkProgress==3:
-					unlockItem("thinkProgress0");
-					unlockItem("thinkProgress1");
-					unlockItem("thinkProgress2");
-				break;
-				case save.thinkProgress==4:
-					unlockItem("thinkProgress0");
-					unlockItem("thinkProgress1");
-					unlockItem("thinkProgress2");
-					unlockItem("thinkProgress3");
-				break;
-				case save.thinkProgress==5:
-					unlockItem("thinkProgress0");
-					unlockItem("thinkProgress1");
-					unlockItem("thinkProgress2");
-					unlockItem("thinkProgress3");
-					unlockItem("thinkProgress4");
-				break;
-				case save.thinkProgress==6:
-					unlockItem("thinkProgress0");
-					unlockItem("thinkProgress1");
-					unlockItem("thinkProgress2");
-					unlockItem("thinkProgress3");
-					unlockItem("thinkProgress4");
-					unlockItem("thinkProgress5");
-				break;
-				case save.thinkProgress==7:
-					unlockItem("thinkProgress0");
-					unlockItem("thinkProgress1");
-					unlockItem("thinkProgress2");
-					unlockItem("thinkProgress3");
-					unlockItem("thinkProgress4");
-					unlockItem("thinkProgress5");
-					unlockItem("thinkProgress6");
-				break;
-				case save.thinkProgress==8:
-					unlockItem("thinkProgress0");
-					unlockItem("thinkProgress1");
-					unlockItem("thinkProgress2");
-					unlockItem("thinkProgress3");
-					unlockItem("thinkProgress4");
-					unlockItem("thinkProgress5");
-					unlockItem("thinkProgress6");
-					unlockItem("thinkProgress7");
-				break;
-				case save.thinkProgress==9:
-					unlockItem("thinkProgress0");
-					unlockItem("thinkProgress1");
-					unlockItem("thinkProgress2");
-					unlockItem("thinkProgress3");
-					unlockItem("thinkProgress4");
-					unlockItem("thinkProgress5");
-					unlockItem("thinkProgress6");
-					unlockItem("thinkProgress7");
-					unlockItem("thinkProgress8");
-				break;
-				case save.thinkProgress==10:
-					unlockItem("thinkProgress0");
-					unlockItem("thinkProgress1");
-					unlockItem("thinkProgress2");
-					unlockItem("thinkProgress3");
-					unlockItem("thinkProgress4");
-					unlockItem("thinkProgress5");
-					unlockItem("thinkProgress6");
-					unlockItem("thinkProgress7");
-					unlockItem("thinkProgress8");
-					unlockItem("thinkProgress9");
-				break;
-				case save.thinkProgress==11:
-					unlockItem("thinkProgress0");
-					unlockItem("thinkProgress1");
-					unlockItem("thinkProgress2");
-					unlockItem("thinkProgress3");
-					unlockItem("thinkProgress4");
-					unlockItem("thinkProgress5");
-					unlockItem("thinkProgress6");
-					unlockItem("thinkProgress7");
-					unlockItem("thinkProgress8");
-					unlockItem("thinkProgress9");
-					unlockItem("thinkProgress10");
-				break;
-				case save.thinkProgress==12:
-					unlockItem("thinkProgress0");
-					unlockItem("thinkProgress1");
-					unlockItem("thinkProgress2");
-					unlockItem("thinkProgress3");
-					unlockItem("thinkProgress4");
-					unlockItem("thinkProgress5");
-					unlockItem("thinkProgress6");
-					unlockItem("thinkProgress7");
-					unlockItem("thinkProgress8");
-					unlockItem("thinkProgress9");
-					unlockItem("thinkProgress10");
-					unlockItem("thinkProgress11");
-				break;
-				default:
-					unlockItem("thinkProgress0");
-					unlockItem("thinkProgress1");
-					unlockItem("thinkProgress2");
-					unlockItem("thinkProgress3");
-					unlockItem("thinkProgress4");
-					unlockItem("thinkProgress5");
-					unlockItem("thinkProgress6");
-					unlockItem("thinkProgress7");
-					unlockItem("thinkProgress8");
-					unlockItem("thinkProgress9");
-					unlockItem("thinkProgress10");
-					unlockItem("thinkProgress11");
-					lockItem("thinkProgress0");
-					lockItem("thinkProgress1");
-					lockItem("thinkProgress2");
-					lockItem("thinkProgress3");
-					lockItem("thinkProgress4");
-					lockItem("thinkProgress5");
-					lockItem("thinkProgress6");
-					lockItem("thinkProgress7");
-					lockItem("thinkProgress8");
-					lockItem("thinkProgress9");
-					lockItem("thinkProgress10");
-					lockItem("thinkProgress11");
-				break;
-			}
+			unlockItem("thinkProgress0");
+			unlockItem("thinkProgress1");
+			unlockItem("thinkProgress2");
+			unlockItem("thinkProgress3");
+			unlockItem("thinkProgress4");
+			unlockItem("thinkProgress5");
+			unlockItem("thinkProgress6");
+			unlockItem("thinkProgress7");
+			unlockItem("thinkProgress8");
+			unlockItem("thinkProgress9");
+			unlockItem("thinkProgress10");
+			unlockItem("thinkProgress11");
+			lockItem("thinkProgress0");
+			lockItem("thinkProgress1");
+			lockItem("thinkProgress2");
+			lockItem("thinkProgress3");
+			lockItem("thinkProgress4");
+			lockItem("thinkProgress5");
+			lockItem("thinkProgress6");
+			lockItem("thinkProgress7");
+			lockItem("thinkProgress8");
+			lockItem("thinkProgress9");
+			lockItem("thinkProgress10");
+			lockItem("thinkProgress11");
 		break;
 	}
 }
@@ -1392,171 +890,65 @@ function updateSmeltPlane‌ThinkOnStart(){
 }
 function updateMineProgress(){
 	switch(true){
-		case save.buildings[0]>=40:
-			unlockItem("mineProgress6");
+		case save.mineProgress==1:
+			unlockItem("mineProgress0");
 		break;
-		case save.buildings[0]>=30:
-			switch(true){
-				case save.mineOneOffs[1]==false:
-					unlockItem("mineProgress5");
-					unlockItem("mineProgress4");
-					lockItem("mineProgress5");
-					lockItem("mineProgress4");
-					save.mineOneOffs[1]=true;
-				break;
-				case save.mineProgress>=1:
-					unlockItem("mineProgress6");
-				break;
-				default:
-					lockItem("mineProgress6");
-				break;
-			}
+		case save.mineProgress==2:
+			unlockItem("mineProgress0");
+			unlockItem("mineProgress1");
 		break;
-		case save.buildings[0]>=20:
-			switch(true){
-				case save.mineOneOffs[0]==false:
-					unlockItem("mineProgress0");
-					unlockItem("mineProgress1");
-					unlockItem("mineProgress2");
-					unlockItem("mineProgress3");
-					lockItem("mineProgress0");
-					lockItem("mineProgress1");
-					lockItem("mineProgress2");
-					lockItem("mineProgress3");
-					save.mineOneOffs[0]=true;
-				break;
-				case save.mineProgress>=3:
-					unlockItem("mineProgress4");
-					unlockItem("mineProgress5");
-				break;
-				case save.mineProgress>=1:
-					unlockItem("mineProgress4");
-				break;
-				default:
-					unlockItem("mineProgress4");
-					unlockItem("mineProgress5");
-					lockItem("mineProgress4");
-					lockItem("mineProgress5");
-				break;
-			}
+		case save.mineProgress==3:
+			unlockItem("mineProgress0");
+			unlockItem("mineProgress1");
+			unlockItem("mineProgress2");
+		break;
+		case save.mineProgress==4:
+			unlockItem("mineProgress0");
+			unlockItem("mineProgress1");
+			unlockItem("mineProgress2");
+			unlockItem("mineProgress3");
 		break;
 		default:
-			switch(true){
-				case save.mineProgress==1:
-					unlockItem("mineProgress0");
-				break;
-				case save.mineProgress==2:
-					unlockItem("mineProgress0");
-					unlockItem("mineProgress1");
-				break;
-				case save.mineProgress==3:
-					unlockItem("mineProgress0");
-					unlockItem("mineProgress1");
-					unlockItem("mineProgress2");
-				break;
-				case save.mineProgress==4:
-					unlockItem("mineProgress0");
-					unlockItem("mineProgress1");
-					unlockItem("mineProgress2");
-					unlockItem("mineProgress3");
-				break;
-				default:
-					unlockItem("mineProgress0");
-					unlockItem("mineProgress1");
-					unlockItem("mineProgress2");
-					unlockItem("mineProgress3");
-					unlockItem("mineProgress4");
-					lockItem("mineProgress0");
-					lockItem("mineProgress1");
-					lockItem("mineProgress2");
-					lockItem("mineProgress3");
-					lockItem("mineProgress4");
-				break;
-			}
+			unlockItem("mineProgress0");
+			unlockItem("mineProgress1");
+			unlockItem("mineProgress2");
+			unlockItem("mineProgress3");
+			lockItem("mineProgress0");
+			lockItem("mineProgress1");
+			lockItem("mineProgress2");
+			lockItem("mineProgress3");
 		break;
 	}
 }
 function updateChopProgress(){
 	switch(true){
-		case save.buildings[0]>=40:
-			unlockItem("chopProgress6");
+		case save.chopProgress==1:
+			unlockItem("chopProgress0");
 		break;
-		case save.buildings[2]>=30:
-			switch(true){
-				case save.chopOneOffs[1]==false:
-					unlockItem("chopProgress5");
-					unlockItem("chopProgress4");
-					lockItem("chopProgress5");
-					lockItem("chopProgress4");
-					save.chopOneOffs[1]=true;
-				break;
-				case save.chopProgress>=1:
-					unlockItem("chopProgress6");
-				break;
-				default:
-					lockItem("chopProgress6");
-				break;
-			}
+		case save.chopProgress==2:
+			unlockItem("chopProgress0");
+			unlockItem("chopProgress1");
 		break;
-		case save.buildings[2]>=20:
-			switch(true){
-				case save.chopOneOffs[0]==false:
-					unlockItem("chopProgress0");
-					unlockItem("chopProgress1");
-					unlockItem("chopProgress2");
-					unlockItem("chopProgress3");
-					lockItem("chopProgress0");
-					lockItem("chopProgress1");
-					lockItem("chopProgress2");
-					lockItem("chopProgress3");
-					save.chopOneOffs[0]=true;
-				break;
-				case save.chopProgress>=3:
-					unlockItem("chopProgress5");
-					unlockItem("chopProgress4");
-				break;
-				case save.chopProgress>=1:
-					unlockItem("chopProgress4");
-				break;
-				default:
-					unlockItem("chopProgress4");
-					unlockItem("chopProgress5");
-					lockItem("chopProgress4");
-					lockItem("chopProgress5");
-				break;
-			}
+		case save.chopProgress==3:
+			unlockItem("chopProgress0");
+			unlockItem("chopProgress1");
+			unlockItem("chopProgress2");
+		break;
+		case save.chopProgress==4:
+			unlockItem("chopProgress0");
+			unlockItem("chopProgress1");
+			unlockItem("chopProgress2");
+			unlockItem("chopProgress3");
 		break;
 		default:
-			switch(true){
-				case save.chopProgress==1:
-					unlockItem("chopProgress0");
-				break;
-				case save.chopProgress==2:
-					unlockItem("chopProgress0");
-					unlockItem("chopProgress1");
-				break;
-				case save.chopProgress==3:
-					unlockItem("chopProgress0");
-					unlockItem("chopProgress1");
-					unlockItem("chopProgress2");
-				break;
-				case save.chopProgress==4:
-					unlockItem("chopProgress0");
-					unlockItem("chopProgress1");
-					unlockItem("chopProgress2");
-					unlockItem("chopProgress3");
-				break;
-				default:
-					unlockItem("chopProgress0");
-					unlockItem("chopProgress1");
-					unlockItem("chopProgress2");
-					unlockItem("chopProgress3");
-					lockItem("chopProgress0");
-					lockItem("chopProgress1");
-					lockItem("chopProgress2");
-					lockItem("chopProgress3");
-				break;
-			}
+			unlockItem("chopProgress0");
+			unlockItem("chopProgress1");
+			unlockItem("chopProgress2");
+			unlockItem("chopProgress3");
+			lockItem("chopProgress0");
+			lockItem("chopProgress1");
+			lockItem("chopProgress2");
+			lockItem("chopProgress3");
 		break;
 	}
 }
@@ -1587,7 +979,7 @@ function updateProgressColors(){
 			document.querySelector("body").style.setProperty("--progress-color", "#B7E47C")
 		break;
 		case PColor==4:
-			document.querySelector("body").style.setProperty("--progress-color", "#9A7FBA")
+			document.querySelector("body").style.setProperty("--progress-color", "#C3B0D9")
 		break;
 		
 	}
@@ -1658,6 +1050,7 @@ function doThink(){
 // Mine
 function mine(){
 	save.mineProgress+=1;
+	updateMineProgress();
 	if(save.mineProgress>=5){
 		save.mineProgress=0;
 		switch(true){
@@ -1684,7 +1077,6 @@ function mine(){
 			break;
 		}
 	}
-	updateMineProgress();
 }
 function doMine(){
 	let result=randomInt(0,9);
@@ -2351,15 +1743,15 @@ function upgradeCheckStart(){
 		unlockItem("buildingTownWrapper");
 	}
 	if(save.buildingsUnlocked[6]==true){
-		unlockItem("woodshopName");
-		unlockItem("woodshopCount");
-		unlockItem("buyWoodshop");
+		unlockItem("brothelName");
+		unlockItem("brothelCount");
+		unlockItem("buyBrothel");
 		unlockItem("buildingTownWrapper");
 	}
 	if(save.buildingsUnlocked[5]==true){
-		unlockItem("blacksmithName");
-		unlockItem("blacksmithCount");
-		unlockItem("buyBlacksmith");
+		unlockItem("hostelName");
+		unlockItem("hostelCount");
+		unlockItem("buyHostel");
 		unlockItem("buildingTownWrapper");
 	}
 	if(save.buildingsUnlocked[4]==true){
@@ -2845,9 +2237,9 @@ function unlockUpgrade(id){
 			if(save.thinkPoints>=40){
 				save.buildingsUnlocked[6]=true;
 				lockItem("unlockButton6");
-				unlockItem("woodshopName");
-				unlockItem("woodshopCount");
-				unlockItem("buyWoodshop");
+				unlockItem("brothelName");
+				unlockItem("brothelCount");
+				unlockItem("buyBrothel");
 				unlockItem("buildingTownWrapper");
 				save.thinkPoints-=40;
 			}
@@ -2856,9 +2248,9 @@ function unlockUpgrade(id){
 			if(save.thinkPoints>=30){
 				save.buildingsUnlocked[5]=true;
 				lockItem("unlockButton5");
-				unlockItem("blacksmithName");
-				unlockItem("blacksmithCount");
-				unlockItem("buyBlacksmith");
+				unlockItem("hostelName");
+				unlockItem("hostelCount");
+				unlockItem("buyHostel");
 				unlockItem("buildingTownWrapper");
 				save.thinkPoints-=30;
 			}
@@ -2953,12 +2345,12 @@ function lockOnReset(){
 	unlockItem("tavernName");
 	unlockItem("tavernCount");
 	unlockItem("buyTavern");
-	unlockItem("blacksmithName");
-	unlockItem("blacksmithCount");
-	unlockItem("buyBlacksmith");
-	unlockItem("woodshopName");
-	unlockItem("woodshopCount");
-	unlockItem("buyWoodshop");
+	unlockItem("hostelName");
+	unlockItem("hostelCount");
+	unlockItem("buyHostel");
+	unlockItem("brothelName");
+	unlockItem("brothelCount");
+	unlockItem("buyBrothel");
 	unlockItem("marketName");
 	unlockItem("marketCount");
 	unlockItem("buyMarket");
@@ -3071,12 +2463,12 @@ function lockOnReset(){
 	lockItem("tavernName");
 	lockItem("tavernCount");
 	lockItem("buyTavern");
-	lockItem("blacksmithName");
-	lockItem("blacksmithCount");
-	lockItem("buyBlacksmith");
-	lockItem("woodshopName");
-	lockItem("woodshopCount");
-	lockItem("buyWoodshop");
+	lockItem("hostelName");
+	lockItem("hostelCount");
+	lockItem("buyHostel");
+	lockItem("brothelName");
+	lockItem("brothelCount");
+	lockItem("buyBrothel");
 	lockItem("marketName");
 	lockItem("marketCount");
 	lockItem("buyMarket");

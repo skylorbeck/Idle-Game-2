@@ -142,7 +142,7 @@ body{
 .chopProgress1{
 	left:27px;
 }
-.chopProgress2,#chopProgress5,#mineProgress5,#planeProgress05,#planeProgress15,#planeProgress25,#planeProgress35,#smeltProgress05,#smeltProgress15,#smeltProgress25,#smeltProgress35{
+.chopProgress2{
 	left:51px;
 }
 .chopProgress3{
@@ -159,50 +159,6 @@ body{
 }
 .mineProgress3{
 	left:75px;
-}
-.chopProgress5,.mineProgress5,.planeProgress5,.smeltProgress5{
-	left: 3px;
-    width: 95px;
-}
-.mineProgress4,.chopProgress4,.planeProgress4,.smeltProgress4{
-	left: 3px;
-	width: 47px;
-}
-.thinkProgress12{
-	left:3px;
-	width:47px;
-}
-.thinkProgress13{
-	left:51px;
-	width:47px;
-}
-.thinkProgress14{
-	left:99px;
-	width:47px;
-}
-.thinkProgress15{
-	left:147px;
-	width:47px;
-}
-.thinkProgress16{
-	left:195px;
-	width:47px;
-}
-.thinkProgress17{
-	left:243px;
-	width:47px;
-}
-.thinkProgress18{
-	left:3px;
-	width:95px;
-}
-.thinkProgress19{
-	left:99px;
-	width:95px;
-}
-.thinkProgress20{
-	left:195px;
-	width:95px;
 }
 .info{
 	display:none;
@@ -380,10 +336,10 @@ body{
 #buyTavern:hover +#tavernInfo{
 	display:block;
 }
-#buyBlacksmith:hover +#blacksmithInfo{
+#buyHostel:hover +#hostelInfo{
 	display:block;
 }
-#buyWoodshop:hover +#woodshopInfo{
+#buyBrothel:hover +#brothelInfo{
 	display:block;
 }
 #buyMarket:hover +#marketInfo{
@@ -580,7 +536,7 @@ body{
 	background:#B7E47C;
 }
 #color4{
-	background:#9A7FBA;
+	background:#C3B0D9;
 }
 #colorText, #colorWrapper{
     position: relative;
