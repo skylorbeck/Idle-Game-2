@@ -2,6 +2,7 @@ window.onload = function(){
 	updateAll();
 	startTickVar();
 	upgradeCheckStart();
+	areaCheck();
 }
 // Stop enter button spam
 function stopRKey(evt) {
@@ -45,6 +46,7 @@ var save={
 	mineOneOffs:[false,false],
 	planeOneOffs:[false,false,false,false,false,false,false,false],
 	smeltOneOffs:[false,false,false,false,false,false,false,false],
+	location:0,
 };
 var save3 = Object.assign({}, save); //JSON.parse(JSON.stringify(save));
 var save2 = JSON.parse(localStorage.getItem('idleGame2.save'));
@@ -82,57 +84,114 @@ function startTickVar(){
 	updateTickVar(3);
 	updateTickVar(9);
 }
-
+function areaCheck(){
+	switch(save.location){
+		case 0:
+			navigateTo(0);
+		break;
+		case 1:
+			navigateTo(1);
+		break; 
+	}
+}
 // visual updates
-function updateResources(){
-	if(save.ore[0]>=1000000){
-		document.getElementById("copperOre").innerHTML=save.ore[0].toExponential(2)
-	}else{document.getElementById("copperOre").innerHTML=save.ore[0].toLocaleString();}
-	if(save.ore[1]>=1000000){
-		document.getElementById("ironOre").innerHTML=save.ore[1].toExponential(2)
-	}else{document.getElementById("ironOre").innerHTML=save.ore[1].toLocaleString();}
-	if(save.ore[2]>=1000000){
-		document.getElementById("silverOre").innerHTML=save.ore[2].toExponential(2)
-	}else{document.getElementById("silverOre").innerHTML=save.ore[2].toLocaleString();}
-	if(save.ore[3]>=1000000){
-		document.getElementById("goldOre").innerHTML=save.ore[3].toExponential(2)
-	}else{document.getElementById("goldOre").innerHTML=save.ore[3].toLocaleString();}
-	if(save.bar[0]>=1000000){
-		document.getElementById("copperBar").innerHTML=save.bar[0].toExponential(2)
-	}else{document.getElementById("copperBar").innerHTML=save.bar[0].toLocaleString();}
-	if(save.bar[1]>=1000000){
-		document.getElementById("ironBar").innerHTML=save.bar[1].toExponential(2)
-	}else{document.getElementById("ironBar").innerHTML=save.bar[1].toLocaleString();}
-	if(save.bar[2]>=1000000){
-		document.getElementById("silverBar").innerHTML=save.bar[2].toExponential(2)
-	}else{document.getElementById("silverBar").innerHTML=save.bar[2].toLocaleString();}
-	if(save.bar[3]>=1000000){
-		document.getElementById("goldBar").innerHTML=save.bar[3].toExponential(2)
-	}else{document.getElementById("goldBar").innerHTML=save.bar[3].toLocaleString();}
-	if(save.wood[0]>=1000000){
-		document.getElementById("softWood").innerHTML=save.wood[0].toExponential(2)
-	}else{document.getElementById("softWood").innerHTML=save.wood[0].toLocaleString();}
-	if(save.wood[1]>=1000000){
-		document.getElementById("hardWood").innerHTML=save.wood[1].toExponential(2)
-	}else{document.getElementById("hardWood").innerHTML=save.wood[1].toLocaleString();}
-	if(save.wood[2]>=1000000){
-		document.getElementById("ebonyWood").innerHTML=save.wood[2].toExponential(2)
-	}else{document.getElementById("ebonyWood").innerHTML=save.wood[2].toLocaleString();}
-	if(save.wood[3]>=1000000){
-		document.getElementById("pearlWood").innerHTML=save.wood[3].toExponential(2)
-	}else{document.getElementById("pearlWood").innerHTML=save.wood[3].toLocaleString();}
-	if(save.plank[0]>=1000000){
-		document.getElementById("softPlank").innerHTML=save.plank[0].toExponential(2)
-	}else{document.getElementById("softPlank").innerHTML=save.plank[0].toLocaleString();}
-	if(save.plank[1]>=1000000){
-		document.getElementById("hardPlank").innerHTML=save.plank[1].toExponential(2)
-	}else{document.getElementById("hardPlank").innerHTML=save.plank[1].toLocaleString();}
-	if(save.plank[2]>=1000000){
-		document.getElementById("ebonyPlank").innerHTML=save.plank[2].toExponential(2)
-	}else{document.getElementById("ebonyPlank").innerHTML=save.plank[2].toLocaleString();}
-	if(save.plank[3]>=1000000){
-		document.getElementById("pearlPlank").innerHTML=save.plank[3].toExponential(2)
-	}else{document.getElementById("pearlPlank").innerHTML=save.plank[3].toLocaleString();}
+function updateResources(id){
+	switch(true){
+		case save.location==1:
+		break;
+		case id==5:
+			if(save.ore[0]>=1000000){
+				document.getElementById("copperOre").innerHTML=save.ore[0].toExponential(2)
+			}else{document.getElementById("copperOre").innerHTML=save.ore[0].toLocaleString();};
+			if(save.ore[1]>=1000000){
+				document.getElementById("ironOre").innerHTML=save.ore[1].toExponential(2)
+			}else{document.getElementById("ironOre").innerHTML=save.ore[1].toLocaleString();};
+			if(save.ore[2]>=1000000){
+				document.getElementById("silverOre").innerHTML=save.ore[2].toExponential(2)
+			}else{document.getElementById("silverOre").innerHTML=save.ore[2].toLocaleString();};
+			if(save.ore[3]>=1000000){
+				document.getElementById("goldOre").innerHTML=save.ore[3].toExponential(2)
+			}else{document.getElementById("goldOre").innerHTML=save.ore[3].toLocaleString();};
+		break;
+		case id==6:
+			if(save.wood[0]>=1000000){
+				document.getElementById("softWood").innerHTML=save.wood[0].toExponential(2)
+			}else{document.getElementById("softWood").innerHTML=save.wood[0].toLocaleString();};
+			if(save.wood[1]>=1000000){
+				document.getElementById("hardWood").innerHTML=save.wood[1].toExponential(2)
+			}else{document.getElementById("hardWood").innerHTML=save.wood[1].toLocaleString();};
+			if(save.wood[2]>=1000000){
+				document.getElementById("ebonyWood").innerHTML=save.wood[2].toExponential(2)
+			}else{document.getElementById("ebonyWood").innerHTML=save.wood[2].toLocaleString();};
+			if(save.wood[3]>=1000000){
+				document.getElementById("pearlWood").innerHTML=save.wood[3].toExponential(2)
+			}else{document.getElementById("pearlWood").innerHTML=save.wood[3].toLocaleString();};
+		break;
+		case id==00:
+			if(save.ore[0]>=1000000){
+				document.getElementById("copperOre").innerHTML=save.ore[0].toExponential(2)
+			}else{document.getElementById("copperOre").innerHTML=save.ore[0].toLocaleString();};
+			if(save.bar[0]>=1000000){
+				document.getElementById("copperBar").innerHTML=save.bar[0].toExponential(2)
+			}else{document.getElementById("copperBar").innerHTML=save.bar[0].toLocaleString();};
+		break;
+		case id==01:
+			if(save.ore[1]>=1000000){
+				document.getElementById("ironOre").innerHTML=save.ore[1].toExponential(2)
+			}else{document.getElementById("ironOre").innerHTML=save.ore[1].toLocaleString();};
+			if(save.bar[1]>=1000000){
+				document.getElementById("ironBar").innerHTML=save.bar[1].toExponential(2)
+			}else{document.getElementById("ironBar").innerHTML=save.bar[1].toLocaleString();};
+		break;
+		case id==02:
+			if(save.ore[2]>=1000000){
+				document.getElementById("silverOre").innerHTML=save.ore[2].toExponential(2)
+			}else{document.getElementById("silverOre").innerHTML=save.ore[2].toLocaleString();};
+			if(save.bar[2]>=1000000){
+				document.getElementById("silverBar").innerHTML=save.bar[2].toExponential(2)
+			}else{document.getElementById("silverBar").innerHTML=save.bar[2].toLocaleString();};
+		break;
+		case id==03:
+			if(save.ore[3]>=1000000){
+				document.getElementById("goldOre").innerHTML=save.ore[3].toExponential(2)
+			}else{document.getElementById("goldOre").innerHTML=save.ore[3].toLocaleString();};
+			if(save.bar[3]>=1000000){
+				document.getElementById("goldBar").innerHTML=save.bar[3].toExponential(2)
+			}else{document.getElementById("goldBar").innerHTML=save.bar[3].toLocaleString();};
+		break;
+		case id==10:
+			if(save.wood[0]>=1000000){
+				document.getElementById("softWood").innerHTML=save.wood[0].toExponential(2)
+			}else{document.getElementById("softWood").innerHTML=save.wood[0].toLocaleString();};
+			if(save.plank[0]>=1000000){
+				document.getElementById("softPlank").innerHTML=save.plank[0].toExponential(2)
+			}else{document.getElementById("softPlank").innerHTML=save.plank[0].toLocaleString();};
+		break;
+		case id==11:
+			if(save.wood[1]>=1000000){
+				document.getElementById("hardWood").innerHTML=save.wood[1].toExponential(2)
+			}else{document.getElementById("hardWood").innerHTML=save.wood[1].toLocaleString();};
+			if(save.plank[1]>=1000000){
+				document.getElementById("hardPlank").innerHTML=save.plank[1].toExponential(2)
+			}else{document.getElementById("hardPlank").innerHTML=save.plank[1].toLocaleString();};
+		break;
+		case id==12:
+			if(save.wood[2]>=1000000){
+				document.getElementById("ebonyWood").innerHTML=save.wood[2].toExponential(2)
+			}else{document.getElementById("ebonyWood").innerHTML=save.wood[2].toLocaleString();};
+			if(save.plank[2]>=1000000){
+				document.getElementById("ebonyPlank").innerHTML=save.plank[2].toExponential(2)
+			}else{document.getElementById("ebonyPlank").innerHTML=save.plank[2].toLocaleString();};
+		break;
+		case id==13:
+			if(save.wood[3]>=1000000){
+				document.getElementById("pearlWood").innerHTML=save.wood[3].toExponential(2)
+			}else{document.getElementById("pearlWood").innerHTML=save.wood[3].toLocaleString();};
+			if(save.plank[3]>=1000000){
+				document.getElementById("pearlPlank").innerHTML=save.plank[3].toExponential(2)
+			}else{document.getElementById("pearlPlank").innerHTML=save.plank[3].toLocaleString();};
+		break;
+	}
 }
 function updateBuildings(){
 	document.getElementById("mineCount").innerHTML=save.buildings[0].toLocaleString();
@@ -440,6 +499,8 @@ function updateBuildingCosts(){
 }
 function updateSmeltProgress(id){
 	switch(true){
+		case save.location==1:
+		break;
 		case id==0:
 			switch(true){
 				case save.buildings[2]>=40:
@@ -784,6 +845,8 @@ function updateSmeltProgress(id){
 }
 function updatePlaneProgress(id){
 	switch(true){
+		case save.location==1:
+		break;
 		case id==0:
 			switch(true){
 				case save.buildings[4]>=40:
@@ -1128,6 +1191,8 @@ function updatePlaneProgress(id){
 }
 function updateThinkProgress(){
 	switch(true){
+		case save.location==1:
+		break;
 		case save.buildings[9]>=39:
 			switch(true){
 				case save.thinkOneOffs[1]==false:
@@ -1390,8 +1455,20 @@ function updateSmeltPlane‌ThinkOnStart(){
 	updatePlaneProgress(3);
 	updateThinkProgress();
 }
+function updateAllResources(){
+	updateResources(00);
+	updateResources(01);
+	updateResources(02);
+	updateResources(03);
+	updateResources(10);
+	updateResources(11);
+	updateResources(12);
+	updateResources(13);
+}
 function updateMineProgress(){
 	switch(true){
+		case save.location==1:
+		break;
 		case save.buildings[0]>=40:
 			unlockItem("mineProgress6");
 		break;
@@ -1478,6 +1555,8 @@ function updateMineProgress(){
 }
 function updateChopProgress(){
 	switch(true){
+		case save.location==1:
+		break;
 		case save.buildings[0]>=40:
 			unlockItem("chopProgress6");
 		break;
@@ -1562,7 +1641,7 @@ function updateChopProgress(){
 }
 function updateAll(){
 	updateSmeltPlane‌ThinkOnStart();
-	updateResources();
+	updateAllResources();
 	updateBuildings();
 	updateBuildingCosts();
 	updateProgressColors();
@@ -1615,6 +1694,8 @@ function changeColor(value){
 }
 function updateThinkPoints(){
 	switch(true){
+		case save.location==1:
+		break;
 		case save.thinkPoints>=1000000:
 					document.getElementById("thinkShopPoints").innerHTML="TP: "+save.thinkPoints.toExponential(2);
 		break;
@@ -1752,7 +1833,7 @@ function doMine(){
 			if(save.ore[0]>=2){enableItem("smeltButton0")};
 		break;
 	}
-	updateResources();
+	updateResources(5);
 }
 // Chop
 function chop(){
@@ -1851,7 +1932,7 @@ function doChop(){
 			if(save.wood[0]>=1){enableItem("planeButton0")};
 		break;
 	}
-	updateResources();
+	updateResources(6);
 	
 }// Smelt
 // Smelt
@@ -1863,9 +1944,9 @@ function smelt(id){
 			save.barTotal[id]+=1;
 			save.ore[id]-=2;
 			save.smeltProgress[id]=0;
+			updateResources("0"+id);
 			if(save.ore[id]<=1){disableItem("smeltButton"+id)};
 		}
-		updateResources();
 		updateSmeltProgress(id);
 	}
 }
@@ -1878,9 +1959,9 @@ function plane(id){
 			save.plankTotal[id]+=2;
 			save.wood[id]-=1;
 			save.planeProgress[id]=0;
+			updateResources("1"+id);
 			if(save.wood[id]<=0){disableItem("planeButton"+id)};
 		}
-		updateResources();
 		updatePlaneProgress(id);
 	}
 }
@@ -2249,7 +2330,7 @@ function buyBuilding(id){
 		break;
 	}
 	updateBuildings();
-	updateResources();
+	updateAllResources();
 	updateSpeed();
 }
 //building checks
@@ -2789,7 +2870,7 @@ function unlockUpgrade(id){
 				save.oreUnlocked[2]=true;
 				save.bar[2]-=50;
 				lockItem("unlockButton12");
-				updateResources();
+				updateResources(02);
 			}
 		break;
 		case 11:
@@ -2797,7 +2878,7 @@ function unlockUpgrade(id){
 				save.oreUnlocked[1]=true;
 				save.bar[1]-=50;
 				lockItem("unlockButton11");
-				updateResources();
+				updateResources(01);
 			}
 		break;
 		case 10:
@@ -2805,7 +2886,7 @@ function unlockUpgrade(id){
 				save.oreUnlocked[0]=true;
 				save.bar[0]-=50;
 				lockItem("unlockButton10");
-				updateResources();
+				updateResources(00);
 			}
 		break;
 		case 9:
@@ -2927,11 +3008,13 @@ function navigateTo(page){
 			unlockItem("theMountain");
 			unlockItem("theTown");
 			lockItem("theTown");
+			save.location=0;
 		break;
 		case 1:
 			unlockItem("theMountain");
 			unlockItem("theTown");
 			lockItem("theMountain");
+			save.location=1;
 		break;
 	}
 	
@@ -3056,6 +3139,45 @@ function lockOnReset(){
 	unlockItem("planeInfo");
 	unlockItem("mountainButton");
 	unlockItem("townButton");
+	unlockItem("smeltProgress04");
+	unlockItem("smeltProgress05");
+	unlockItem("smeltProgress06");
+	unlockItem("smeltProgress14");
+	unlockItem("smeltProgress15");
+	unlockItem("smeltProgress16");
+	unlockItem("smeltProgress24");
+	unlockItem("smeltProgress25");
+	unlockItem("smeltProgress26");
+	unlockItem("smeltProgress34");
+	unlockItem("smeltProgress35");
+	unlockItem("smeltProgress36");
+	unlockItem("planeProgress04");
+	unlockItem("planeProgress05");
+	unlockItem("planeProgress06");
+	unlockItem("planeProgress14");
+	unlockItem("planeProgress15");
+	unlockItem("planeProgress16");
+	unlockItem("planeProgress24");
+	unlockItem("planeProgress25");
+	unlockItem("planeProgress26");
+	unlockItem("planeProgress34");
+	unlockItem("planeProgress35");
+	unlockItem("planeProgress36");
+	unlockItem("thinkProgress12");
+	unlockItem("thinkProgress13");
+	unlockItem("thinkProgress14");
+	unlockItem("thinkProgress15");
+	unlockItem("thinkProgress16");
+	unlockItem("thinkProgress17");
+	unlockItem("thinkProgress18");
+	unlockItem("thinkProgress19");
+	unlockItem("thinkProgress20");
+	unlockItem("mineProgress4");
+	unlockItem("mineProgress5");
+	unlockItem("mineProgress6");
+	unlockItem("chopProgress4");
+	unlockItem("chopProgress5");
+	unlockItem("chopProgress6");
 	lockItem("mineName");
 	lockItem("mineCount");
 	lockItem("buyMine");
@@ -3173,6 +3295,45 @@ function lockOnReset(){
 	lockItem("smeltInfo");
 	lockItem("planeInfo");
 	lockItem("townButton");
+	lockItem("smeltProgress04");
+	lockItem("smeltProgress05");
+	lockItem("smeltProgress06");
+	lockItem("smeltProgress14");
+	lockItem("smeltProgress15");
+	lockItem("smeltProgress16");
+	lockItem("smeltProgress24");
+	lockItem("smeltProgress25");
+	lockItem("smeltProgress26");
+	lockItem("smeltProgress34");
+	lockItem("smeltProgress35");
+	lockItem("smeltProgress36");
+	lockItem("planeProgress04");
+	lockItem("planeProgress05");
+	lockItem("planeProgress06");
+	lockItem("planeProgress14");
+	lockItem("planeProgress15");
+	lockItem("planeProgress16");
+	lockItem("planeProgress24");
+	lockItem("planeProgress25");
+	lockItem("planeProgress26");
+	lockItem("planeProgress34");
+	lockItem("planeProgress35");
+	lockItem("planeProgress36");
+	lockItem("thinkProgress12");
+	lockItem("thinkProgress13");
+	lockItem("thinkProgress14");
+	lockItem("thinkProgress15");
+	lockItem("thinkProgress16");
+	lockItem("thinkProgress17");
+	lockItem("thinkProgress18");
+	lockItem("thinkProgress19");
+	lockItem("thinkProgress20");
+	lockItem("mineProgress4");
+	lockItem("mineProgress5");
+	lockItem("mineProgress6");
+	lockItem("chopProgress4");
+	lockItem("chopProgress5");
+	lockItem("chopProgress6");
 }
 var settingsOpen=0;
 function openSettings(){
@@ -3199,6 +3360,12 @@ function devMode2(value){
 	}
 	upgradeCheckStart();
 	updateAll();
+}
+function devMode3(){
+	let x;
+	for(x=0;x<50;x++){
+		unlockUpgrade(x);
+	}
 }
 // lock and unlock
 function lockItem(item){
