@@ -9,6 +9,12 @@ body{
 	margin: 0px;
 	
 }
+.highlighted{
+	border-color:var(--progress-color);
+}
+.highlightedText{
+	color:var(--progress-color);
+}
 .resource{
 	border: white solid 2px;
     width: 150px;
@@ -278,6 +284,22 @@ body{
     left: 3px;
     top: 2px;
 }
+.townWrapper{
+	border: solid white 2px;
+    border-radius: 5px;
+	/* position:absolute; */
+	width:150px;
+	height:100px;
+	left: 3px;
+    top: 3px;
+	margin:3px;
+}
+.adventureCurrent{
+	margin:3px;
+}
+.adventure{
+	width:25%;
+}
 #game{
 	width: 575px;
     height: 362px;
@@ -546,7 +568,7 @@ body{
     font-size: 10px;
     color: var(--progress-color);
 }
-#settingsWrapper{
+#settingsWrapper,#adventureWrapper{
 	border: white solid 2px;
     border-radius: 5px;
 	width: 550px;
@@ -591,6 +613,49 @@ body{
 }
 #townButton{
 	left: 164px;
+}
+#townInnerWrapper{
+	position: absolute;
+	    flex-wrap: wrap;
+    display: inline-flex;
+}
+#adventureXButton{
+	top: -1px;
+}
+#adventureInnerWrapper{
+	position: relative;
+    top: 25px;
+    display: inline-flex;
+    width: inherit;
+}
+#adventureCurrentInfo{
+	width:inherit;
+	position: absolute;
+    bottom: 10px;
+    border-top: 2px white solid;
+	display: inline-flex;
+	left:0;
+	flex-wrap: wrap;
+}
+#adventureCurrentTitle{
+	text-align: center;
+    width: inherit;
+}
+
+/* #townBlacksmithWrapper,#townWoodshopWrapper,#townMarketWrapper,#townBankWrapper{ */
+	/* display:none; */
+/* } */
+#tavernBoxTitle,#blacksmithBoxTitle,#woodshopBoxTitle,#marketBoxTitle,#bankBoxTitle{
+	text-align: center;
+    border-bottom: 2px white solid;
+}
+#tavernSendAdventureButton{
+	left: 25px;
+    position: relative;
+}
+#adventureTimeUntilNew{
+	position: relative;
+    left: 40px;
 }
 .locked{
 	display:none;

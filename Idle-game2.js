@@ -3,6 +3,8 @@ window.onload = function(){
 	startTickVar();
 	upgradeCheckStart();
 	areaCheck();
+	updatePostable();
+	updateTimeUntilNewQuests()
 }
 // Stop enter button spam
 function stopRKey(evt) {
@@ -47,6 +49,15 @@ var save={
 	planeOneOffs:[false,false,false,false,false,false,false,false],
 	smeltOneOffs:[false,false,false,false,false,false,false,false],
 	location:0,
+	quest:[],
+	onQuest:false,
+	townXP:0,
+	questDeleted:[false,false,false,false],
+	questRefreshTime:300,
+};
+var quests=[]//type,time,cost,adventurers,xp
+if(	localStorage.getItem('idleGame2.quests') !== null){
+	quests=JSON.parse(localStorage.getItem('idleGame2.quests'));
 };
 var save3 = Object.assign({}, save); //JSON.parse(JSON.stringify(save));
 var save2 = JSON.parse(localStorage.getItem('idleGame2.save'));
@@ -61,13 +72,16 @@ if(	localStorage.getItem('idleGame2.PColor') !== null){
 
 function gameSave(){
 	window.localStorage['idleGame2.save'] = JSON.stringify(save);
+	window.localStorage['idleGame2.quests'] = JSON.stringify(quests);
 }
 
 
 // Timers
 var saveTick = window.setInterval(function(){gameSave()},1000);
 	upgradeCheckTick = window.setInterval(function(){upgradeCheck();},500);
+	// genQuestTick=window.setInterval(function(){genAllAdventures();},300000);
 	// updateTick =window.setInterval(function(){updateThinkPoints();},1000);
+	questTimeRemainTick=window.setInterval(function(){updateCurrentAdventureTime();updateTimeUntilNewQuests();},1000);
 	
 function buildingTick(id){
 	window.setTimeout(function(){buildingCheck(id);updateTickVar(id);},tickVar[id]);
@@ -84,6 +98,9 @@ function startTickVar(){
 	updateTickVar(3);
 	updateTickVar(9);
 }
+
+
+
 function areaCheck(){
 	switch(save.location){
 		case 0:
@@ -204,11 +221,122 @@ function updateBuildings(){
 	document.getElementById("marketCount").innerHTML=save.buildings[7].toLocaleString();
 	document.getElementById("bankCount").innerHTML=save.buildings[8].toLocaleString();
 	document.getElementById("labCount").innerHTML=save.buildings[9].toLocaleString();
-	document.getElementById("tavernCountT").innerHTML=save.buildings[4].toLocaleString();
-	document.getElementById("blacksmithCountT").innerHTML=save.buildings[5].toLocaleString();
-	document.getElementById("woodshopCountT").innerHTML=save.buildings[6].toLocaleString();
-	document.getElementById("marketCountT").innerHTML=save.buildings[7].toLocaleString();
-	document.getElementById("bankCountT").innerHTML=save.buildings[8].toLocaleString();
+	// document.getElementById("tavernCountT").innerHTML=save.buildings[4].toLocaleString();
+	// document.getElementById("blacksmithCountT").innerHTML=save.buildings[5].toLocaleString();
+	// document.getElementById("woodshopCountT").innerHTML=save.buildings[6].toLocaleString();
+	// document.getElementById("marketCountT").innerHTML=save.buildings[7].toLocaleString();
+	// document.getElementById("bankCountT").innerHTML=save.buildings[8].toLocaleString();
+}
+var quest0Targets=["Boars","Tigers","Bears","Wolves","Bandits","Thugs","Slimes","Spiders","Zombies","Skeletons","Giant Rats","Gorillas","Eagles","Pythons"];
+var quest1Targets=["Cave","Fort","Dungeon","Castle","Camp","Cavern","Crypt","Burrows","Pits","Tunnels","Labyrinth","Catacombs","Delves","Tombs","Quarters","Vault","Grotto","Keep","Tower"];
+var quest2Targets=["Golda","Cristie","Annika","Elmira","Kathey","Loreta","Iluminada","Wanda","Olevia","Delana","Tammy","Janetta","Abigail","Corinna","Tandra","Providencia","Ricarda","Natashia","Berenice","Lynsey","Jodee","Alejandrina","Larhonda","Eleanora","Shanae","Cassie","Marylouise","Pennie","Gracie","Nerissa","Luanna","Anissa","Agustina","Donnette","Paulita","Meghan","Anh","Shellie","Teresa","Letty","Kimber","Carlie","Joi","Adell","Elfreda","Vada","Riva","Caren","Hans","Sonny","Sherman","Alex","Titus","Jordon","Dewitt","Jamal","Kirby","Monte","Frederick","Shad","Blair","Ambrose","Clifford","Jonas","Wilford","Bob","Mckinley","Kyle","Ted","Conrad","Andy","Long","Nathaniel","Ray","Alexis","Boyce","Brant","Gerry","Humberto","Kristopher","Tom","Augustus","Nicky","Ty","Gordon","Esteban","Reuben","Adolfo","Dylan","Gary","Jerrold","Sterling","Quinn","Modesto","Ethan","Arlie","Cleo","Pearla","Sliver","Espen","Alfonz","Emmi"]
+var quest3Targets=["a pair of earrings","a slipper","a blowdryer","a pair of tongs","a sheet of paper","a rock","a magnet","a toy car","some milk","a fork","a bag","a toothpick","a plate","some eye liner","a ring","a lighter","a safety pin","a squirrel","a shawl","a belt","a cement stone","a candy bar","a carrot","a coffee pot","a pocketknife","a bottle cap","a dagger","a bottle of ink","a knife","a box of tissues","a spool of string","an incense holder","a toy soldier","a nail filer","a wrench","some food","a rubber duck","a pair of knitting needles","a candy wrapper","a zipper","a paintbrush","a hair tie","a pair of socks","a salt shaker","a wallet","an egg timer","a pocketwatch","an empty bottle","a lime","a coffee mug","a butter knife","a soccer ball","a scallop shell","a necklace","a bottle of glue","a candlestick","a plastic fork","a carton of ice cream","a matchbook","a needle","a plush dinosaur","a pair of sunglasses","a lamp","a bag of popcorn","a map","a jar of jam","a tomato","a picture frame","a pen","a bonesaw","a box of crayons","a wine glass","a sponge","a flashlight","a lamp shade","a pillow","a can of beans"];
+var quest4Targets=["mushrooms","herbs","leaves","berries","sticks","snails","butterflies","ants","bones","tusks","horns","claws","shells","fruit","beetles"]
+var questAdj=["Angry","Fierce","Grumpy","Helpless","Itchy","Jealous","Lazy","Mysterious","Nervous","Obnoxious","Pitiful","Repulsive","Scary","Vast","Immense","Enormous","Spacious","Exorbitant","Gross","Foul","Disturbed","Screeching","Horrible","Defiant","Puzzling","Tranquil","Gamy","Agonizing","Roasted","Damaged","Aluring","Pale","Lewd","Uppity","Demonic","Mighty","Flawless"];
+
+function updateCurrentAdventure(){
+	switch(save.quest[0]){
+		case 0://kill X of Y
+			document.getElementById("adventureCurrentTitle").innerHTML="Kill "+save.quest[6]+" "+quest0Targets[save.quest[5]];
+		break;
+		case 1://clear X location
+			document.getElementById("adventureCurrentTitle").innerHTML="Clear the "+questAdj[save.quest[6]]+" "+quest1Targets[save.quest[5]];
+		break;
+		case 2://kill X target
+			document.getElementById("adventureCurrentTitle").innerHTML="Kill "+quest2Targets[save.quest[5]]+" the "+questAdj[save.quest[6]];
+		break;
+		case 3://Get X object
+			document.getElementById("adventureCurrentTitle").innerHTML="Obtain "+quest3Targets[save.quest[5]];
+		break;
+		case 4://Gather X amount of things
+			document.getElementById("adventureCurrentTitle").innerHTML="Gather "+save.quest[6]+" "+quest4Targets[save.quest[5]];
+		break;
+	}
+	document.getElementById("adventureCurrentAdv").innerHTML="Adventurers Questing: "+"<span class=highlightedText>"+save.quest[1]+"</span>";
+	let m=Math.floor(save.quest[2]/60);
+	let s=save.quest[2]-(m*60);
+	document.getElementById("adventureCurrentTimeRemain").innerHTML="Time Remaining: "+"<span class=highlightedText>"+m+":"+s.toLocaleString(undefined,{minimumIntegerDigits: 2})+"</span>";
+	document.getElementById("adventureCurrentXp").innerHTML="XP Reward: "+"<span class=highlightedText>"+save.quest[4]+"</span>";
+}
+function updateAdventures(slot){
+	let quest=quests[slot];
+	if(save.questDeleted[slot]==true){document.getElementById("adventure"+slot+"Type").innerHTML="---"}else{
+		switch(quest.type){
+			case 0://kill X of Y
+				document.getElementById("adventure"+slot+"Type").innerHTML="Kill "+quest.amt+" "+quest0Targets[quest.trgt];
+			break;
+			case 1://clear X location
+				document.getElementById("adventure"+slot+"Type").innerHTML="Clear the "+questAdj[quest.amt]+" "+quest1Targets[quest.trgt];
+			break;
+			case 2://kill X target
+				document.getElementById("adventure"+slot+"Type").innerHTML="Kill "+quest2Targets[quest.trgt]+" the "+questAdj[quest.amt];
+			break;
+			case 3://Get X object
+				document.getElementById("adventure"+slot+"Type").innerHTML="Obtain "+quest3Targets[quest.trgt];
+			break;
+			case 4://Gather X amount of things
+				document.getElementById("adventure"+slot+"Type").innerHTML="Gather "+quest.amt+" "+quest4Targets[quest.trgt];
+			break;
+		}
+		document.getElementById("adventure"+slot+"Time").innerHTML="Time="+quest.time;
+		document.getElementById("adventure"+slot+"Cost").innerHTML="Cost="+quest.cost;
+		document.getElementById("adventure"+slot+"Adv").innerHTML="Adv="+quest.adv;
+		document.getElementById("adventure"+slot+"Xp").innerHTML="Xp="+quest.xp;
+	}
+}
+function updateCurrentAdventureTime(){
+	let m=Math.floor(save.quest[2]/60);
+	let s=save.quest[2]-(m*60);
+	switch(true){
+		case save.quest[2]>=1:
+			save.quest[2]--;
+			document.getElementById("adventureCurrentTimeRemain").innerHTML="Time Remaining: "+"<span class=highlightedText>"+m+":"+s.toLocaleString(undefined,{minimumIntegerDigits: 2})+"</span>";
+		break;
+		case save.quest[2]==0 && save.onQuest==true:
+			questComplete();
+		break;
+		case save.quest[2]==0:
+			document.getElementById("adventureCurrentTimeRemain").innerHTML="Time Remaining: <span class=highlightedText>Complete</span>"
+			updatePostable();
+		break;
+		
+	}
+}
+function updateTimeUntilNewQuests(){
+	let m=Math.floor(save.questRefreshTime/60);
+	let s=save.questRefreshTime-(m*60);
+	switch(save.questRefreshTime){
+		case 0:
+			genAllAdventures();
+			save.questRefreshTime=300;
+		default:
+			save.questRefreshTime--;
+			document.getElementById("adventureTimeUntilNew").innerHTML="Time until new quests: "+m+":"+s.toLocaleString(undefined,{minimumIntegerDigits: 2});
+		break;
+	}
+	
+}
+function updateAllAdventures(){
+	let x;
+	for (x=0;x<4;x++){
+		updateAdventures(x);
+	}
+}
+function updatePostable(){
+	switch(save.onQuest){
+		case true:
+			for (x=0;x<4;x++){
+				disableItem("adventure"+x+"Button");
+			}
+		break;
+		case false:
+			for (x=0;x<4;x++){
+				if(save.questDeleted[x]==false){
+					enableItem("adventure"+x+"Button");
+				}
+			}
+		break;
+	}
 }
 function updateSpeed(){
 	let a=document.getElementById("mineSpeed");
@@ -271,13 +399,13 @@ function updateSpeed(){
 	let e=document.getElementById("planeInfo")
 	switch(true){
 		case save.sawUpgraded[0]==true:
-			e.innerHTML="1:2 | "+((0.2*save.buildings[3]).toFixed(2)*2)+" Plank/s/Ea";
+			e.innerHTML="2:4 | "+((0.2*save.buildings[3]).toFixed(2)*2)+" Plank/s/Ea";
 		break;
 		case save.buildings[3]>=1:
-			e.innerHTML="1:2 | "+((0.2*save.buildings[3]).toFixed(2)*2)+" Plank/sec";
+			e.innerHTML="2:4 | "+((0.2*save.buildings[3]).toFixed(2)*2)+" Plank/sec";
 		break;
 		default:
-			e.innerHTML="1:2";
+			e.innerHTML="2:4";
 		break;
 	}
 }
@@ -504,7 +632,7 @@ function updateSmeltProgress(id){
 		case id==0:
 			switch(true){
 				case save.buildings[2]>=40:
-					unlockItem("smeltProgress06");
+					if(save.ore[0]<=1){unlockItem("smeltProgress06");lockItem("smeltProgress06")}else{unlockItem("smeltProgress06");};
 				break;
 				case save.buildings[2]>=30:
 					switch(true){
@@ -589,7 +717,7 @@ function updateSmeltProgress(id){
 		case id==1:
 			switch(true){
 				case save.buildings[2]>=40:
-					unlockItem("smeltProgress16");
+				if(save.ore[1]<=1){unlockItem("smeltProgress16");lockItem("smeltProgress16")}else{unlockItem("smeltProgress16");};
 				break;
 				case save.buildings[2]>=30:
 					switch(true){
@@ -674,7 +802,7 @@ function updateSmeltProgress(id){
 		case id==2:
 			switch(true){
 				case save.buildings[2]>=40:
-					unlockItem("smeltProgress26");
+					if(save.ore[2]<=1){unlockItem("smeltProgress26");lockItem("smeltProgress26")}else{unlockItem("smeltProgress26");};
 				break;
 				case save.buildings[2]>=30:
 					switch(true){
@@ -759,7 +887,7 @@ function updateSmeltProgress(id){
 		case id==3:
 			switch(true){
 				case save.buildings[2]>=40:
-					unlockItem("smeltProgress36");
+					if(save.ore[3]<=1){unlockItem("smeltProgress36");lockItem("smeltProgress36")}else{unlockItem("smeltProgress36");};
 				break;
 				case save.buildings[2]>=30:
 					switch(true){
@@ -850,7 +978,7 @@ function updatePlaneProgress(id){
 		case id==0:
 			switch(true){
 				case save.buildings[4]>=40:
-					unlockItem("planeProgress06");
+					if(save.wood[0]<=1){unlockItem("planeProgress06");lockItem("planeProgress06")}else{unlockItem("planeProgress06");};
 				break;
 				case save.buildings[4]>=30:
 					switch(true){
@@ -935,7 +1063,7 @@ function updatePlaneProgress(id){
 		case id==1:
 			switch(true){
 				case save.buildings[4]>=40:
-					unlockItem("planeProgress16");
+					if(save.wood[1]<=1){unlockItem("planeProgress16");lockItem("planeProgress16")}else{unlockItem("planeProgress16");};
 				break;
 				case save.buildings[4]>=30:
 					switch(true){
@@ -1020,7 +1148,7 @@ function updatePlaneProgress(id){
 		case id==2:
 			switch(true){
 				case save.buildings[4]>=40:
-					unlockItem("planeProgress26");
+					if(save.wood[2]<=1){unlockItem("planeProgress26");lockItem("planeProgress26")}else{unlockItem("planeProgress26");};
 				break;
 				case save.buildings[4]>=30:
 					switch(true){
@@ -1105,7 +1233,7 @@ function updatePlaneProgress(id){
 		case id==3:
 			switch(true){
 				case save.buildings[4]>=40:
-					unlockItem("planeProgress36");
+					if(save.wood[3]<=1){unlockItem("planeProgress36");lockItem("planeProgress36")}else{unlockItem("planeProgress36");};
 				break;
 				case save.buildings[4]>=30:
 					switch(true){
@@ -1455,6 +1583,7 @@ function updateSmeltPlane‌ThinkOnStart(){
 	updatePlaneProgress(3);
 	updateThinkProgress();
 }
+
 function updateAllResources(){
 	updateResources(00);
 	updateResources(01);
@@ -1650,6 +1779,8 @@ function updateAll(){
 	updateSpeed();
 	upgradeCheck();
 	updateThinkPoints();
+	updateAllAdventures();
+	updateCurrentAdventure();
 }
 function updateProgressColors(){
 	switch(true){
@@ -1945,22 +2076,22 @@ function smelt(id){
 			save.ore[id]-=2;
 			save.smeltProgress[id]=0;
 			updateResources("0"+id);
-			if(save.ore[id]<=1){disableItem("smeltButton"+id)};
+			if(save.ore[id]<=1){disableItem("smeltButton"+id);};
 		}
 		updateSmeltProgress(id);
 	}
 }
 // Plane
 function plane(id){
-	if(save.wood[id]>=1){
+	if(save.wood[id]>=2){
 		save.planeProgress[id]+=1;
 		if(save.planeProgress[id]>=5){
-			save.plank[id]+=2;
-			save.plankTotal[id]+=2;
-			save.wood[id]-=1;
+			save.plank[id]+=4;
+			save.plankTotal[id]+=4;
+			save.wood[id]-=2;
 			save.planeProgress[id]=0;
 			updateResources("1"+id);
-			if(save.wood[id]<=0){disableItem("planeButton"+id)};
+			if(save.wood[id]<=1){disableItem("planeButton"+id)};
 		}
 		updatePlaneProgress(id);
 	}
@@ -3002,6 +3133,109 @@ function unlockUpgrade(id){
 	}
 	updateThinkPoints();
 }
+var adventuresOpen=0;
+function openAdventures(){
+	switch(adventuresOpen){
+		case 0:
+		unlockItem("adventureWrapper");
+		adventuresOpen=1;
+		break;
+		case 1:
+		lockItem("adventureWrapper");
+		adventuresOpen=0;
+		break;
+	}
+}
+function genAllAdventures(){
+	let x;
+	for (x=0;x<4;x++){
+		genAdventure(x);
+	}
+}
+function genAdventure(slot){
+	let type=randomInt(0,4);
+	let adv;
+	let time;
+	let cost;
+	let xp;
+	let trgt;
+	let amt;
+	switch(type){
+		case 0://kill X of Y
+			trgt=randomInt(0,13);
+			amt=randomInt(5,25);
+			adv=randomInt(1,4);
+			time=randomInt(60,180);
+			cost=randomInt(60,250);
+			xp=randomInt(80,160)
+		break;
+		case 1://clear X location
+			trgt=randomInt(0,18);
+			amt=randomInt(0,36);
+			adv=randomInt(1,4);
+			time=randomInt(60,180);
+			cost=randomInt(80,300);
+			xp=randomInt(100,300)
+		break;
+		case 2://kill X target
+			trgt=randomInt(0,101);
+			amt=randomInt(0,36);
+			adv=randomInt(2,4);
+			time=randomInt(90,180);
+			cost=randomInt(100,500);
+			xp=randomInt(300,600)
+		break;
+		case 3://Get X object
+			trgt=randomInt(0,76);
+			adv=randomInt(1,4);
+			time=randomInt(60,120);
+			cost=randomInt(20,60);
+			xp=randomInt(50,200)
+		break;
+		case 4://Gather X amount of things
+			trgt=randomInt(0,14);
+			amt=randomInt(5,50);
+			adv=randomInt(1,2);
+			time=randomInt(60,90);
+			cost=randomInt(0,20);
+			xp=randomInt(25,100)
+		break;
+	}
+	quests[slot]={type,time,cost,adv,xp,trgt,amt};
+	save.questDeleted[slot]=false;
+	updateAdventures(slot);
+	updatePostable();
+}
+function postAdventure(slot){
+	let quest=quests[slot];
+	save.quest[0]=quest.type;
+	save.quest[1]=quest.adv;
+	save.quest[2]=quest.time;
+	save.quest[3]=quest.cost;
+	save.quest[4]=quest.xp;
+	save.quest[5]=quest.trgt;
+	save.quest[6]=quest.amt;
+	// genAdventure(slot);
+	deleteQuest(slot);
+	save.onQuest=true;
+	updatePostable();
+	updateCurrentAdventure();
+}
+function questComplete(){
+	document.getElementById("adventureCurrentTimeRemain").innerHTML="Time Remaining: <span class=highlightedText>Complete</span>";
+	save.townXP+=save.quest[4];
+	save.onQuest=false;
+	updatePostable();
+}
+function deleteQuest(slot){
+	document.getElementById("adventure"+slot+"Type").innerHTML="---";
+	document.getElementById("adventure"+slot+"Time").innerHTML="";
+	document.getElementById("adventure"+slot+"Cost").innerHTML="";
+	document.getElementById("adventure"+slot+"Adv").innerHTML="";
+	document.getElementById("adventure"+slot+"Xp").innerHTML="";
+	save.questDeleted[slot]=true;
+}
+
 function navigateTo(page){
 	switch(page){
 		case 0:
@@ -3009,15 +3243,18 @@ function navigateTo(page){
 			unlockItem("theTown");
 			lockItem("theTown");
 			save.location=0;
+			highlightItem("mountainButton");
+			unhighlightItem("townButton");
 		break;
 		case 1:
 			unlockItem("theMountain");
 			unlockItem("theTown");
 			lockItem("theMountain");
 			save.location=1;
+			highlightItem("townButton");
+			unhighlightItem("mountainButton");
 		break;
 	}
-	
 }
 
 function lockOnReset(){
@@ -3347,8 +3584,8 @@ function openSettings(){
 		settingsOpen=0;
 		break;
 	}
-	
 }
+
 function devMode(value){
 	save.oreTotal[0]+=value;save.oreTotal[1]+=value;save.oreTotal[2]+=value;save.oreTotal[3]+=value;save.woodTotal[0]+=value;save.woodTotal[1]+=value;save.woodTotal[2]+=value;save.woodTotal[3]+=value;save.barTotal[0]+=value;save.barTotal[1]+=value;save.barTotal[2]+=value;save.barTotal[3]+=value;save.plankTotal[0]+=value;save.plankTotal[1]+=value;save.plankTotal[2]+=value;save.plankTotal[3]+=value;save.ore[0]+=value;save.ore[1]+=value;save.ore[2]+=value;save.ore[3]+=value;save.wood[0]+=value;save.wood[1]+=value;save.wood[2]+=value;save.wood[3]+=value;save.bar[0]+=value;save.bar[1]+=value;save.bar[2]+=value;save.bar[3]+=value;save.plank[0]+=value;save.plank[1]+=value;save.plank[2]+=value;save.plank[3]+=value;save.thinkPoints+=value;save.thinkPointsTotal+=value;updateAll();
 }
@@ -3374,7 +3611,12 @@ document.getElementById(item).className = document.getElementById(item).classNam
 function unlockItem(item){
 document.getElementById(item).className = document.getElementById(item).className.replace(" locked","");
 }
-
+function highlightItem(item){
+document.getElementById(item).className = document.getElementById(item).className + " highlighted";
+}
+function unhighlightItem(item){
+document.getElementById(item).className = document.getElementById(item).className.replace(" highlighted","");
+}
 // disable and enable
 function disableItem(item){
 document.getElementById(item).disabled=true;
