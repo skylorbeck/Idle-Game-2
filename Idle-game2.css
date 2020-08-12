@@ -300,6 +300,14 @@ body{
 .adventure{
 	width:25%;
 }
+.adventureTitle{
+	text-align: center;
+    width: inherit;
+	/* font-size:20px; */
+	/* font-weight:bold; */
+	text-decoration: underline;
+	text-decoration-color:var(--progress-color);
+}
 #game{
 	width: 575px;
     height: 362px;
@@ -627,6 +635,7 @@ body{
     top: 25px;
     display: inline-flex;
     width: inherit;
+	text-align: center;
 }
 #adventureCurrentInfo{
 	width:inherit;
@@ -637,10 +646,7 @@ body{
 	left:0;
 	flex-wrap: wrap;
 }
-#adventureCurrentTitle{
-	text-align: center;
-    width: inherit;
-}
+
 
 /* #townBlacksmithWrapper,#townWoodshopWrapper,#townMarketWrapper,#townBankWrapper{ */
 	/* display:none; */
