@@ -224,11 +224,11 @@
 				</div>
 				<div id=buildingTownWrapper class="resource locked">
 					<div id=townNameWrapper>
-						<div id=tavernName class=" locked">Tavern:</div>
-						<div id=blacksmithName class=" locked">Armorer:</div>
-						<div id=woodshopName class=" locked">Goods Store:</div>
-						<div id=marketName class=" locked">Market:</div>
-						<div id=bankName class=" locked">Bank:</div>
+						<div id=tavernName class=" locked">Tavern Level:</div>
+						<div id=blacksmithName class=" locked">Armorer Level:</div>
+						<div id=woodshopName class=" locked">Goods Level:</div>
+						<div id=marketName class=" locked">Market Level:</div>
+						<div id=bankName class=" locked">Bank Level:</div>
 					</div>
 					<div id=townCraftWrapper class=resourceCount>
 						<div id=tavernCount class=" locked">0</div>
@@ -310,11 +310,11 @@
 						<div id=unlockInfo4 class="info info3">20 TP</div>
 					</div>
 					<div id=unlockWrapper5 class=unlockWrapper>
-						<input id=unlockButton5 class="button unlockable locked" type=button value="unlock blacksmith" onclick=unlockUpgrade(5);>
+						<input id=unlockButton5 class="button unlockable locked" type=button value="unlock armorer" onclick=unlockUpgrade(5);>
 						<div id=unlockInfo5 class="info info3">30 TP</div>
 					</div>
 					<div id=unlockWrapper6 class=unlockWrapper>
-						<input id=unlockButton6 class="button unlockable locked" type=button value="unlock woodshop" onclick=unlockUpgrade(6);>
+						<input id=unlockButton6 class="button unlockable locked" type=button value="unlock goods store" onclick=unlockUpgrade(6);>
 						<div id=unlockInfo6 class="info info3">40 TP</div>
 					</div>
 					<div id=unlockWrapper7 class=unlockWrapper>
@@ -418,40 +418,48 @@
 			</div>
 			<div id=theTown class=" locked">
 				<div id=townInnerWrapper>
+					<div id=townTownWrapper class=townWrapper>
+						<div id=townBoxTitle class=boxTitle>Town Info</div>
+						<div id=townLevel>Town Level: 0</div>
+						<div id=townXp>0 XP Total</div>
+						<div id=townXpNeed>0 XP to level</div>
+					</div>
 					<div id=townTavernWrapper class=townWrapper>
-						<div id=tavernBoxTitle>Tavern</div>
-						<div id=tavernPatrons>Patrons: 0</div>
+						<div id=tavernBoxTitle class=boxTitle>Tavern</div>
 						<div id=tavernAdventurers>Adventurers: 0</div>
+						<div id=tavernQuestTime>0m00s Left</div>
 						<input id=tavernSendAdventureButton class=button type=button value="Post A Quest" onclick=openAdventures();>
 					</div>
 					<div id=townBlacksmithWrapper class=townWrapper>
-						<div id=blacksmithBoxTitle>Armorer</div>
-						<div id=blacksmithLevel>Equipment Level: 0</div>
+						<div id=blacksmithBoxTitle class=boxTitle>Armorer</div>
+						<!-- <div id=blacksmithLevel>Equipment Level: 0</div> -->
+						<div id=blacksmithBonus>Equipment Bonus: 0%</div>
 					</div>
 					<div id=townWoodshopWrapper class=townWrapper>
-						<div id=woodshopBoxTitle>General Goods</div>
+						<div id=woodshopBoxTitle class=boxTitle>General Goods</div>
 						<div id=woodshopLevel>Goods Level: 0</div>
 						<div id=woodshopGoodsCount>Goods: 0</div>
 					</div>
 					<div id=townMarketWrapper class=townWrapper>
-						<div id=marketBoxTitle>Market</div>
+						<div id=marketBoxTitle class=boxTitle>Market</div>
 						<div id=market id=marketGoodsValue>Goods Price: 0</div>
 						<input id=marketSellButton class=button type=button value="Sell Goods">
 					</div>
 					<div id=townBankWrapper class=townWrapper>
-						<div id=bankBoxTitle>Bank</div>
-						<div id=bankStockValue>Current Price: 0</div>
-						<input id=bankSellButton class=button type=button value="Cash out">
+						<div id=bankBoxTitle class=boxTitle>Bank</div>
+						<div id=bankGold>Gold: 0</div>
 						<input id=bankBuyButton class=button type=button value="Invest">
 					</div>
 				</div>
 				<div id=adventureWrapper class=" locked">
 					<input id=adventureXButton class=button type=button value="X" onclick=openAdventures();>
 					<div id=adventureTimeUntilNew>Time until new quests: 5:00</div>
+					<div id=adventureAdventurers>Adventurers Available: 0</div>
+					<div id=adventureGold>Gold: 0</div>
 					<div id=adventureInnerWrapper>
 						<div id=adventure0 class=adventure>
-							<input id=adventure0Button class=button type=button value="Post" onclick=postAdventure(0); disabled>
-							<div id=adventure0InfoWrapper>
+							<input id=adventure0Button class="button adventureButton" type=button value="Post" onclick=postAdventure(0); disabled>
+							<div id=adventure0InfoWrapper class=adventureInfoWrapper>
 								<div id=adventure0Type class=adventureTitle></div>
 								<div id=adventure0Time></div>
 								<div id=adventure0Adv></div>
@@ -460,8 +468,8 @@
 							</div>
 						</div>
 						<div id=adventure1 class=adventure>
-							<input id=adventure1Button class=button type=button value="Post" onclick=postAdventure(1); disabled>
-							<div id=adventure1InfoWrapper>
+							<input id=adventure1Button class="button adventureButton" type=button value="Post" onclick=postAdventure(1); disabled>
+							<div id=adventure1InfoWrapper class=adventureInfoWrapper>
 								<div id=adventure1Type class=adventureTitle></div>
 								<div id=adventure1Time></div>
 								<div id=adventure1Adv></div>
@@ -470,8 +478,8 @@
 							</div>
 						</div>
 						<div id=adventure2 class=adventure>
-							<input id=adventure2Button class=button type=button value="Post" onclick=postAdventure(2); disabled>
-							<div id=adventure2InfoWrapper>
+							<input id=adventure2Button class="button adventureButton" type=button value="Post" onclick=postAdventure(2); disabled>
+							<div id=adventure2InfoWrapper class=adventureInfoWrapper>
 								<div id=adventure2Type class=adventureTitle></div>
 								<div id=adventure2Time></div>
 								<div id=adventure2Adv></div>
@@ -480,8 +488,8 @@
 							</div>
 						</div>
 						<div id=adventure3 class=adventure>
-							<input id=adventure3Button class=button type=button value="Post" onclick=postAdventure(3); disabled>
-							<div id=adventure3InfoWrapper>
+							<input id=adventure3Button class="button adventureButton" type=button value="Post" onclick=postAdventure(3); disabled>
+							<div id=adventure3InfoWrapper class=adventureInfoWrapper>
 								<div id=adventure3Type class=adventureTitle></div>
 								<div id=adventure3Time></div>
 								<div id=adventure3Adv></div>

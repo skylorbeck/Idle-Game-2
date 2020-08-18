@@ -49,11 +49,18 @@ var save={
 	planeOneOffs:[false,false,false,false,false,false,false,false],
 	smeltOneOffs:[false,false,false,false,false,false,false,false],
 	location:0,
-	quest:[],
+	quest:[-1,0,9999,0,0,0,0],
 	onQuest:false,
+	townLevel:0,
 	townXP:0,
+	xpNeed:0,
 	questDeleted:[false,false,false,false],
 	questRefreshTime:300,
+	adv:0,
+	advMax:0,
+	advOut:0,
+	gold:0,
+	
 };
 var quests=[]//type,time,cost,adventurers,xp
 if(	localStorage.getItem('idleGame2.quests') !== null){
@@ -86,20 +93,26 @@ var saveTick = window.setInterval(function(){gameSave()},1000);
 function buildingTick(id){
 	window.setTimeout(function(){buildingCheck(id);updateTickVar(id);},tickVar[id]);
 }
+function buildingTick2(id){
+	window.setTimeout(function(){buildingCheck(id);updateTickVar2(id);},tickVar[id]);
+}
 function updateTickVar(id){
 	tickVar[id]=(1000/save.buildings[id]);
 	// console.log(tickVar);
 	buildingTick(id);
 }
+function updateTickVar2(id){
+	tickVar[id]=(2000/save.buildings[id]);
+	// console.log(tickVar);
+	buildingTick2(id);
+}
 function startTickVar(){
 	updateTickVar(0);
-	updateTickVar(1);
+	updateTickVar2(1);
 	updateTickVar(2);
-	updateTickVar(3);
+	updateTickVar2(3);
 	updateTickVar(9);
 }
-
-
 
 function areaCheck(){
 	switch(save.location){
@@ -112,6 +125,24 @@ function areaCheck(){
 	}
 }
 // visual updates
+function updateXp(){
+	save.xpNeed=(Math.floor(Math.exp(save.townLevel))*1000);
+	let xpNeed2=save.xpNeed-save.townXP;
+	if(xpNeed2<=0){
+		save.townLevel++;
+		save.xpNeed=(Math.floor(Math.exp(save.townLevel))*1000);
+		xpNeed2=save.xpNeed-save.townXP;
+		};
+	document.getElementById("townXpNeed").innerHTML="<span class=highlightedText>"+xpNeed2+"</span> XP to level";
+	document.getElementById("townXp").innerHTML="<span class=highlightedText>"+save.townXP+"</span> XP Total";
+	document.getElementById("townLevel").innerHTML="Town Level: <span class=highlightedText>"+save.townLevel+"</span>";
+}
+function updateGold(){
+	g="Gold: <span class=highlightedText>"+save.gold+"</span>";
+	document.getElementById("bankGold").innerHTML=g;
+	document.getElementById("adventureGold").innerHTML=g;
+	
+}
 function updateResources(id){
 	switch(true){
 		case save.location==1:
@@ -221,11 +252,10 @@ function updateBuildings(){
 	document.getElementById("marketCount").innerHTML=save.buildings[7].toLocaleString();
 	document.getElementById("bankCount").innerHTML=save.buildings[8].toLocaleString();
 	document.getElementById("labCount").innerHTML=save.buildings[9].toLocaleString();
-	// document.getElementById("tavernCountT").innerHTML=save.buildings[4].toLocaleString();
-	// document.getElementById("blacksmithCountT").innerHTML=save.buildings[5].toLocaleString();
-	// document.getElementById("woodshopCountT").innerHTML=save.buildings[6].toLocaleString();
-	// document.getElementById("marketCountT").innerHTML=save.buildings[7].toLocaleString();
-	// document.getElementById("bankCountT").innerHTML=save.buildings[8].toLocaleString();
+	// document.getElementById("blacksmithLevel").innerHTML="Equipment Level <span class=highlightedText> "+save.buildings[5].toLocaleString()+"</span>";
+	document.getElementById("blacksmithBonus").innerHTML="Equipment Bonus <span class=highlightedText> "+1*save.buildings[5]+"%</span>";
+	
+
 }
 var quest0Targets=["Boars","Tigers","Bears","Wolves","Bandits","Thugs","Slimes","Spiders","Zombies","Skeletons","Giant Rats","Gorillas","Eagles","Pythons"];
 var quest1Targets=["Cave","Fort","Dungeon","Castle","Camp","Cavern","Crypt","Burrows","Pits","Tunnels","Labyrinth","Catacombs","Delves","Tombs","Quarters","Vault","Grotto","Keep","Tower"];
@@ -233,8 +263,17 @@ var quest2Targets=["Golda","Cristie","Annika","Elmira","Kathey","Loreta","Ilumin
 var quest3Targets=["a pair of earrings","a slipper","a blowdryer","a pair of tongs","a sheet of paper","a rock","a magnet","a toy car","some milk","a fork","a bag","a toothpick","a plate","some eye liner","a ring","a lighter","a safety pin","a squirrel","a shawl","a belt","a cement stone","a candy bar","a carrot","a coffee pot","a pocketknife","a bottle cap","a dagger","a bottle of ink","a knife","a box of tissues","a spool of string","an incense holder","a toy soldier","a nail filer","a wrench","some food","a rubber duck","a pair of knitting needles","a candy wrapper","a zipper","a paintbrush","a hair tie","a pair of socks","a salt shaker","a wallet","an egg timer","a pocketwatch","an empty bottle","a lime","a coffee mug","a butter knife","a soccer ball","a scallop shell","a necklace","a bottle of glue","a candlestick","a plastic fork","a carton of ice cream","a matchbook","a needle","a plush dinosaur","a pair of sunglasses","a lamp","a bag of popcorn","a map","a jar of jam","a tomato","a picture frame","a pen","a bonesaw","a box of crayons","a wine glass","a sponge","a flashlight","a lamp shade","a pillow","a can of beans"];
 var quest4Targets=["mushrooms","herbs","leaves","berries","sticks","snails","butterflies","ants","bones","tusks","horns","claws","shells","fruit","beetles"]
 var questAdj=["Angry","Fierce","Grumpy","Helpless","Itchy","Jealous","Lazy","Mysterious","Nervous","Obnoxious","Pitiful","Repulsive","Scary","Vast","Immense","Enormous","Spacious","Exorbitant","Gross","Foul","Disturbed","Screeching","Horrible","Defiant","Puzzling","Tranquil","Gamy","Agonizing","Roasted","Damaged","Aluring","Pale","Lewd","Uppity","Demonic","Mighty","Flawless"];
-
+function updateAdventurers(){
+		save.adv=save.advMax-save.advOut;
+		document.getElementById("adventureAdventurers").innerHTML="Adventurers Available:<span class=highlightedText> "+save.adv+"</span>"; 
+		document.getElementById("tavernAdventurers").innerHTML="Adventurers:<span class=highlightedText> "+save.adv+"</span>"; 
+}
 function updateCurrentAdventure(){
+	document.getElementById("adventureCurrentAdv").innerHTML="Adventurers Questing: "+"<span class=highlightedText>"+save.quest[1]+"</span>";
+	let m=Math.floor(save.quest[2]/60);
+	let s=save.quest[2]-(m*60);
+	document.getElementById("adventureCurrentTimeRemain").innerHTML="Time Remaining: "+"<span class=highlightedText>"+m+":"+s.toLocaleString(undefined,{minimumIntegerDigits: 2})+"</span>";
+	document.getElementById("adventureCurrentXp").innerHTML="XP Reward: "+"<span class=highlightedText>"+save.quest[4]+"</span>";
 	switch(save.quest[0]){
 		case 0://kill X of Y
 			document.getElementById("adventureCurrentTitle").innerHTML="Kill "+save.quest[6]+" "+quest0Targets[save.quest[5]];
@@ -251,16 +290,17 @@ function updateCurrentAdventure(){
 		case 4://Gather X amount of things
 			document.getElementById("adventureCurrentTitle").innerHTML="Gather "+save.quest[6]+" "+quest4Targets[save.quest[5]];
 		break;
+		default:
+			document.getElementById("adventureCurrentTitle").innerHTML="Pick a quest above!";
+			document.getElementById("adventureCurrentAdv").innerHTML="Available Adventurers = Tavern Level / 10 rounded up.";
+			document.getElementById("adventureCurrentTimeRemain").innerHTML="";
+			document.getElementById("adventureCurrentXp").innerHTML="";
+		break;
 	}
-	document.getElementById("adventureCurrentAdv").innerHTML="Adventurers Questing: "+"<span class=highlightedText>"+save.quest[1]+"</span>";
-	let m=Math.floor(save.quest[2]/60);
-	let s=save.quest[2]-(m*60);
-	document.getElementById("adventureCurrentTimeRemain").innerHTML="Time Remaining: "+"<span class=highlightedText>"+m+":"+s.toLocaleString(undefined,{minimumIntegerDigits: 2})+"</span>";
-	document.getElementById("adventureCurrentXp").innerHTML="XP Reward: "+"<span class=highlightedText>"+save.quest[4]+"</span>";
 }
 function updateAdventures(slot){
 	let quest=quests[slot];
-	if(save.questDeleted[slot]==true){document.getElementById("adventure"+slot+"Type").innerHTML="---"}else{
+	if(save.questDeleted[slot]==true){lockItem("adventure"+slot+"InfoWrapper")}else{
 		switch(quest.type){
 			case 0://kill X of Y
 				document.getElementById("adventure"+slot+"Type").innerHTML="Kill "+quest.amt+" "+quest0Targets[quest.trgt];
@@ -278,28 +318,36 @@ function updateAdventures(slot){
 				document.getElementById("adventure"+slot+"Type").innerHTML="Gather "+quest.amt+" "+quest4Targets[quest.trgt];
 			break;
 		}
-		document.getElementById("adventure"+slot+"Time").innerHTML="Time="+quest.time;
-		document.getElementById("adventure"+slot+"Cost").innerHTML="Cost="+quest.cost;
-		document.getElementById("adventure"+slot+"Adv").innerHTML="Adv="+quest.adv;
-		document.getElementById("adventure"+slot+"Xp").innerHTML="Xp="+quest.xp;
+		unlockItem("adventure"+slot+"InfoWrapper");
+		let m=Math.floor(quest.time/60);
+		let s=quest.time-(m*60);
+		document.getElementById("adventure"+slot+"Time").innerHTML="<span class=highlightedText>"+m+"m"+s.toLocaleString(undefined,{minimumIntegerDigits: 2})+"s</span> needed";
+		document.getElementById("adventure"+slot+"Cost").innerHTML="<span class=highlightedText>"+quest.cost+"</span>"+" Gold to Post";
+		document.getElementById("adventure"+slot+"Adv").innerHTML="<span class=highlightedText>"+quest.adv+"</span>"+" Adventurers";
+		document.getElementById("adventure"+slot+"Xp").innerHTML="<span class=highlightedText>"+quest.xp+"</span>"+" Town XP reward";
 	}
 }
 function updateCurrentAdventureTime(){
 	let m=Math.floor(save.quest[2]/60);
 	let s=save.quest[2]-(m*60);
+	let t="<span class=highlightedText>"+m+"m"+s.toLocaleString(undefined,{minimumIntegerDigits: 2})+"s</span>";
 	switch(true){
+		case save.quest[2]==9999:
+			document.getElementById("adventureCurrentTimeRemain").innerHTML="";
+			document.getElementById("tavernQuestTime").innerHTML="";
+		break;
 		case save.quest[2]>=1:
 			save.quest[2]--;
-			document.getElementById("adventureCurrentTimeRemain").innerHTML="Time Remaining: "+"<span class=highlightedText>"+m+":"+s.toLocaleString(undefined,{minimumIntegerDigits: 2})+"</span>";
+				if(adventuresOpen==0){}else{document.getElementById("adventureCurrentTimeRemain").innerHTML="Time Remaining: "+t;}
+			document.getElementById("tavernQuestTime").innerHTML=t+" Left";
 		break;
 		case save.quest[2]==0 && save.onQuest==true:
 			questComplete();
-		break;
-		case save.quest[2]==0:
-			document.getElementById("adventureCurrentTimeRemain").innerHTML="Time Remaining: <span class=highlightedText>Complete</span>"
 			updatePostable();
+		default:
+			document.getElementById("adventureCurrentTimeRemain").innerHTML="Time Remaining: <span class=highlightedText>Complete</span>";
+			document.getElementById("tavernQuestTime").innerHTML="<span class=highlightedText>Complete</span>";
 		break;
-		
 	}
 }
 function updateTimeUntilNewQuests(){
@@ -308,13 +356,14 @@ function updateTimeUntilNewQuests(){
 	switch(save.questRefreshTime){
 		case 0:
 			genAllAdventures();
-			save.questRefreshTime=300;
+			save.questRefreshTime=600;
 		default:
 			save.questRefreshTime--;
-			document.getElementById("adventureTimeUntilNew").innerHTML="Time until new quests: "+m+":"+s.toLocaleString(undefined,{minimumIntegerDigits: 2});
+			if(adventuresOpen==0){}else{
+				document.getElementById("adventureTimeUntilNew").innerHTML="Time until new quests: <span class=highlightedText>"+m+":"+s.toLocaleString(undefined,{minimumIntegerDigits: 2})+"</span>";
+				}
 		break;
 	}
-	
 }
 function updateAllAdventures(){
 	let x;
@@ -399,10 +448,10 @@ function updateSpeed(){
 	let e=document.getElementById("planeInfo")
 	switch(true){
 		case save.sawUpgraded[0]==true:
-			e.innerHTML="2:4 | "+((0.2*save.buildings[3]).toFixed(2)*2)+" Plank/s/Ea";
+			e.innerHTML="2:4 | "+((0.2*save.buildings[3])*2).toFixed(2)+" Plank/s/Ea";
 		break;
 		case save.buildings[3]>=1:
-			e.innerHTML="2:4 | "+((0.2*save.buildings[3]).toFixed(2)*2)+" Plank/sec";
+			e.innerHTML="2:4 | "+((0.2*save.buildings[3])*2).toFixed(2)+" Plank/sec";
 		break;
 		default:
 			e.innerHTML="2:4";
@@ -410,186 +459,53 @@ function updateSpeed(){
 	}
 }
 function updateBuildingCost(id){
+	function uBC(build,Cbuild,x){
+		switch(true){
+				case save.buildings[x]>=0 && save.buildings[x]<=9:
+					document.getElementById(build+"Info").innerHTML=parseInt(2+save.buildings[x],10)+"x<span class=copper>▰</span>, " + parseInt(8+save.buildings[x]*4,10)+"x<span class=soft>▬</span>";
+				break;
+				case save.buildings[x]>=10 && save.buildings[x]<=19:
+					document.getElementById(build+"Info").innerHTML=parseInt(save.buildings[x]-8,10)+"x<span class=iron>▰</span>, "+parseInt(save.buildings[x]*4-32,10)+"x<span class=hard>▬</span>";
+				break;
+				case save.buildings[x]>=20 && save.buildings[x]<=29:
+					document.getElementById(build+"Info").innerHTML=parseInt(2+save.buildings[x]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[x]*4-72,10)+"x<span class=ebony>▬</span>";
+				break;
+				case save.buildings[x]>=30 && save.buildings[x]<=39:
+					document.getElementById(build+"Info").innerHTML=parseInt(save.buildings[x]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[x]*4-112,10)+"x<span class=pearl>▬</span>";
+				break;
+				case save.buildings[x]>=40:
+					document.getElementById(build+"Info").innerHTML="Max Reached";
+					disableItem("buy"+Cbuild);
+				break;
+			}
+	}
 	switch(id){
 		case 0:
-			switch(true){
-				case save.buildings[0]>=0 && save.buildings[0]<=9:
-					document.getElementById("mineInfo").innerHTML=parseInt(2+save.buildings[0],10)+"x<span class=copper>▰</span>, " + parseInt(8+save.buildings[0]*4,10)+"x<span class=soft>▬</span>";
-				break;
-				case save.buildings[0]>=10 && save.buildings[0]<=19:
-					document.getElementById("mineInfo").innerHTML=parseInt(save.buildings[0]-8,10)+"x<span class=iron>▰</span>, "+parseInt(save.buildings[0]*4-32,10)+"x<span class=hard>▬</span>";
-				break;
-				case save.buildings[0]>=20 && save.buildings[0]<=29:
-					document.getElementById("mineInfo").innerHTML=parseInt(2+save.buildings[0]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[0]*4-72,10)+"x<span class=ebony>▬</span>";
-				break;
-				case save.buildings[0]>=30 && save.buildings[0]<=39:
-					document.getElementById("mineInfo").innerHTML=parseInt(save.buildings[0]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[0]*4-112,10)+"x<span class=pearl>▬</span>";
-				break;
-				case save.buildings[0]>=40:
-					document.getElementById("mineInfo").innerHTML="Max Reached";
-					disableItem("buyMine");
-				break;
-			}
+			uBC("mine","Mine",0)
 		break;
 		case 1:
-			switch(true){
-				case save.buildings[1]>=0 && save.buildings[1]<=9:
-					document.getElementById("refineryInfo").innerHTML=parseInt(2+save.buildings[1],10)+"x<span class=copper>▰</span>, " + parseInt(8+save.buildings[1]*4,10)+"x<span class=soft>▬</span>";
-				break;
-				case save.buildings[1]>=10 && save.buildings[1]<=19:
-					document.getElementById("refineryInfo").innerHTML=parseInt(save.buildings[1]-8,10)+"x<span class=iron>▰</span>, "+parseInt(save.buildings[1]*4-32,10)+"x<span class=hard>▬</span>";
-				break;
-				case save.buildings[1]>=20 && save.buildings[1]<=29:
-					document.getElementById("refineryInfo").innerHTML=parseInt(2+save.buildings[1]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[1]*4-72,10)+"x<span class=ebony>▬</span>";
-				break;
-				case save.buildings[1]>=30 && save.buildings[0]<=39:
-					document.getElementById("refineryInfo").innerHTML=parseInt(save.buildings[1]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[1]*4-112,10)+"x<span class=pearl>▬</span>";
-				break;
-				case save.buildings[1]>=40:
-					document.getElementById("refineryInfo").innerHTML="Max Reached";
-					disableItem("buyRefinery");
-				break;
-			}
+			uBC("refinery","Refinery",1)
 		break;
 		case 2:
-			switch(true){
-				case save.buildings[2]>=0 && save.buildings[2]<=9:
-					document.getElementById("yardInfo").innerHTML=parseInt(2+save.buildings[2],10)+"x<span class=copper>▰</span>, " + parseInt(8+save.buildings[2]*4,10)+"x<span class=soft>▬</span>";
-				break;
-				case save.buildings[2]>=10 && save.buildings[2]<=19:
-					document.getElementById("yardInfo").innerHTML=parseInt(save.buildings[2]-8,10)+"x<span class=iron>▰</span>, "+parseInt(save.buildings[2]*4-32,10)+"x<span class=hard>▬</span>";
-				break;
-				case save.buildings[2]>=20 && save.buildings[2]<=29:
-					document.getElementById("yardInfo").innerHTML=parseInt(2+save.buildings[2]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[2]*4-72,10)+"x<span class=ebony>▬</span>";
-				break;
-				case save.buildings[2]>=30 && save.buildings[0]<=39:
-					document.getElementById("yardInfo").innerHTML=parseInt(save.buildings[2]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[2]*4-112,10)+"x<span class=pearl>▬</span>";
-				break;
-				case save.buildings[2]>=40:
-					document.getElementById("yardInfo").innerHTML="Max Reached";
-					disableItem("buyYard");
-				break;
-			}
+			uBC("yard","Yard",2)
 		break;
 		case 3:
-			switch(true){
-				case save.buildings[3]>=0 && save.buildings[3]<=9:
-					document.getElementById("sawInfo").innerHTML=parseInt(2+save.buildings[3],10)+"x<span class=copper>▰</span>, " + parseInt(8+save.buildings[3]*4,10)+"x<span class=soft>▬</span>";
-				break;
-				case save.buildings[3]>=10 && save.buildings[3]<=19:
-					document.getElementById("sawInfo").innerHTML=parseInt(save.buildings[3]-8,10)+"x<span class=iron>▰</span>, "+parseInt(save.buildings[3]*4-32,10)+"x<span class=hard>▬</span>";
-				break;
-				case save.buildings[3]>=20 && save.buildings[3]<=29:
-					document.getElementById("sawInfo").innerHTML=parseInt(2+save.buildings[3]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[3]*4-72,10)+"x<span class=ebony>▬</span>";
-				break;
-				case save.buildings[3]>=30 && save.buildings[0]<=39:
-					document.getElementById("sawInfo").innerHTML=parseInt(save.buildings[3]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[3]*4-112,10)+"x<span class=pearl>▬</span>";
-				break;
-				case save.buildings[3]>=40:
-					document.getElementById("sawInfo").innerHTML="Max Reached";
-					disableItem("buySaw");
-				break;
-			}
+			uBC("saw","Saw",3)
 		break;
 		case 4:
-			switch(true){
-				case save.buildings[4]>=0 && save.buildings[4]<=9:
-					document.getElementById("tavernInfo").innerHTML=parseInt(2+save.buildings[4],10)+"x<span class=copper>▰</span>, " + parseInt(8+save.buildings[4]*4,10)+"x<span class=soft>▬</span>";
-				break;
-				case save.buildings[4]>=10 && save.buildings[4]<=19:
-					document.getElementById("tavernInfo").innerHTML=parseInt(save.buildings[4]-8,10)+"x<span class=iron>▰</span>, "+parseInt(save.buildings[4]*4-32,10)+"x<span class=hard>▬</span>";
-				break;
-				case save.buildings[4]>=20 && save.buildings[4]<=29:
-					document.getElementById("tavernInfo").innerHTML=parseInt(2+save.buildings[4]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[4]*4-72,10)+"x<span class=ebony>▬</span>";
-				break;
-				case save.buildings[4]>=30 && save.buildings[0]<=39:
-					document.getElementById("tavernInfo").innerHTML=parseInt(save.buildings[4]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[4]*4-112,10)+"x<span class=pearl>▬</span>";
-				break;
-				case save.buildings[4]>=40:
-					document.getElementById("tavernInfo").innerHTML="Max Reached";
-					disableItem("buyTavern");
-				break;
-			}
+			uBC("tavern","Tavern",4)
 		break;
 		case 5:
-			switch(true){
-				case save.buildings[5]>=0 && save.buildings[5]<=9:
-					document.getElementById("blacksmithInfo").innerHTML=parseInt(2+save.buildings[5],10)+"x<span class=copper>▰</span>, " + parseInt(8+save.buildings[5]*4,10)+"x<span class=soft>▬</span>";
-				break;
-				case save.buildings[5]>=10 && save.buildings[5]<=19:
-					document.getElementById("blacksmithInfo").innerHTML=parseInt(save.buildings[5]-8,10)+"x<span class=iron>▰</span>, "+parseInt(save.buildings[5]*4-32,10)+"x<span class=hard>▬</span>";
-				break;
-				case save.buildings[5]>=20 && save.buildings[5]<=29:
-					document.getElementById("blacksmithInfo").innerHTML=parseInt(2+save.buildings[5]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[5]*4-72,10)+"x<span class=ebony>▬</span>";
-				break;
-				case save.buildings[5]>=30 && save.buildings[0]<=39:
-					document.getElementById("blacksmithInfo").innerHTML=parseInt(save.buildings[5]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[5]*4-112,10)+"x<span class=pearl>▬</span>";
-				break;
-				case save.buildings[5]>=40:
-					document.getElementById("blacksmithInfo").innerHTML="Max Reached";
-					disableItem("buyBlacksmith");
-				break;
-			}
+			uBC("blacksmith","Blacksmith",5)
 		break;
 		case 6:
-			switch(true){
-				case save.buildings[6]>=0 && save.buildings[6]<=9:
-					document.getElementById("woodshopInfo").innerHTML=parseInt(2+save.buildings[6],10)+"x<span class=copper>▰</span>, " + parseInt(8+save.buildings[6]*4,10)+"x<span class=soft>▬</span>";
-				break;
-				case save.buildings[6]>=10 && save.buildings[6]<=19:
-					document.getElementById("woodshopInfo").innerHTML=parseInt(save.buildings[6]-8,10)+"x<span class=iron>▰</span>, "+parseInt(save.buildings[6]*4-32,10)+"x<span class=hard>▬</span>";
-				break;
-				case save.buildings[6]>=20 && save.buildings[6]<=29:
-					document.getElementById("woodshopInfo").innerHTML=parseInt(2+save.buildings[6]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[6]*4-72,10)+"x<span class=ebony>▬</span>";
-				break;
-				case save.buildings[6]>=30 && save.buildings[0]<=39:
-					document.getElementById("woodshopInfo").innerHTML=parseInt(save.buildings[6]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[6]*4-112,10)+"x<span class=pearl>▬</span>";
-				break;
-				case save.buildings[6]>=40:
-					document.getElementById("woodshopInfo").innerHTML="Max Reached";
-					disableItem("buyWoodshop");
-				break;
-			}
+			uBC("woodshop","Woodshop",6)
 		break;
 		case 7:
-			switch(true){
-				case save.buildings[7]>=0 && save.buildings[7]<=9:
-					document.getElementById("marketInfo").innerHTML=parseInt(2+save.buildings[7],10)+"x<span class=copper>▰</span>, " + parseInt(8+save.buildings[7]*4,10)+"x<span class=soft>▬</span>";
-				break;
-				case save.buildings[7]>=10 && save.buildings[7]<=19:
-					document.getElementById("marketInfo").innerHTML=parseInt(save.buildings[7]-8,10)+"x<span class=iron>▰</span>, "+parseInt(save.buildings[7]*4-32,10)+"x<span class=hard>▬</span>";
-				break;
-				case save.buildings[7]>=20 && save.buildings[7]<=29:
-					document.getElementById("marketInfo").innerHTML=parseInt(2+save.buildings[7]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[7]*4-72,10)+"x<span class=ebony>▬</span>";
-				break;
-				case save.buildings[7]>=30 && save.buildings[0]<=39:
-					document.getElementById("marketInfo").innerHTML=parseInt(save.buildings[7]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[7]*4-112,10)+"x<span class=pearl>▬</span>";
-				break;
-				case save.buildings[7]>=40:
-					document.getElementById("marketInfo").innerHTML="Max Reached";
-					disableItem("buyMarket");
-				break;
-			}
+			uBC("market","Market",7)
 		break;
 		case 8:
-			switch(true){
-				case save.buildings[8]>=0 && save.buildings[8]<=9:
-					document.getElementById("bankInfo").innerHTML=parseInt(2+save.buildings[8],10)+"x<span class=copper>▰</span>, " + parseInt(8+save.buildings[8]*4,10)+"x<span class=soft>▬</span>";
-				break;
-				case save.buildings[8]>=10 && save.buildings[8]<=19:
-					document.getElementById("bankInfo").innerHTML=parseInt(save.buildings[8]-8,10)+"x<span class=iron>▰</span>, "+parseInt(save.buildings[8]*4-32,10)+"x<span class=hard>▬</span>";
-				break;
-				case save.buildings[8]>=20 && save.buildings[8]<=29:
-					document.getElementById("bankInfo").innerHTML=parseInt(2+save.buildings[8]-20,10)+"x<span class=silver>▰</span>, "+parseInt(save.buildings[8]*4-72,10)+"x<span class=ebony>▬</span>";
-				break;
-				case save.buildings[8]>=30 && save.buildings[0]<=39:
-					document.getElementById("bankInfo").innerHTML=parseInt(save.buildings[8]-28,10)+"x<span class=gold>▰</span>, "+parseInt(save.buildings[8]*4-112,10)+"x<span class=pearl>▬</span>";
-				break;
-				case save.buildings[8]>=40:
-					document.getElementById("bankInfo").innerHTML="Max Reached";
-					disableItem("buyBank");
-				break;
-			}
+			uBC("bank","Bank",8)
 		break;
 		case 9:
 			switch(true){
@@ -977,10 +893,10 @@ function updatePlaneProgress(id){
 		break;
 		case id==0:
 			switch(true){
-				case save.buildings[4]>=40:
+				case save.buildings[3]>=40:
 					if(save.wood[0]<=1){unlockItem("planeProgress06");lockItem("planeProgress06")}else{unlockItem("planeProgress06");};
 				break;
-				case save.buildings[4]>=30:
+				case save.buildings[3]>=30:
 					switch(true){
 						case save.planeOneOffs[1]==false:
 							unlockItem("planeProgress04");
@@ -998,7 +914,7 @@ function updatePlaneProgress(id){
 						break;
 					}
 				break;
-				case save.buildings[4]>=20:
+				case save.buildings[3]>=20:
 					switch(true){
 						case save.planeOneOffs[0]==false:
 							unlockItem("planeProgress00");
@@ -1062,10 +978,10 @@ function updatePlaneProgress(id){
 		break;
 		case id==1:
 			switch(true){
-				case save.buildings[4]>=40:
+				case save.buildings[3]>=40:
 					if(save.wood[1]<=1){unlockItem("planeProgress16");lockItem("planeProgress16")}else{unlockItem("planeProgress16");};
 				break;
-				case save.buildings[4]>=30:
+				case save.buildings[3]>=30:
 					switch(true){
 						case save.planeOneOffs[3]==false:
 							unlockItem("planeProgress14");
@@ -1083,7 +999,7 @@ function updatePlaneProgress(id){
 						break;
 					}
 				break;
-				case save.buildings[4]>=20:
+				case save.buildings[3]>=20:
 					switch(true){
 						case save.planeOneOffs[2]==false:
 							unlockItem("planeProgress10");
@@ -1147,10 +1063,10 @@ function updatePlaneProgress(id){
 		break;
 		case id==2:
 			switch(true){
-				case save.buildings[4]>=40:
+				case save.buildings[3]>=40:
 					if(save.wood[2]<=1){unlockItem("planeProgress26");lockItem("planeProgress26")}else{unlockItem("planeProgress26");};
 				break;
-				case save.buildings[4]>=30:
+				case save.buildings[3]>=30:
 					switch(true){
 						case save.planeOneOffs[5]==false:
 							unlockItem("planeProgress24");
@@ -1168,7 +1084,7 @@ function updatePlaneProgress(id){
 						break;
 					}
 				break;
-				case save.buildings[4]>=20:
+				case save.buildings[3]>=20:
 					switch(true){
 						case save.planeOneOffs[4]==false:
 							unlockItem("planeProgress20");
@@ -1232,10 +1148,10 @@ function updatePlaneProgress(id){
 		break;
 		case id==3:
 			switch(true){
-				case save.buildings[4]>=40:
+				case save.buildings[3]>=40:
 					if(save.wood[3]<=1){unlockItem("planeProgress36");lockItem("planeProgress36")}else{unlockItem("planeProgress36");};
 				break;
-				case save.buildings[4]>=30:
+				case save.buildings[3]>=30:
 					switch(true){
 						case save.planeOneOffs[7]==false:
 							unlockItem("planeProgress34");
@@ -1253,7 +1169,7 @@ function updatePlaneProgress(id){
 						break;
 					}
 				break;
-				case save.buildings[4]>=20:
+				case save.buildings[3]>=20:
 					switch(true){
 						case save.planeOneOffs[6]==false:
 							unlockItem("planeProgress30");
@@ -1583,7 +1499,6 @@ function updateSmeltPlane‌ThinkOnStart(){
 	updatePlaneProgress(3);
 	updateThinkProgress();
 }
-
 function updateAllResources(){
 	updateResources(00);
 	updateResources(01);
@@ -1781,6 +1696,10 @@ function updateAll(){
 	updateThinkPoints();
 	updateAllAdventures();
 	updateCurrentAdventure();
+	updateCurrentAdventureTime();
+	updateAdventurers();
+	updateGold();
+	updateXp();
 }
 function updateProgressColors(){
 	switch(true){
@@ -1900,68 +1819,53 @@ function mine(){
 }
 function doMine(){
 	let result=randomInt(0,9);
+	function doMineX(x){
+		save.ore[x]+=1;
+		save.oreTotal[x]+=1;
+		if(save.ore[x]>=2){enableItem("smeltButton"+x)};
+	}
 	switch(true){
 		case save.oreUnlocked[2]==true:
 			switch(true){
 				case result>=9:
-					save.ore[3]+=1;
-					save.oreTotal[3]+=1;
-					if(save.ore[3]>=2){enableItem("smeltButton3")};
+					doMineX(3);
 				break;
-				case result>=7:
-					save.ore[2]+=1;
-					save.oreTotal[2]+=1;
-					if(save.ore[2]>=2){enableItem("smeltButton2")};
+				case result>=6:
+					doMineX(2);
 				break;
-				case result>=4:
-					save.ore[1]+=1;
-					save.oreTotal[1]+=1;
-					if(save.ore[1]>=2){enableItem("smeltButton1")};
+				case result>=3:
+					doMineX(1);
 				break;
 				default:
-					save.ore[0]+=1;
-					save.oreTotal[0]+=1;
-					if(save.ore[0]>=2){enableItem("smeltButton0")};
+					doMineX(0);
 				break;
 			}
 		break;
 		case save.oreUnlocked[1]==true:
 			switch(true){
-				case result>=8:
-					save.ore[2]+=1;
-					save.oreTotal[2]+=1;
-					if(save.ore[2]>=2){enableItem("smeltButton2")};
+				case result>=7:
+					doMineX(2);
 				break;
-				case result>=5:
-					save.ore[1]+=1;
-					save.oreTotal[1]+=1;
-					if(save.ore[1]>=2){enableItem("smeltButton1")};
+				case result>=3:
+					doMineX(1);
 				break;
 				default:
-					save.ore[0]+=1;
-					save.oreTotal[0]+=1;
-					if(save.ore[0]>=2){enableItem("smeltButton0")};
+					doMineX(0);
 				break;
 			}
 		break;
 		case save.oreUnlocked[0]==true:
 			switch(true){
-				case result>=7:
-					save.ore[1]+=1;
-					save.oreTotal[1]+=1;
-					if(save.ore[1]>=2){enableItem("smeltButton1")};
+				case result>=6:
+					doMineX(1);
 				break;
 				default:
-					save.ore[0]+=1;
-					save.oreTotal[0]+=1;
-					if(save.ore[0]>=2){enableItem("smeltButton0")};
+					doMineX(0);
 				break;
 			}
 		break;
 		default:
-			save.ore[0]+=1;
-			save.oreTotal[0]+=1;
-			if(save.ore[0]>=2){enableItem("smeltButton0")};
+			doMineX(0);
 		break;
 	}
 	updateResources(5);
@@ -1999,68 +1903,53 @@ function chop(){
 }
 function doChop(){
 	let result=randomInt(0,9);
+	function doChopX(x){
+		save.wood[x]+=1;
+		save.woodTotal[x]+=1;
+		if(save.wood[x]>=2){enableItem("planeButton"+x)};
+	}
 	switch(true){
 		case save.woodUnlocked[2]==true:
 			switch(true){
 				case result>=9:
-					save.wood[3]+=1;
-					save.woodTotal[3]+=1;
-					if(save.wood[3]>=1){enableItem("planeButton3")};
+					doChopX(3);
 				break;
-				case result>=7:
-					save.wood[2]+=1;
-					save.woodTotal[2]+=1;
-					if(save.wood[2]>=1){enableItem("planeButton2")};
+				case result>=6:
+					doChopX(2);
 				break;
-				case result>=4:
-					save.wood[1]+=1;
-					save.woodTotal[1]+=1;
-					if(save.wood[1]>=1){enableItem("planeButton1")};
+				case result>=3:
+					doChopX(1);
 				break;
 				default:
-					save.wood[0]+=1;
-					save.woodTotal[0]+=1;
-					if(save.wood[0]>=1){enableItem("planeButton0")};
+					doChopX(0);
 				break;
 			}
 		break;
 		case save.woodUnlocked[1]==true:
 			switch(true){
-				case result>=8:
-					save.wood[2]+=1;
-					save.woodTotal[2]+=1;
-					if(save.wood[2]>=1){enableItem("planeButton2")};
+				case result>=7:
+					doChopX(2);
 				break;
-				case result>=5:
-					save.wood[1]+=1;
-					save.woodTotal[1]+=1;
-					if(save.wood[1]>=1){enableItem("planeButton1")};
+				case result>=3:
+					doChopX(1);
 				break;
 				default:
-					save.wood[0]+=1;
-					save.woodTotal[0]+=1;
-					if(save.wood[0]>=1){enableItem("planeButton0")};
+					doChopX(0);
 				break;
 			}
 		break;
 		case save.woodUnlocked[0]==true:
 			switch(true){
-				case result>=7:
-					save.wood[1]+=1;
-					save.woodTotal[1]+=1;
-					if(save.wood[1]>=1){enableItem("planeButton1")};
+				case result>=6:
+					doChopX(1);
 				break;
 				default:
-					save.wood[0]+=1;
-					save.woodTotal[0]+=1;
-					if(save.wood[0]>=1){enableItem("planeButton0")};
+					doChopX(0);
 				break;
 			}
 		break;
 		default:
-			save.wood[0]+=1;
-			save.woodTotal[0]+=1;
-			if(save.wood[0]>=1){enableItem("planeButton0")};
+			doChopX(0);
 		break;
 	}
 	updateResources(6);
@@ -2098,6 +1987,34 @@ function plane(id){
 }
 // Buildings
 function buyBuilding(id){
+	function buyTierZero(x){
+		if(save.bar[0]>=2+save.buildings[x]  && save.plank[0]>=8+save.buildings[x]*4 ){
+		save.bar[0]-=2+save.buildings[x];
+		save.plank[0]-=8+save.buildings[x]*4;
+		save.buildings[x]+=1;
+		}
+	}
+	function buyTierOne(x){
+		if(save.bar[1]>=save.buildings[x]-8 && save.plank[1]>=save.buildings[x]*4-32){
+		save.bar[1]-=save.buildings[x]-8;
+		save.plank[1]-=save.buildings[x]*4-32;
+		save.buildings[x]+=1;
+		}
+	}
+	function buyTierTwo(x){
+		if(save.bar[2]>=save.buildings[x]-18 && save.plank[2]>=save.buildings[x]*4-72){
+		save.bar[2]-=save.buildings[x]-18;
+		save.plank[2]-=save.buildings[x]*4-72;
+		save.buildings[x]+=1;
+		}
+	}
+	function buyTierThree(x){
+		if(save.bar[3]>=save.buildings[x]-28 && save.plank[3]>=save.buildings[x]*4-112){
+		save.bar[3]-=save.buildings[x]-28;
+		save.plank[3]-=save.buildings[x]*4-112;
+		save.buildings[x]+=1;
+		}
+	}
 	switch(id){
 		case 0:
 			switch(true){
@@ -2105,284 +2022,160 @@ function buyBuilding(id){
 					
 				break;
 				case save.buildings[0]>=30:
-					if(save.bar[3]>=save.buildings[0]-28 && save.plank[2]>=save.buildings[0]*4-112){
-					save.bar[3]-=save.buildings[0]-28;
-					save.plank[3]-=save.buildings[0]*4-112;
-					save.buildings[0]+=1;
-					}
+					buyTierThree(0);
 				break;
 				case save.buildings[0]>=20:
-					if(save.bar[2]>=save.buildings[0]-18 && save.plank[2]>=save.buildings[0]*4-72){
-					save.bar[2]-=save.buildings[0]-18;
-					save.plank[2]-=save.buildings[0]*4-72;
-					save.buildings[0]+=1;
-					}
+					buyTierTwo(0);
 				break;
 				case save.buildings[0]>=10:
-					if(save.bar[1]>=save.buildings[0]-8 && save.plank[1]>=save.buildings[0]*4-32){
-					save.bar[1]-=save.buildings[0]-8;
-					save.plank[1]-=save.buildings[0]*4-32;
-					save.buildings[0]+=1;
-					}
+					buyTierOne(0);
 				break;
 				case save.buildings[0]>=0:
-					if(save.bar[0]>=2+save.buildings[0]  && save.plank[0]>=8+save.buildings[0]*4 ){
-					save.bar[0]-=2+save.buildings[0];
-					save.plank[0]-=8+save.buildings[0]*4;
-					save.buildings[0]+=1;
-					}
+					buyTierZero(0);
 				break;
 			}
 			updateBuildingCost(0);
 		break;
 		case 1:
 			switch(true){
-				case save.buildings[0]>=40:
+				case save.buildings[1]>=40:
 					
 				break;
 				case save.buildings[1]>=30:
-					if(save.bar[3]>=save.buildings[1]-28 && save.plank[2]>=save.buildings[1]*4-112){
-					save.bar[3]-=save.buildings[1]-28;
-					save.plank[3]-=save.buildings[1]*4-112;
-					save.buildings[1]+=1;
-					}
+					buyTierThree(1);
 				break;
 				case save.buildings[1]>=20:
-					if(save.bar[2]>=save.buildings[1]-18 && save.plank[2]>=save.buildings[1]*4-72){
-					save.bar[2]-=save.buildings[1]-18;
-					save.plank[2]-=save.buildings[1]*4-72;
-					save.buildings[1]+=1;
-					}
+					buyTierTwo(1);
 				break;
 				case save.buildings[1]>=10:
-					if(save.bar[1]>=save.buildings[1]-8 && save.plank[1]>=save.buildings[1]*4-32){
-					save.bar[1]-=save.buildings[1]-8;
-					save.plank[1]-=save.buildings[1]*4-32;
-					save.buildings[1]+=1;
-					}
+					buyTierOne(1);
 				break;
 				case save.buildings[1]>=0:
-					if(save.bar[0]>=2+save.buildings[1]  && save.plank[0]>=8+save.buildings[1]*4 ){
-					save.bar[0]-=2+save.buildings[1];
-					save.plank[0]-=8+save.buildings[1]*4;
-					save.buildings[1]+=1;
-					}
+					buyTierZero(1);
 				break;
 			}
 			updateBuildingCost(1);
 		break;
 		case 2:
 			switch(true){
-				case save.buildings[0]>=40:
+				case save.buildings[2]>=40:
 					
 				break;
 				case save.buildings[2]>=30:
-					if(save.bar[3]>=save.buildings[2]-28 && save.plank[2]>=save.buildings[2]*4-112){
-					save.bar[3]-=save.buildings[2]-28;
-					save.plank[3]-=save.buildings[2]*4-112;
-					save.buildings[2]+=1;
-					}
+					buyTierThree(2);
 				break;
 				case save.buildings[2]>=20:
-					if(save.bar[2]>=save.buildings[2]-18 && save.plank[2]>=save.buildings[2]*4-72){
-					save.bar[2]-=save.buildings[2]-18;
-					save.plank[2]-=save.buildings[2]*4-72;
-					save.buildings[2]+=1;
-					}
+					buyTierTwo(2);
 				break;
 				case save.buildings[2]>=10:
-					if(save.bar[1]>=save.buildings[2]-8 && save.plank[1]>=save.buildings[2]*4-32){
-					save.bar[1]-=save.buildings[2]-8;
-					save.plank[1]-=save.buildings[2]*4-32;
-					save.buildings[2]+=1;
-					}
+					buyTierOne(2);
 				break;
 				case save.buildings[2]>=0:
-					if(save.bar[0]>=2+save.buildings[2]  && save.plank[0]>=8+save.buildings[2]*4 ){
-					save.bar[0]-=2+save.buildings[2];
-					save.plank[0]-=8+save.buildings[2]*4;
-					save.buildings[2]+=1;
-					}
+					buyTierZero(2);
 				break;
 			}
 			updateBuildingCost(2);
 		break;
 		case 3:
 			switch(true){
-				case save.buildings[0]>=40:
+				case save.buildings[3]>=40:
 					
 				break;
 				case save.buildings[3]>=30:
-					if(save.bar[3]>=save.buildings[3]-28 && save.plank[2]>=save.buildings[3]*4-112){
-					save.bar[3]-=save.buildings[3]-28;
-					save.plank[3]-=save.buildings[3]*4-112;
-					save.buildings[3]+=1;
-					}
+					buyTierThree(3);
 				break;
 				case save.buildings[3]>=20:
-					if(save.bar[2]>=save.buildings[3]-18 && save.plank[2]>=save.buildings[3]*4-72){
-					save.bar[2]-=save.buildings[3]-18;
-					save.plank[2]-=save.buildings[3]*4-72;
-					save.buildings[3]+=1;
-					}
+					buyTierTwo(3);
 				break;
 				case save.buildings[3]>=10:
-					if(save.bar[1]>=save.buildings[3]-8 && save.plank[1]>=save.buildings[3]*4-32){
-					save.bar[1]-=save.buildings[3]-8;
-					save.plank[1]-=save.buildings[3]*4-32;
-					save.buildings[3]+=1;
-					}
+					buyTierOne(3);
 				break;
 				case save.buildings[3]>=0:
-					if(save.bar[0]>=2+save.buildings[3]  && save.plank[0]>=8+save.buildings[3]*4 ){
-					save.bar[0]-=2+save.buildings[3];
-					save.plank[0]-=8+save.buildings[3]*4;
-					save.buildings[3]+=1;
-					}
+					buyTierZero(3);
 				break;
 			}
 			updateBuildingCost(3);
 		break;
 		case 4:
 			switch(true){
-				case save.buildings[0]>=40:
-					
+				case save.buildings[4]>=40:
+					save.advMax=5;
 				break;
 				case save.buildings[4]>=30:
-					if(save.bar[3]>=save.buildings[4]-28 && save.plank[2]>=save.buildings[4]*4-112){
-					save.bar[3]-=save.buildings[4]-28;
-					save.plank[3]-=save.buildings[4]*4-112;
-					save.buildings[4]+=1;
-					}
+					buyTierThree(4);
+					save.advMax=4;
 				break;
 				case save.buildings[4]>=20:
-					if(save.bar[2]>=save.buildings[4]-18 && save.plank[2]>=save.buildings[4]*4-72){
-					save.bar[2]-=save.buildings[4]-18;
-					save.plank[2]-=save.buildings[4]*4-72;
-					save.buildings[4]+=1;
-					}
+					buyTierTwo(4);
+					save.advMax=3;
 				break;
 				case save.buildings[4]>=10:
-					if(save.bar[1]>=save.buildings[4]-8 && save.plank[1]>=save.buildings[4]*4-32){
-					save.bar[1]-=save.buildings[4]-8;
-					save.plank[1]-=save.buildings[4]*4-32;
-					save.buildings[4]+=1;
-					}
+					buyTierOne(4);
+					save.advMax=2;
 				break;
 				case save.buildings[4]>=0:
-					if(save.bar[0]>=2+save.buildings[4]  && save.plank[0]>=8+save.buildings[4]*4 ){
-					save.bar[0]-=2+save.buildings[4];
-					save.plank[0]-=8+save.buildings[4]*4;
-					save.buildings[4]+=1;
-					}
+					buyTierZero(4);
+					save.advMax=1;
 				break;
 			}
 			updateBuildingCost(4);
 		break;
 		case 5:
 			switch(true){
-				case save.buildings[0]>=40:
+				case save.buildings[5]>=40:
 					
 				break;
 				case save.buildings[5]>=30:
-					if(save.bar[3]>=save.buildings[5]-28 && save.plank[2]>=save.buildings[5]*4-112){
-					save.bar[3]-=save.buildings[5]-28;
-					save.plank[3]-=save.buildings[5]*4-112;
-					save.buildings[5]+=1;
-					}
+					buyTierThree(5);
 				break;
 				case save.buildings[5]>=20:
-					if(save.bar[2]>=save.buildings[5]-18 && save.plank[2]>=save.buildings[5]*4-72){
-					save.bar[2]-=save.buildings[5]-18;
-					save.plank[2]-=save.buildings[5]*4-72;
-					save.buildings[5]+=1;
-					}
+					buyTierTwo(5);
 				break;
 				case save.buildings[5]>=10:
-					if(save.bar[1]>=save.buildings[5]-8 && save.plank[1]>=save.buildings[5]*4-32){
-					save.bar[1]-=save.buildings[5]-8;
-					save.plank[1]-=save.buildings[5]*4-32;
-					save.buildings[5]+=1;
-					}
+					buyTierOne(5);
 				break;
 				case save.buildings[5]>=0:
-					if(save.bar[0]>=2+save.buildings[5]  && save.plank[0]>=8+save.buildings[5]*4 ){
-					save.bar[0]-=2+save.buildings[5];
-					save.plank[0]-=8+save.buildings[5]*4;
-					save.buildings[5]+=1;
-					}
+					buyTierZero(5);
 				break;
 			}
 			updateBuildingCost(5);
 		break;
 		case 6:
 			switch(true){
-				case save.buildings[0]>=40:
+				case save.buildings[6]>=40:
 					
 				break;
 				case save.buildings[6]>=30:
-					if(save.bar[3]>=save.buildings[6]-28 && save.plank[2]>=save.buildings[6]*4-112){
-					save.bar[3]-=save.buildings[6]-28;
-					save.plank[3]-=save.buildings[6]*4-112;
-					save.buildings[6]+=1;
-					}
+					buyTierThree(6);
 				break;
 				case save.buildings[6]>=20:
-					if(save.bar[2]>=save.buildings[6]-18 && save.plank[2]>=save.buildings[6]*4-72){
-					save.bar[2]-=save.buildings[6]-18;
-					save.plank[2]-=save.buildings[6]*4-72;
-					save.buildings[6]+=1;
-					}
+					buyTierTwo(6);
 				break;
 				case save.buildings[6]>=10:
-					if(save.bar[1]>=save.buildings[6]-8 && save.plank[1]>=save.buildings[6]*4-32){
-					save.bar[1]-=save.buildings[6]-8;
-					save.plank[1]-=save.buildings[6]*4-32;
-					save.buildings[6]+=1;
-					}
+					buyTierOne(6);
 				break;
 				case save.buildings[6]>=0:
-					if(save.bar[0]>=2+save.buildings[6]  && save.plank[0]>=8+save.buildings[6]*4 ){
-					save.bar[0]-=2+save.buildings[6];
-					save.plank[0]-=8+save.buildings[6]*4;
-					save.buildings[6]+=1;
-					}
+					buyTierZero(6);
 				break;
 			}
 			updateBuildingCost(6);
 		break;
 		case 7:
 			switch(true){
-				case save.buildings[0]>=40:
+				case save.buildings[7]>=40:
 					
 				break;
 				case save.buildings[7]>=30:
-					if(save.bar[3]>=save.buildings[7]-28 && save.plank[2]>=save.buildings[7]*4-112){
-					save.bar[3]-=save.buildings[7]-28;
-					save.plank[3]-=save.buildings[7]*4-112;
-					save.buildings[7]+=1;
-					}
+					buyTierThree(7);
 				break;
 				case save.buildings[7]>=20:
-					if(save.bar[2]>=save.buildings[7]-18 && save.plank[2]>=save.buildings[7]*4-72){
-					save.bar[2]-=save.buildings[7]-18;
-					save.plank[2]-=save.buildings[7]*4-72;
-					save.buildings[7]+=1;
-					}
+					buyTierTwo(7);
 				break;
 				case save.buildings[7]>=10:
-					if(save.bar[1]>=save.buildings[7]-8 && save.plank[1]>=save.buildings[7]*4-32){
-					save.bar[1]-=save.buildings[7]-8;
-					save.plank[1]-=save.buildings[7]*4-32;
-					save.buildings[7]+=1;
-					}
+					buyTierOne(7);
 				break;
 				case save.buildings[7]>=0:
-					if(save.bar[0]>=2+save.buildings[7]  && save.plank[0]>=8+save.buildings[7]*4 ){
-					save.bar[0]-=2+save.buildings[7];
-					save.plank[0]-=8+save.buildings[7]*4;
-					save.buildings[7]+=1;
-					}
+					buyTierZero(7);
 				break;
 			}
 			updateBuildingCost(7);
@@ -2393,32 +2186,16 @@ function buyBuilding(id){
 					
 				break;
 				case save.buildings[8]>=30:
-					if(save.bar[3]>=save.buildings[8]-28 && save.plank[2]>=save.buildings[8]*4-112){
-					save.bar[3]-=save.buildings[8]-28;
-					save.plank[3]-=save.buildings[8]*4-112;
-					save.buildings[8]+=1;
-					}
+					buyTierThree(8);
 				break;
 				case save.buildings[8]>=20:
-					if(save.bar[2]>=save.buildings[8]-18 && save.plank[2]>=save.buildings[8]*4-72){
-					save.bar[2]-=save.buildings[8]-18;
-					save.plank[2]-=save.buildings[8]*4-72;
-					save.buildings[8]+=1;
-					}
+					buyTierTwo(8);
 				break;
 				case save.buildings[8]>=10:
-					if(save.bar[1]>=save.buildings[8]-8 && save.plank[1]>=save.buildings[8]*4-32){
-					save.bar[1]-=save.buildings[8]-8;
-					save.plank[1]-=save.buildings[8]*4-32;
-					save.buildings[8]+=1;
-					}
+					buyTierOne(8);
 				break;
 				case save.buildings[8]>=0:
-					if(save.bar[0]>=2+save.buildings[8]  && save.plank[0]>=8+save.buildings[8]*4 ){
-					save.bar[0]-=2+save.buildings[8];
-					save.plank[0]-=8+save.buildings[8]*4;
-					save.buildings[8]+=1;
-					}
+					buyTierZero(8);
 				break;
 			}
 			updateBuildingCost(8);
@@ -2429,7 +2206,7 @@ function buyBuilding(id){
 					
 				break;
 				case save.buildings[9]>=39:
-					if(save.bar[3]>=save.buildings[9]-37 && save.plank[2]>=save.buildings[9]*4-148){
+					if(save.bar[3]>=save.buildings[9]-37 && save.plank[3]>=save.buildings[9]*4-148){
 					save.bar[3]-=save.buildings[9]-37;
 					save.plank[3]-=save.buildings[9]*4-148;
 					save.buildings[9]+=1;
@@ -2450,7 +2227,7 @@ function buyBuilding(id){
 					}
 				break;
 				case save.buildings[9]>=0:
-					if(save.bar[0]>=2+save.buildings[9]  && save.plank[0]>=2+save.buildings[9] ){
+					if(save.bar[0]>=2+save.buildings[9]  && save.plank[0]>=8+save.buildings[9]*4 ){
 					save.bar[0]-=2+save.buildings[9];
 					save.plank[0]-=8+save.buildings[9]*4;
 					save.buildings[9]+=1;
@@ -2618,10 +2395,10 @@ function upgradeCheckStart(){
 	if(save.ore[1]>=2){enableItem("smeltButton1")}else{disableItem("smeltButton1")};
 	if(save.ore[2]>=2){enableItem("smeltButton2")}else{disableItem("smeltButton2")};
 	if(save.ore[3]>=2){enableItem("smeltButton3")}else{disableItem("smeltButton3")};
-	if(save.wood[0]>=1){enableItem("planeButton0")}else{disableItem("planeButton0")};
-	if(save.wood[1]>=1){enableItem("planeButton1")}else{disableItem("planeButton1")};
-	if(save.wood[2]>=1){enableItem("planeButton2")}else{disableItem("planeButton2")};
-	if(save.wood[3]>=1){enableItem("planeButton3")}else{disableItem("planeButton3")};
+	if(save.wood[0]>=2){enableItem("planeButton0")}else{disableItem("planeButton0")};
+	if(save.wood[1]>=2){enableItem("planeButton1")}else{disableItem("planeButton1")};
+	if(save.wood[2]>=2){enableItem("planeButton2")}else{disableItem("planeButton2")};
+	if(save.wood[3]>=2){enableItem("planeButton3")}else{disableItem("planeButton3")};
 	if(save.townUnlocked==true){unlockItem("townButton")};
 }
 function upgradeCheck(){
@@ -2824,6 +2601,8 @@ function upgradeCheck(){
 		unlockItem("woodWrapper");
 		unlockItem("softWoodName");
 		unlockItem("softWood");
+	}
+	if(save.woodTotal[0]>=2){
 		unlockItem("planeButton0");
 		unlockItem("planeInfo");
 	}
@@ -2832,21 +2611,21 @@ function upgradeCheck(){
 		unlockItem("softPlankName");
 		unlockItem("softPlank");
 	}
-	if(save.woodTotal[1]>=1){
+	if(save.woodTotal[1]>=2){
 		unlockItem("hardWoodName");
 		unlockItem("hardWood");
 		unlockItem("planeButton1");
 		unlockItem("hardPlankName");
 		unlockItem("hardPlank");
 	}
-	if(save.woodTotal[2]>=1){
+	if(save.woodTotal[2]>=2){
 		unlockItem("ebonyWoodName");
 		unlockItem("ebonyWood");
 		unlockItem("planeButton2");
 		unlockItem("ebonyPlankName");
 		unlockItem("ebonyPlank");
 	}
-	if(save.woodTotal[3]>=1){
+	if(save.woodTotal[3]>=2){
 		unlockItem("pearlWoodName");
 		unlockItem("pearlWood");
 		unlockItem("planeButton3");
@@ -3139,6 +2918,7 @@ function openAdventures(){
 		case 0:
 		unlockItem("adventureWrapper");
 		adventuresOpen=1;
+		updateAdventurers();
 		break;
 		case 1:
 		lockItem("adventureWrapper");
@@ -3146,6 +2926,7 @@ function openAdventures(){
 		break;
 	}
 }
+
 function genAllAdventures(){
 	let x;
 	for (x=0;x<4;x++){
@@ -3163,42 +2944,42 @@ function genAdventure(slot){
 	switch(type){
 		case 0://kill X of Y
 			trgt=randomInt(0,13);
-			amt=randomInt(5,25);
+			amt=randomInt(5,50);
 			adv=randomInt(1,4);
-			time=randomInt(60,180);
-			cost=randomInt(60,250);
-			xp=randomInt(80,160)
+			time=Math.floor(amt*12/adv);
+			cost=amt*10;
+			xp=amt*5;
 		break;
 		case 1://clear X location
 			trgt=randomInt(0,18);
 			amt=randomInt(0,36);
-			adv=randomInt(1,4);
-			time=randomInt(60,180);
-			cost=randomInt(80,300);
-			xp=randomInt(100,300)
+			adv=randomInt(2,4);
+			time=Math.floor(randomInt(120,480)/adv);
+			cost=adv*150;
+			xp=time*5;
 		break;
 		case 2://kill X target
 			trgt=randomInt(0,101);
 			amt=randomInt(0,36);
 			adv=randomInt(2,4);
-			time=randomInt(90,180);
-			cost=randomInt(100,500);
-			xp=randomInt(300,600)
+			time=Math.floor(randomInt(180,600)/adv);
+			cost=adv*150;
+			xp=5*randomInt(80,160);
 		break;
 		case 3://Get X object
 			trgt=randomInt(0,76);
-			adv=randomInt(1,4);
-			time=randomInt(60,120);
-			cost=randomInt(20,60);
-			xp=randomInt(50,200)
+			adv=randomInt(1,2);
+			time=Math.floor(randomInt(120,180)/adv);
+			cost=adv*150;
+			xp=5*randomInt(20,60);
 		break;
 		case 4://Gather X amount of things
 			trgt=randomInt(0,14);
-			amt=randomInt(5,50);
+			amt=randomInt(10,50);
 			adv=randomInt(1,2);
-			time=randomInt(60,90);
-			cost=randomInt(0,20);
-			xp=randomInt(25,100)
+			time=Math.floor((amt*12)/adv);
+			cost=amt*10;
+			xp=amt*10;
 		break;
 	}
 	quests[slot]={type,time,cost,adv,xp,trgt,amt};
@@ -3208,31 +2989,35 @@ function genAdventure(slot){
 }
 function postAdventure(slot){
 	let quest=quests[slot];
-	save.quest[0]=quest.type;
-	save.quest[1]=quest.adv;
-	save.quest[2]=quest.time;
-	save.quest[3]=quest.cost;
-	save.quest[4]=quest.xp;
-	save.quest[5]=quest.trgt;
-	save.quest[6]=quest.amt;
-	// genAdventure(slot);
-	deleteQuest(slot);
-	save.onQuest=true;
-	updatePostable();
-	updateCurrentAdventure();
+	if(save.adv-save.advOut>=quest.adv && save.gold>=quest.cost){
+		save.advOut+=quest.adv;
+		save.gold-=quest.cost;
+		save.quest[0]=quest.type;
+		save.quest[1]=quest.adv;
+		save.quest[2]=Math.floor(quest.time-quest.time/100*save.buildings[5]);
+		save.quest[3]=quest.cost;
+		save.quest[4]=quest.xp;
+		save.quest[5]=quest.trgt;
+		save.quest[6]=quest.amt;
+		deleteQuest(slot);
+		save.onQuest=true;
+		updatePostable();
+		updateCurrentAdventure();
+		openAdventures();
+		updateAdventurers();
+		updateGold();
+	}
 }
 function questComplete(){
-	document.getElementById("adventureCurrentTimeRemain").innerHTML="Time Remaining: <span class=highlightedText>Complete</span>";
 	save.townXP+=save.quest[4];
 	save.onQuest=false;
 	updatePostable();
+	save.advOut-=save.quest[1];
+	updateAdventurers();
+	updateXp();
 }
 function deleteQuest(slot){
-	document.getElementById("adventure"+slot+"Type").innerHTML="---";
-	document.getElementById("adventure"+slot+"Time").innerHTML="";
-	document.getElementById("adventure"+slot+"Cost").innerHTML="";
-	document.getElementById("adventure"+slot+"Adv").innerHTML="";
-	document.getElementById("adventure"+slot+"Xp").innerHTML="";
+	lockItem("adventure"+slot+"InfoWrapper");
 	save.questDeleted[slot]=true;
 }
 
